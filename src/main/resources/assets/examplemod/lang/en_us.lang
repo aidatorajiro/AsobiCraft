@@ -1,0 +1,5 @@
+message.examplemod.counter=Counter: %d
+tile.examplemod.exampleblock.name=Example Block
+tile.examplemod.counterblock.name=Counter
+tile.examplemod.statemanipulatorblock.name=State Manipulator
+item.examplemod.exampleitem.name=Example Item

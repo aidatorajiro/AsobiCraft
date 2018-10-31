@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "examplemod:block/statemanipulatorblock",
+    "down": "examplemod:block/statemanipulatorblock",
+    "up": "examplemod:block/statemanipulatorblock",
+    "east": "examplemod:block/statemanipulatorblock",
+    "west": "examplemod:block/statemanipulatorblock",
+    "north": "examplemod:block/statemanipulatorblock",
+    "south": "examplemod:block/statemanipulatorblock"
+  }
+}
