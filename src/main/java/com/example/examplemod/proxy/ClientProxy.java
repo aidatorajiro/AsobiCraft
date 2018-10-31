@@ -1,7 +1,6 @@
 package com.example.examplemod.proxy;
 
-import com.example.examplemod.ModBlocks;
-import com.example.examplemod.ModItems;
+import com.example.examplemod.ModObjects;
 import com.example.examplemod.block.BaseBlock;
 import com.example.examplemod.item.BaseItem;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -19,11 +18,11 @@ public class ClientProxy extends CommonProxy {
 
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
-        for (BaseBlock block : ModBlocks.blocks) {
+        for (BaseBlock block : ModObjects.blocks) {
             block.initModel();
         }
 
-        for (BaseItem item : ModItems.items) {
+        for (BaseItem item : ModObjects.items) {
             item.initModel();
         }
     }

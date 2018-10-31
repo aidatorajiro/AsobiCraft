@@ -30,7 +30,6 @@ public class CounterBlock extends BaseBlock implements ITileEntityProvider {
             TextComponentTranslation component = new TextComponentTranslation("message.examplemod.counter", counter);
             component.getStyle().setColor(TextFormatting.GREEN);
             playerIn.sendStatusMessage(component, false);
-
         }
         return true;
     }
