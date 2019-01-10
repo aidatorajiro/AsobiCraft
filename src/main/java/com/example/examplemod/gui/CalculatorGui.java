@@ -1,7 +1,6 @@
 package com.example.examplemod.gui;
 
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.block.CalculatorBlock;
 import com.example.examplemod.container.CalculatorContainer;
 import com.example.examplemod.tileentity.CalculatorTileEntity;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -11,7 +10,7 @@ public class CalculatorGui extends GuiContainer {
 
     private static final ResourceLocation background = new ResourceLocation(ExampleMod.MODID, "textures/gui/calculator.png");
 
-    public CalculatorGui(CalculatorContainer container) {
+    public CalculatorGui(CalculatorTileEntity tile, CalculatorContainer container) {
         super(container);
 
         xSize = 300;

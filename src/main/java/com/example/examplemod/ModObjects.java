@@ -3,6 +3,7 @@ package com.example.examplemod;
 import com.example.examplemod.block.*;
 import com.example.examplemod.item.BaseItem;
 import com.example.examplemod.item.ExampleItem;
+import com.example.examplemod.item.NumberItem;
 import com.example.examplemod.item.OperatorItem;
 import com.example.examplemod.tileentity.BaseTileEntity;
 import com.example.examplemod.tileentity.CalculatorTileEntity;
@@ -45,11 +46,13 @@ public class ModObjects {
     public static OperatorItem minusOperatorItem;
     public static OperatorItem divOperatorItem;
     public static OperatorItem mulOperatorItem;
+    public static NumberItem numberItem;
 
     /**
      * Create and register all items to ModObjects.
      */
     public static void initialize() {
+        // Register Items
         exampleItem = new ExampleItem();
         registerItem(exampleItem, "exampleItem");
 
@@ -64,6 +67,11 @@ public class ModObjects {
 
         mulOperatorItem = new OperatorItem((a, b) -> (a * b));
         registerItem(mulOperatorItem, "mulOperatorItem");
+
+        numberItem = new NumberItem();
+        registerItem(numberItem, "numberItem");
+
+        // Register Blocks and Tileentities.
 
         exampleBlock = new ExampleBlock();
         registerBlock(exampleBlock, "exampleBlock");
@@ -89,6 +97,7 @@ public class ModObjects {
     private static void registerItem (BaseItem item, String id) {
         item.setRegistryName(id);
         item.setUnlocalizedName(ExampleMod.MODID + "." + id);
+        item.setCreativeTab(ModObjects.tabExampleMod);
         items.add(item);
     }
 
@@ -100,6 +109,7 @@ public class ModObjects {
     private static void registerBlock (BaseBlock block, String id) {
         block.setRegistryName(id);
         block.setUnlocalizedName(ExampleMod.MODID + "." + id);
+        block.setCreativeTab(ModObjects.tabExampleMod);
         blocks.add(block);
     }
 

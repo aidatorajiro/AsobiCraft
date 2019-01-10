@@ -4,6 +4,12 @@
     "model": "examplemod:statemanipulatorblock"
   },
   "variants": {
+    "facing=down": { "model": "examplemod:statemanipulatorblock" },
+    "facing=up": { "model": "examplemod:statemanipulatorblock" },
+    "facing=east":  { "model": "examplemod:statemanipulatorblock" },
+    "facing=west":  { "model": "examplemod:statemanipulatorblock" },
+    "facing=north": { "model": "examplemod:statemanipulatorblock" },
+    "facing=south": { "model": "examplemod:statemanipulatorblock" },
     "normal": [{}],
     "inventory": [{}]
   }

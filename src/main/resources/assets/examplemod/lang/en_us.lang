@@ -3,3 +3,7 @@ tile.examplemod.exampleblock.name=Example Block
 tile.examplemod.counterblock.name=Counter
 tile.examplemod.statemanipulatorblock.name=State Manipulator
 item.examplemod.exampleitem.name=Example Item
+item.examplemod.plusOperatorItem.name=Plus Operator
+item.examplemod.minusOperatorItem.name=Minus Operator
+item.examplemod.divOperatorItem.name=Div Operator
+item.examplemod.mulOperatorItem.name=Mul Operator
