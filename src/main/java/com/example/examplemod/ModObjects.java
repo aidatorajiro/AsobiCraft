@@ -1,8 +1,8 @@
 package com.example.examplemod;
 
 import com.example.examplemod.block.*;
+import com.example.examplemod.item.AdbmalItem;
 import com.example.examplemod.item.BaseItem;
-import com.example.examplemod.item.ExampleItem;
 import com.example.examplemod.item.NumberItem;
 import com.example.examplemod.item.OperatorItem;
 import com.example.examplemod.tileentity.BaseTileEntity;
@@ -11,8 +11,6 @@ import com.example.examplemod.tileentity.CounterTileEntity;
 import com.example.examplemod.tileentity.StateManipulatorTileEntity;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,13 +33,13 @@ public class ModObjects {
     public static final CreativeTabs tabExampleMod = (new CreativeTabs("tabExampleMod") {
         @Override
         public ItemStack getTabIconItem() {
-            return new ItemStack(exampleItem);
+            return new ItemStack(adbmalItem);
         }
     });
 
     public static List<BaseItem> items = new ArrayList();
 
-    public static ExampleItem exampleItem;
+    public static AdbmalItem adbmalItem;
     public static OperatorItem plusOperatorItem;
     public static OperatorItem minusOperatorItem;
     public static OperatorItem divOperatorItem;
@@ -53,8 +51,8 @@ public class ModObjects {
      */
     public static void initialize() {
         // Register Items
-        exampleItem = new ExampleItem();
-        registerItem(exampleItem, "exampleItem");
+        adbmalItem = new AdbmalItem();
+        registerItem(adbmalItem, "adbmalItem");
 
         plusOperatorItem = new OperatorItem((a, b) -> (a + b));
         registerItem(plusOperatorItem, "plusOperatorItem");

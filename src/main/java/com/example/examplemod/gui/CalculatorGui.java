@@ -13,8 +13,8 @@ public class CalculatorGui extends GuiContainer {
     public CalculatorGui(CalculatorTileEntity tile, CalculatorContainer container) {
         super(container);
 
-        xSize = 300;
-        ySize = 300;
+        xSize = 176;
+        ySize = 228;
     }
 
     @Override

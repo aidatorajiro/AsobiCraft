@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "examplemod:item/exampleitem"
+    "layer0": "examplemod:item/adbmalitem"
   }
 }
