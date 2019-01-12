@@ -40,10 +40,12 @@ public class CalculatorContainer extends BaseContainer {
 
     private void addOwnSlots() {
         IItemHandler itemHandler = this.tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        int centerX = 88;
-        int centerY = 73;
+        int centerX = 89;
+        int centerY = 76;
         int radius = 60;
         double theta = 2*Math.PI/16.0;
+
+        if (itemHandler == null) { return; }
 
         // Add our own slots
         for (int i = 0; i < itemHandler.getSlots(); i++) {
@@ -56,10 +58,5 @@ public class CalculatorContainer extends BaseContainer {
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
         return tile.canInteractWith(playerIn);
-    }
-
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-        return super.transferStackInSlot(playerIn, index);
     }
 }
