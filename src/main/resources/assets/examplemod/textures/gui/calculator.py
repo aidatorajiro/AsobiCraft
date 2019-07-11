@@ -3,8 +3,9 @@ from PIL import *
 import math
 
 im = Image.new("RGBA", (256, 256), (255, 255, 255, 0))
-draw_window(im, (176, 230), (19, 29, 47, 255), (230, 177, 223), 2)
+draw_window(im, (253, 234), (19, 29, 47, 255), (230, 177, 223, 255), 2)
 
+draw_slots(im, GRAY_SLOT, (174, 9), (4, 12))
 draw_player_inv(im, GRAY_SLOT, (9, 151))
 
 centerX = 89

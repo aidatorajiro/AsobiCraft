@@ -2,10 +2,10 @@ package com.example.examplemod.container;
 
 import com.example.examplemod.tileentity.CalculatorTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -15,31 +15,13 @@ public class CalculatorContainer extends BaseContainer {
 
     public CalculatorContainer (IInventory playerInventory, CalculatorTileEntity tile) {
         this.tile = tile;
-        addPlayerSlots(playerInventory);
-        addOwnSlots();
+        drawPlayerSlots(playerInventory, 9, 151);
+        drawInputs();
+        drawOutputs();
     }
 
-    private void addPlayerSlots(IInventory playerInventory) {
-        int offsetY = 151;
-        // Slots for the main inventory
-        for (int row = 0; row < 3; ++row) {
-            for (int col = 0; col < 9; ++col) {
-                int x = 9 + col * 18;
-                int y = row * 18 + offsetY;
-                this.addSlotToContainer(new Slot(playerInventory, col + row * 9 + 10, x, y));
-            }
-        }
-
-        // Slots for the hotbar
-        for (int row = 0; row < 9; ++row) {
-            int x = 9 + row * 18;
-            int y = 58 + offsetY;
-            this.addSlotToContainer(new Slot(playerInventory, row, x, y));
-        }
-    }
-
-    private void addOwnSlots() {
-        IItemHandler itemHandler = this.tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+    private void drawInputs() {
+        IItemHandler itemHandler = this.tile.getInput();
         int centerX = 89;
         int centerY = 76;
         int radius = 60;
@@ -53,6 +35,39 @@ public class CalculatorContainer extends BaseContainer {
             int y = (int)(Math.cos(theta*i)*radius + centerY - 8);
             addSlotToContainer(new SlotItemHandler(itemHandler, i, x, y));
         }
+    }
+
+    private void drawOutputs() {
+        IItemHandler itemHandler = this.tile.getOutput();
+        if (itemHandler == null) { return; }
+        drawSlots(itemHandler, 174, 9, 4, 12);
+    }
+
+    @Override
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+        ItemStack ret = ItemStack.EMPTY;
+        Slot slot = this.inventorySlots.get(index);
+
+        if (slot != null && slot.getHasStack()) {
+            ItemStack itemstack = slot.getStack();
+            ret = itemstack.copy();
+
+            if (index < tile.INPUT_SIZE) {
+                if (!this.mergeItemStack(itemstack, 16, this.inventorySlots.size(), true)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!this.mergeItemStack(itemstack, 0, 16, false)) {
+                return ItemStack.EMPTY;
+            }
+
+            if (itemstack.isEmpty()) {
+                slot.putStack(ItemStack.EMPTY);
+            } else {
+                slot.onSlotChanged();
+            }
+        }
+
+        return ret;
     }
 
     @Override

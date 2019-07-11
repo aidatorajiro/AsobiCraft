@@ -21,9 +21,9 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12.2-14.23.4.2765"
+    version = "1.12.2-14.23.5.2768"
     runDir = "run"
-    
+
     // the mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   snapshot are built nightly.
     // stable_#            stables are built at the discretion of the MCP team.
@@ -99,7 +99,7 @@ dependencies {
     //deobfCompile "com.enderio.core:EnderCore:1.12.2-0.5.40"
     //compile "com.mod-buildcraft:buildcraft:7.99.12"
     //compile "appeng:appliedenergistics2:rv6-stable-1"
-    deobfCompile "projecte:ProjectE:1.12:PE1.3.1B"
+    //deobfCompile "projecte:ProjectE:1.12:PE1.3.1B"
     //compile "com.wayoftime.bloodmagic:BloodMagic:1.12.2-2.3.3-101"
     //compile "info.amerifrance.guideapi:Guide-API:1.12-2.1.7-62"
     //compile "com.enderio:EnderIO:1.12.2-5.0.36"
@@ -113,13 +113,13 @@ dependencies {
     //compile "mrtjp:ProjectRed:1.12.2-4.9.2.101:mechanical"
     //compile "mrtjp:ProjectRed:1.12.2-4.9.2.101:world"
     //compile "net.industrial-craft:industrialcraft-2:2.8.99-ex112"
-}
 
-//    deobfCompile "com.mod-buildcraft:buildcraft:7.99.12"
-//    compile "appeng:appliedenergistics2:rv6-stable-1"
-//    deobfCompile "projecte:ProjectE:1.12:PE1.3.1B"
-//    compile "com.wayoftime.bloodmagic:BloodMagic:1.12.2-2.3.3-101"
-//    compile "info.amerifrance.guideapi:Guide-API:1.12-2.1.7-62"
-//    deobfCompile "com.enderio.core:EnderCore:1.12.2-0.5.40"
-//    compile "com.enderio:EnderIO:1.12.2-5.0.36"
-//    compile "info.loenwind.autosave:AutoSave:1.12.2-1.0.8"
+    //    deobfCompile "com.mod-buildcraft:buildcraft:7.99.12"
+    //    compile "appeng:appliedenergistics2:rv6-stable-1"
+    //    deobfCompile "projecte:ProjectE:1.12:PE1.3.1B"
+    //    compile "com.wayoftime.bloodmagic:BloodMagic:1.12.2-2.3.3-101"
+    //    compile "info.amerifrance.guideapi:Guide-API:1.12-2.1.7-62"
+    //    deobfCompile "com.enderio.core:EnderCore:1.12.2-0.5.40"
+    //    compile "com.enderio:EnderIO:1.12.2-5.0.36"
+    //    compile "info.loenwind.autosave:AutoSave:1.12.2-1.0.8"
+}

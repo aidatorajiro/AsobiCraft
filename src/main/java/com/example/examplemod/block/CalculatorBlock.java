@@ -16,6 +16,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 public class CalculatorBlock extends BaseBlock implements ITileEntityProvider {
     public CalculatorBlock() {
         super(Material.ROCK);
@@ -29,10 +31,21 @@ public class CalculatorBlock extends BaseBlock implements ITileEntityProvider {
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
-            CalculatorTileEntity tile = (CalculatorTileEntity) world.getTileEntity(pos);
             player.openGui(ExampleMod.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
+    }
+
+    @Override
+    public int tickRate(World worldIn) {
+        return 10;
+    }
+
+    @Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+        super.updateTick(world, pos, state, rand);
+        CalculatorTileEntity tile = (CalculatorTileEntity) world.getTileEntity(pos);
+        tile.updateTick(world, pos, state, rand);
     }
 
     @Override
