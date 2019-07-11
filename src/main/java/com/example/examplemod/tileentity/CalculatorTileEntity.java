@@ -130,35 +130,22 @@ public class CalculatorTileEntity extends BaseTileEntity implements IInventory {
 
     @Override
     public ItemStack getStackInSlot(int prev_index) {
-        Tuple<IItemHandler, Integer> t = ItemHandlerHelper.getMergedSlot(prev_index, input, output);
-        IItemHandler handler = t.getFirst();
-        int index = t.getSecond();
-        return handler.getStackInSlot(index);
+        return ItemHandlerHelper.getStackInSlotMerged(prev_index, input, output);
     }
 
     @Override
     public ItemStack decrStackSize(int prev_index, int num) {
-        Tuple<IItemHandler, Integer> t = ItemHandlerHelper.getMergedSlot(prev_index, input, output);
-        IItemHandler handler = t.getFirst();
-        int index = t.getSecond();
-        return handler.extractItem(index, num, false);
+        return ItemHandlerHelper.extractItemMerged(prev_index, num, false, input, output);
     }
 
     @Override
     public ItemStack removeStackFromSlot(int prev_index) {
-        Tuple<IItemHandler, Integer> t = ItemHandlerHelper.getMergedSlot(prev_index, input, output);
-        IItemHandler handler = t.getFirst();
-        int index = t.getSecond();
-        return handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
+        return ItemHandlerHelper.clearSlotMerged(prev_index, input, output);
     }
 
     @Override
     public void setInventorySlotContents(int prev_index, ItemStack itemStack) {
-        Tuple<IItemHandler, Integer> t = ItemHandlerHelper.getMergedSlot(prev_index, input, output);
-        IItemHandler handler = t.getFirst();
-        int index = t.getSecond();
-        handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
-        handler.insertItem(index, itemStack, false);
+         ItemHandlerHelper.setSlotMerged(prev_index, itemStack, input, output);
     }
 
     @Override
@@ -183,10 +170,7 @@ public class CalculatorTileEntity extends BaseTileEntity implements IInventory {
 
     @Override
     public boolean isItemValidForSlot(int prev_index, ItemStack itemStack) {
-        Tuple<IItemHandler, Integer> t = ItemHandlerHelper.getMergedSlot(prev_index, input, output);
-        IItemHandler handler = t.getFirst();
-        int index = t.getSecond();
-        return handler.isItemValid(index, itemStack);
+        return ItemHandlerHelper.isItemValidMerged(prev_index, itemStack, input, output);
     }
 
     @Override

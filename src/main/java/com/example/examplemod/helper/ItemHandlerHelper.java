@@ -14,7 +14,7 @@ public class ItemHandlerHelper extends net.minecraftforge.items.ItemHandlerHelpe
         return true;
     }
 
-    public static Tuple<IItemHandler, Integer> getMergedSlot(int index, IItemHandler... handlers) {
+    public static Tuple<IItemHandler, Integer> getMergedHandler(int index, IItemHandler... handlers) {
         for (IItemHandler handler : handlers) {
             int slots = handler.getSlots();
             if (index >= slots) {
@@ -32,5 +32,41 @@ public class ItemHandlerHelper extends net.minecraftforge.items.ItemHandlerHelpe
         for (int i = 0; i < count; i++) {
             handler.extractItem(i, handler.getStackInSlot(i).getCount(), false);
         }
+    }
+
+    public static ItemStack getStackInSlotMerged(int prev_index, IItemHandler... handlers) {
+        Tuple<IItemHandler, Integer> t = getMergedHandler(prev_index, handlers);
+        IItemHandler handler = t.getFirst();
+        int index = t.getSecond();
+        return handler.getStackInSlot(index);
+    }
+
+    public static ItemStack extractItemMerged(int prev_index, int num, boolean simulate, IItemHandler... handlers) {
+        Tuple<IItemHandler, Integer> t = getMergedHandler(prev_index, handlers);
+        IItemHandler handler = t.getFirst();
+        int index = t.getSecond();
+        return handler.extractItem(index, num, simulate);
+    }
+
+    public static ItemStack clearSlotMerged(int prev_index, IItemHandler... handlers) {
+        Tuple<IItemHandler, Integer> t = getMergedHandler(prev_index, handlers);
+        IItemHandler handler = t.getFirst();
+        int index = t.getSecond();
+        return handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
+    }
+
+    public static void setSlotMerged(int prev_index, ItemStack itemStack, IItemHandler... handlers) {
+        Tuple<IItemHandler, Integer> t = getMergedHandler(prev_index, handlers);
+        IItemHandler handler = t.getFirst();
+        int index = t.getSecond();
+        handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
+        handler.insertItem(index, itemStack, false);
+    }
+
+    public static boolean isItemValidMerged(int prev_index, ItemStack itemStack, IItemHandler... handlers) {
+        Tuple<IItemHandler, Integer> t = getMergedHandler(prev_index, handlers);
+        IItemHandler handler = t.getFirst();
+        int index = t.getSecond();
+        return handler.isItemValid(index, itemStack);
     }
 }
