@@ -8,6 +8,7 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -61,6 +62,13 @@ public class CalculatorBlock extends BaseBlock implements ITileEntityProvider {
     @Override
     public boolean isFullCube(IBlockState state) {
         return false;
+    }
+
+    @Override
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+        CalculatorTileEntity tile = (CalculatorTileEntity) world.getTileEntity(pos);
+        InventoryHelper.dropInventoryItems(world, pos, tile);
+        super.breakBlock(world, pos, state);
     }
 
     @Override

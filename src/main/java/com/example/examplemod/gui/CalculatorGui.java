@@ -18,6 +18,18 @@ public class CalculatorGui extends GuiContainer {
     }
 
     @Override
+    public void updateScreen() {
+        super.updateScreen();
+        drawString(fontRenderer, "Calculating: ", 20, 20, 16);
+    }
+
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float f) {
+        super.drawScreen(mouseX, mouseY, f);
+        renderHoveredToolTip(mouseX, mouseY);
+    }
+
+    @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         mc.getTextureManager().bindTexture(background);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);

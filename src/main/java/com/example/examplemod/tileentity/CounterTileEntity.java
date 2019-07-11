@@ -12,6 +12,10 @@ public class CounterTileEntity extends BaseTileEntity {
         return counter;
     }
 
+    public int getValue () {
+        return counter;
+    }
+
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);

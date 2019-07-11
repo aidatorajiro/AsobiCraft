@@ -1,5 +1,6 @@
 package com.example.examplemod.tileentity;
 
+import com.example.examplemod.helper.ItemHandlerHelper;
 import com.example.examplemod.item.NumberItem;
 import com.example.examplemod.item.OperatorItem;
 import net.minecraft.block.state.IBlockState;
@@ -9,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -20,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class CalculatorTileEntity extends BaseTileEntity {
+public class CalculatorTileEntity extends BaseTileEntity implements IInventory {
     public int INPUT_SIZE = 16;
     public int OUTPUT_SIZE = 48;
 
@@ -114,5 +116,107 @@ public class CalculatorTileEntity extends BaseTileEntity {
 
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 
+    }
+
+    @Override
+    public int getSizeInventory() {
+        return INPUT_SIZE + OUTPUT_SIZE;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return ItemHandlerHelper.isEmpty(input) && ItemHandlerHelper.isEmpty(output);
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int prev_index) {
+        Tuple<IItemHandler, Integer> t = ItemHandlerHelper.getMergedSlot(prev_index, input, output);
+        IItemHandler handler = t.getFirst();
+        int index = t.getSecond();
+        return handler.getStackInSlot(index);
+    }
+
+    @Override
+    public ItemStack decrStackSize(int prev_index, int num) {
+        Tuple<IItemHandler, Integer> t = ItemHandlerHelper.getMergedSlot(prev_index, input, output);
+        IItemHandler handler = t.getFirst();
+        int index = t.getSecond();
+        return handler.extractItem(index, num, false);
+    }
+
+    @Override
+    public ItemStack removeStackFromSlot(int prev_index) {
+        Tuple<IItemHandler, Integer> t = ItemHandlerHelper.getMergedSlot(prev_index, input, output);
+        IItemHandler handler = t.getFirst();
+        int index = t.getSecond();
+        return handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
+    }
+
+    @Override
+    public void setInventorySlotContents(int prev_index, ItemStack itemStack) {
+        Tuple<IItemHandler, Integer> t = ItemHandlerHelper.getMergedSlot(prev_index, input, output);
+        IItemHandler handler = t.getFirst();
+        int index = t.getSecond();
+        handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
+        handler.insertItem(index, itemStack, false);
+    }
+
+    @Override
+    public int getInventoryStackLimit() {
+        return 64;
+    }
+
+    @Override
+    public boolean isUsableByPlayer(EntityPlayer entityPlayer) {
+        return true;
+    }
+
+    @Override
+    public void openInventory(EntityPlayer entityPlayer) {
+
+    }
+
+    @Override
+    public void closeInventory(EntityPlayer entityPlayer) {
+
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int prev_index, ItemStack itemStack) {
+        Tuple<IItemHandler, Integer> t = ItemHandlerHelper.getMergedSlot(prev_index, input, output);
+        IItemHandler handler = t.getFirst();
+        int index = t.getSecond();
+        return handler.isItemValid(index, itemStack);
+    }
+
+    @Override
+    public int getField(int i) {
+        return 0;
+    }
+
+    @Override
+    public void setField(int i, int i1) {
+
+    }
+
+    @Override
+    public int getFieldCount() {
+        return 0;
+    }
+
+    @Override
+    public void clear() {
+        ItemHandlerHelper.clear(input);
+        ItemHandlerHelper.clear(output);
+    }
+
+    @Override
+    public String getName() {
+        return "container.calculator";
+    }
+
+    @Override
+    public boolean hasCustomName() {
+        return false;
     }
 }
