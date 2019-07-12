@@ -6,8 +6,10 @@ import com.example.examplemod.item.OperatorItem;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Tuple;
@@ -22,9 +24,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
+import static com.example.examplemod.ModObjects.numberItem;
+
 public class CalculatorTileEntity extends BaseTileEntity implements IInventory {
     public int INPUT_SIZE = 16;
     public int OUTPUT_SIZE = 48;
+    public int current_operator = 0;
 
     private ItemStackHandler input = new ItemStackHandler(INPUT_SIZE) {
         @Override
@@ -77,6 +82,9 @@ public class CalculatorTileEntity extends BaseTileEntity implements IInventory {
         if (compound.hasKey("output")) {
             output.deserializeNBT((NBTTagCompound) compound.getTag("output"));
         }
+        if (compound.hasKey("current_operator")) {
+            current_operator = compound.getInteger("current_operator");
+        }
     }
 
     @Override
@@ -84,6 +92,7 @@ public class CalculatorTileEntity extends BaseTileEntity implements IInventory {
         super.writeToNBT(compound);
         compound.setTag("input", input.serializeNBT());
         compound.setTag("output", output.serializeNBT());
+        compound.setTag("current_operator", new NBTTagInt(current_operator));
         return compound;
     }
 
@@ -114,8 +123,31 @@ public class CalculatorTileEntity extends BaseTileEntity implements IInventory {
         return super.getCapability(capability, facing);
     }
 
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+    public boolean canCalculate() {
+        for (int i = 0; i < input.getSlots(); i++) {
+            if (input.getStackInSlot(i).isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+        if (!canCalculate()) {
+            return;
+        }
+        int index_prev = (current_operator - 1 + INPUT_SIZE) % INPUT_SIZE;
+        int index_next = (current_operator + 1 + INPUT_SIZE) % INPUT_SIZE;
+        int index_replace = (current_operator + 3 + INPUT_SIZE) % INPUT_SIZE;
+        ItemStack num_a = input.getStackInSlot(index_prev);
+        ItemStack num_b = input.getStackInSlot(index_next);
+        ItemStack operator = input.getStackInSlot(current_operator % INPUT_SIZE);
+        double result = ((OperatorItem) operator.getItem()).calculate(numberItem.getNumber(num_a), numberItem.getNumber(num_b));
+        ItemStack resultItem = new ItemStack(numberItem);
+        numberItem.setNumber(resultItem, result);
+        resultItem.setCount(input.getStackInSlot(index_replace).getCount());
+        input.setStackInSlot(index_replace, resultItem);
+        current_operator += 2;
     }
 
     @Override

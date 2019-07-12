@@ -8,19 +8,27 @@ import net.minecraft.util.ResourceLocation;
 
 public class CalculatorGui extends GuiContainer {
 
+    private static CalculatorTileEntity tile;
+
     private static final ResourceLocation background = new ResourceLocation(ExampleMod.MODID, "textures/gui/calculator.png");
 
-    public CalculatorGui(CalculatorTileEntity tile, CalculatorContainer container) {
+    public CalculatorGui(CalculatorTileEntity tileIn, CalculatorContainer container) {
         super(container);
 
         xSize = 253;
         ySize = 234;
+
+        tile = tileIn;
     }
 
     @Override
     public void updateScreen() {
         super.updateScreen();
-        drawString(fontRenderer, "Calculating: ", 20, 20, 16);
+        if (tile.canCalculate()) {
+            drawString(fontRenderer, "Calculating: ", 20, 20, 0xffffff);
+        } else {
+            drawString(fontRenderer, "Set numbers and operators", 20, 20, 0xffffff);
+        }
     }
 
     @Override
