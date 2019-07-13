@@ -2,17 +2,16 @@ package com.example.examplemod.tileentity;
 
 import com.example.examplemod.helper.ItemHandlerHelper;
 import com.example.examplemod.itemhandler.FloatingItemStackHandler;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
-public class FloatingChestTileentity extends BaseInventoryTileEntity {
+public class FloatingChestTileEntity extends BaseInventoryTileEntity {
     int INV_SIZE = 40;
     private static double EXPORT_SIZE = FloatingItemStackHandler.MAX_ITEMSTACK_EXPORT_SIZE;
 
     private FloatingItemStackHandler handler = new FloatingItemStackHandler(INV_SIZE) {
         @Override
         protected void onContentsChanged(int slot) {
-            FloatingChestTileentity.this.markDirty();
+            FloatingChestTileEntity.this.markDirty();
         }
     };
 

@@ -1,6 +1,5 @@
 package com.example.examplemod.block;
 
-import com.example.examplemod.tileentity.FloatingChestTileentity;
 import com.example.examplemod.tileentity.PointerTileEntity;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;

@@ -87,7 +87,7 @@ public class ModObjects {
 
         floatingChestBlock = new FloatingChestBlock();
         registerBlock(floatingChestBlock, "floatingChestBlock");
-        registerTileEntity(FloatingChestTileentity.class, "floatingChestTileEntity");
+        registerTileEntity(FloatingChestTileEntity.class, "floatingChestTileEntity");
 
         pointerBlock = new PointerBlock();
         registerBlock(pointerBlock, "pointerBlock");
