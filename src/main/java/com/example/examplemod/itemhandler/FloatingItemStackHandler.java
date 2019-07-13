@@ -80,6 +80,9 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
     public void setStackInSlot(int slot, @Nonnull ItemStack stack)
     {
         validateSlotIndex(slot);
+        if (this.stacks.get(slot).getStackSize() > MAX_ITEMSTACK_EXPORT_SIZE) {
+            return;
+        }
         this.stacks.set(slot, new FloatingItemStack(stack));
         onContentsChanged(slot);
     }
