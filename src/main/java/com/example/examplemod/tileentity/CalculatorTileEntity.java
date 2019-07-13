@@ -21,7 +21,7 @@ import java.util.Random;
 
 import static com.example.examplemod.ModObjects.numberItem;
 
-public class CalculatorTileEntity extends BaseInventoryTileEntity {
+public class CalculatorTileEntity extends BaseTileEntity {
     public int INPUT_SIZE = 16;
     public int OUTPUT_SIZE = 48;
     public int current_operator = 0;
@@ -139,56 +139,5 @@ public class CalculatorTileEntity extends BaseInventoryTileEntity {
         resultItem.setCount(input.getStackInSlot(index_replace).getCount());
         input.setStackInSlot(index_replace, resultItem);
         current_operator += 2;
-    }
-
-    @Override
-    public int getSizeInventory() {
-        return INPUT_SIZE + OUTPUT_SIZE;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return ItemHandlerHelper.isEmpty(input) && ItemHandlerHelper.isEmpty(output);
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int prev_index) {
-        return ItemHandlerHelper.getStackInSlotMerged(prev_index, input, output);
-    }
-
-    @Override
-    public ItemStack decrStackSize(int prev_index, int num) {
-        return ItemHandlerHelper.extractItemMerged(prev_index, num, false, input, output);
-    }
-
-    @Override
-    public ItemStack removeStackFromSlot(int prev_index) {
-        return ItemHandlerHelper.clearSlotMerged(prev_index, input, output);
-    }
-
-    @Override
-    public void setInventorySlotContents(int prev_index, ItemStack itemStack) {
-         ItemHandlerHelper.setSlotMerged(prev_index, itemStack, input, output);
-    }
-
-    @Override
-    public int getInventoryStackLimit() {
-        return 64;
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int prev_index, ItemStack itemStack) {
-        return ItemHandlerHelper.isItemValidMerged(prev_index, itemStack, input, output);
-    }
-
-    @Override
-    public void clear() {
-        ItemHandlerHelper.clear(input);
-        ItemHandlerHelper.clear(output);
-    }
-
-    @Override
-    public String getName() {
-        return "mod.examplemod.container.calculator";
     }
 }

@@ -3,6 +3,7 @@ package com.example.examplemod.block;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.tileentity.CalculatorTileEntity;
 import com.example.examplemod.tileentity.StateManipulatorTileEntity;
+import com.example.examplemod.helper.ItemHandlerHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -69,7 +70,8 @@ public class CalculatorBlock extends BaseBlock implements ITileEntityProvider {
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
         CalculatorTileEntity tile = (CalculatorTileEntity) world.getTileEntity(pos);
-        InventoryHelper.dropInventoryItems(world, pos, tile);
+        ItemHandlerHelper.dropHandlerItems(world, pos, tile.getInput());
+        ItemHandlerHelper.dropHandlerItems(world, pos, tile.getOutput());
         super.breakBlock(world, pos, state);
     }
 

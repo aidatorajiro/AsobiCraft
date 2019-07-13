@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
 import java.lang.Math;
 
 public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModifiable, INBTSerializable<NBTTagCompound> {
-    public static double MAX_ITEMSTACK_EXPORT_SIZE = 2048;
+    public static double MAX_ITEMSTACK_EXPORT_SIZE = 2147483647;
 
     private NonNullList<FloatingItemStack> stacks;
 

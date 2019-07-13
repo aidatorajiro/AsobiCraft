@@ -1,9 +1,15 @@
 package com.example.examplemod.helper;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Tuple;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
+
+import static net.minecraft.inventory.InventoryHelper.spawnItemStack;
 
 public class ItemHandlerHelper extends net.minecraftforge.items.ItemHandlerHelper {
     public static boolean isEmpty(IItemHandler handler) {
@@ -70,5 +76,23 @@ public class ItemHandlerHelper extends net.minecraftforge.items.ItemHandlerHelpe
         IItemHandler handler = t.getFirst();
         int index = t.getSecond();
         return handler.isItemValid(index, itemStack);
+    }
+
+    public static void dropHandlerItems(World worldIn, BlockPos pos, IItemHandler handler)
+    {
+        dropHandlerItems(worldIn, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), handler);
+    }
+
+    public static void dropHandlerItems(World worldIn, Entity entityAt, IItemHandler handler)
+    {
+        dropHandlerItems(worldIn, entityAt.posX, entityAt.posY, entityAt.posZ, handler);
+    }
+
+    public static void dropHandlerItems(World worldIn, double x, double y, double z, IItemHandler handler) {
+        int count = handler.getSlots();
+        for (int i = 0; i < count; i++) {
+            ItemStack stack = handler.extractItem(i, handler.getStackInSlot(i).getCount(), false);
+            spawnItemStack(worldIn, x, y, z, stack);
+        }
     }
 }
