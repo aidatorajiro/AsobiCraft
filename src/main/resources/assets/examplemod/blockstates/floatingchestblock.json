@@ -1,0 +1,16 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "examplemod:floatingchestblock"
+	},
+	"variants": {
+		"facing=down": { "model": "examplemod:floatingchestblock" },
+		"facing=up": { "model": "examplemod:floatingchestblock" },
+		"facing=east":  { "model": "examplemod:floatingchestblock" },
+		"facing=west":  { "model": "examplemod:floatingchestblock" },
+		"facing=north": { "model": "examplemod:floatingchestblock" },
+		"facing=south": { "model": "examplemod:floatingchestblock" },
+		"normal": [{}],
+		"inventory": [{}]
+	}
+}

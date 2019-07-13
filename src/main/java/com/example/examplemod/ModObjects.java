@@ -5,10 +5,7 @@ import com.example.examplemod.item.AdbmalItem;
 import com.example.examplemod.item.BaseItem;
 import com.example.examplemod.item.NumberItem;
 import com.example.examplemod.item.OperatorItem;
-import com.example.examplemod.tileentity.BaseTileEntity;
-import com.example.examplemod.tileentity.CalculatorTileEntity;
-import com.example.examplemod.tileentity.CounterTileEntity;
-import com.example.examplemod.tileentity.StateManipulatorTileEntity;
+import com.example.examplemod.tileentity.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
@@ -26,6 +23,8 @@ public class ModObjects {
     public static CounterBlock counterBlock;
     public static StateManipulatorBlock stateManipulatorBlock;
     public static CalculatorBlock calculatorBlock;
+    public static FloatingChestBlock floatingChestBlock;
+    public static PointerBlock pointerBlock;
 
     public static List<Class<?extends BaseTileEntity>> tileEntities = new ArrayList();
     public static List<String> tileEntityNames = new ArrayList();
@@ -85,6 +84,14 @@ public class ModObjects {
         calculatorBlock = new CalculatorBlock();
         registerBlock(calculatorBlock, "calculatorBlock");
         registerTileEntity(CalculatorTileEntity.class, "calculatorTileEntity");
+
+        floatingChestBlock = new FloatingChestBlock();
+        registerBlock(floatingChestBlock, "floatingChestBlock");
+        registerTileEntity(FloatingChestTileentity.class, "floatingChestTileEntity");
+
+        pointerBlock = new PointerBlock();
+        registerBlock(pointerBlock, "pointerBlock");
+        registerTileEntity(PointerTileEntity.class, "pointerTileEntity");
     }
 
     /**

@@ -32,10 +32,12 @@ public class FloatingItemStack implements INBTSerializable<NBTTagCompound> {
         return stackSize == 0 || itemStack.isEmpty();
     }
 
-    public ItemStack asItemStack() {
-        ItemStack stack = this.itemStack.copy();
-        stack.setCount((int)this.stackSize);
-        return stack;
+    /**
+     * Get *copied* ItemStack of this FloatingItemStack.
+     * @return ItemStack
+     */
+    public ItemStack getItemStack() {
+        return  this.itemStack.copy();
     }
 
     public FloatingItemStack modifyStackSize (double amount) {
@@ -68,6 +70,6 @@ public class FloatingItemStack implements INBTSerializable<NBTTagCompound> {
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
         this.itemStack = nbt.hasKey("itemStack") ? new ItemStack(nbt.getCompoundTag("itemStack")) : ItemStack.EMPTY;
-        this.stackSize = nbt.hasKey("stackSize") ? nbt.getDouble("itemStack") : 0;
+        this.stackSize = nbt.hasKey("stackSize") ? nbt.getDouble("itemStack") : 0.0;
     }
 }

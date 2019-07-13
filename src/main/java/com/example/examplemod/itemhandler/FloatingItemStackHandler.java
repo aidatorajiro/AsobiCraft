@@ -13,7 +13,11 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 
+import java.lang.Math;
+
 public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModifiable, INBTSerializable<NBTTagCompound> {
+    private static double MAX_ITEMSTACK_EXPORT_SIZE = 256;
+
     private NonNullList<FloatingItemStack> stacks;
 
     public FloatingItemStackHandler()
@@ -85,12 +89,19 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
         return stacks.size();
     }
 
+    /**
+     * Return the slot designated by given slot id as an ItemStack.
+     * Modifying any ItemStack which is returned by this function will do no change.
+     * @param slot slot id
+     */
     @Nonnull
     @Override
-    /* SERIOUSLY, AGAIN, DO NOT MODIFY THIS ITEMSTACK! */
     public ItemStack getStackInSlot(int slot) {
         validateSlotIndex(slot);
-        return this.stacks.get(slot).asItemStack();
+        FloatingItemStack stack = this.stacks.get(slot);
+        ItemStack export = stack.getItemStack();
+        export.setCount((int) Math.min(MAX_ITEMSTACK_EXPORT_SIZE, stack.getStackSize()));
+        return export;
     }
 
     @Nonnull
@@ -104,7 +115,7 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
         FloatingItemStack existing = this.stacks.get(slot);
 
         if (!existing.isEmpty()) {
-            if (!ItemHandlerHelper.canItemStacksStack(stack, existing.asItemStack()))
+            if (!ItemHandlerHelper.canItemStacksStack(stack, existing.getItemStack()))
                 return stack;
         }
 
@@ -124,6 +135,34 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
         return ItemStack.EMPTY;
     }
 
+    public FloatingItemStack insertItemFloating(int slot, @Nonnull FloatingItemStack stack, boolean simulate) {
+        if (stack.isEmpty())
+            return FloatingItemStack.EMPTY;
+
+        validateSlotIndex(slot);
+
+        FloatingItemStack existing = this.stacks.get(slot);
+
+        if (!existing.isEmpty()) {
+            if (!ItemHandlerHelper.canItemStacksStack(stack.getItemStack(), existing.getItemStack()))
+                return stack;
+        }
+
+        if (!simulate) {
+            if (existing.isEmpty())
+            {
+                this.stacks.set(slot, stack.copy());
+            }
+            else
+            {
+                existing.modifyStackSize(stack.getStackSize());
+            }
+            onContentsChanged(slot);
+        }
+
+        return FloatingItemStack.EMPTY;
+    }
+
     protected void validateSlotIndex(int slot)
     {
         if (slot < 0 || slot >= stacks.size())
@@ -139,18 +178,22 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
         validateSlotIndex(slot);
 
         FloatingItemStack existing = this.stacks.get(slot);
+        double existingStackSize = existing.getStackSize();
+        ItemStack export = existing.getItemStack();
 
         if (existing.isEmpty())
             return ItemStack.EMPTY;
 
-        if (existing.getStackSize() <= amount)
+        if (existingStackSize <= amount)
         {
             if (!simulate)
             {
                 this.stacks.set(slot, FloatingItemStack.EMPTY);
                 onContentsChanged(slot);
             }
-            return existing.asItemStack();
+
+            export.setCount((int) Math.min(MAX_ITEMSTACK_EXPORT_SIZE, existingStackSize));
+            return export;
         }
         else
         {
@@ -160,13 +203,51 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
                 onContentsChanged(slot);
             }
 
-            return existing.copy().setStackSize(amount).asItemStack();
+            export.setCount(amount);
+            return export;
+        }
+    }
+
+    public FloatingItemStack extractItemFloating(int slot, double amount, boolean simulate) {
+        if (amount == 0)
+            return FloatingItemStack.EMPTY;
+
+        validateSlotIndex(slot);
+
+        FloatingItemStack existing = this.stacks.get(slot);
+        double existingStackSize = existing.getStackSize();
+        FloatingItemStack export = new FloatingItemStack(existing.getItemStack());
+
+        if (existing.isEmpty())
+            return FloatingItemStack.EMPTY;
+
+        if (existingStackSize <= amount)
+        {
+            if (!simulate)
+            {
+                this.stacks.set(slot, FloatingItemStack.EMPTY);
+                onContentsChanged(slot);
+            }
+
+            export.setStackSize(existingStackSize);
+            return export;
+        }
+        else
+        {
+            if (!simulate)
+            {
+                this.stacks.set(slot, existing.copy().modifyStackSize(-amount));
+                onContentsChanged(slot);
+            }
+
+            export.setStackSize(amount);
+            return export;
         }
     }
 
     @Override
     public int getSlotLimit(int slot) {
-        return 2147483647;
+        return (int) MAX_ITEMSTACK_EXPORT_SIZE;
     }
 
     @Override

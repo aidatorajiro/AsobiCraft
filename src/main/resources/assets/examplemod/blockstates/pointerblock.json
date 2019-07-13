@@ -1,0 +1,16 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "examplemod:pointerblock"
+	},
+	"variants": {
+		"facing=down": { "model": "examplemod:pointerblock", "z": 90 },
+		"facing=up": { "model": "examplemod:pointerblock", "z": 270 },
+		"facing=east":  { "model": "examplemod:pointerblock", "y": 0 },
+		"facing=west":  { "model": "examplemod:pointerblock", "y": 180 },
+		"facing=north": { "model": "examplemod:pointerblock", "y": 270 },
+		"facing=south": { "model": "examplemod:pointerblock", "y": 90 },
+		"normal": [{}],
+		"inventory": [{}]
+	}
+}
