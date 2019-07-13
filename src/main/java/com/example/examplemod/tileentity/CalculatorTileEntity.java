@@ -5,19 +5,14 @@ import com.example.examplemod.item.NumberItem;
 import com.example.examplemod.item.OperatorItem;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
@@ -26,7 +21,7 @@ import java.util.Random;
 
 import static com.example.examplemod.ModObjects.numberItem;
 
-public class CalculatorTileEntity extends BaseTileEntity implements IInventory {
+public class CalculatorTileEntity extends BaseInventoryTileEntity {
     public int INPUT_SIZE = 16;
     public int OUTPUT_SIZE = 48;
     public int current_operator = 0;
@@ -94,10 +89,6 @@ public class CalculatorTileEntity extends BaseTileEntity implements IInventory {
         compound.setTag("output", output.serializeNBT());
         compound.setTag("current_operator", new NBTTagInt(current_operator));
         return compound;
-    }
-
-    public boolean canInteractWith(EntityPlayer playerIn) {
-        return !isInvalid() && playerIn.getDistanceSq(this.pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
     }
 
     @Override
@@ -186,38 +177,8 @@ public class CalculatorTileEntity extends BaseTileEntity implements IInventory {
     }
 
     @Override
-    public boolean isUsableByPlayer(EntityPlayer entityPlayer) {
-        return true;
-    }
-
-    @Override
-    public void openInventory(EntityPlayer entityPlayer) {
-
-    }
-
-    @Override
-    public void closeInventory(EntityPlayer entityPlayer) {
-
-    }
-
-    @Override
     public boolean isItemValidForSlot(int prev_index, ItemStack itemStack) {
         return ItemHandlerHelper.isItemValidMerged(prev_index, itemStack, input, output);
-    }
-
-    @Override
-    public int getField(int i) {
-        return 0;
-    }
-
-    @Override
-    public void setField(int i, int i1) {
-
-    }
-
-    @Override
-    public int getFieldCount() {
-        return 0;
     }
 
     @Override
@@ -228,11 +189,6 @@ public class CalculatorTileEntity extends BaseTileEntity implements IInventory {
 
     @Override
     public String getName() {
-        return "container.calculator";
-    }
-
-    @Override
-    public boolean hasCustomName() {
-        return false;
+        return "mod.examplemod.container.calculator";
     }
 }
