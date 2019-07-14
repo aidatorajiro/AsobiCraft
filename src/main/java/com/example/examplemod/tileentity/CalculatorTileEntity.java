@@ -37,7 +37,7 @@ public class CalculatorTileEntity extends BaseTileEntity {
             if (isItemValid(slot, stack)) {
                 return super.insertItem(slot, stack, simulate);
             } else {
-                return ItemStack.EMPTY;
+                return stack;
             }
         }
 
