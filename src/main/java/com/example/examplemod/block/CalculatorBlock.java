@@ -27,9 +27,8 @@ import java.util.Random;
 
 public class CalculatorBlock extends BaseBlock implements ITileEntityProvider {
     public CalculatorBlock() {
-        super(Material.ROCK);
+        super();
         this.setTickRandomly(true);
-        this.setHardness(1.0F);
     }
 
     @Override

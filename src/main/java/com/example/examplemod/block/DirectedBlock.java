@@ -16,8 +16,8 @@ import net.minecraft.world.World;
 public abstract class DirectedBlock extends BaseBlock {
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
-    public DirectedBlock(Material blockMaterialIn) {
-        super(blockMaterialIn);
+    public DirectedBlock() {
+        super();
     }
 
     @Override

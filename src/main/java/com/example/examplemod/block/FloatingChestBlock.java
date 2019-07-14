@@ -26,7 +26,7 @@ import java.util.Random;
 
 public class FloatingChestBlock extends DirectedBlock implements ITileEntityProvider {
     public FloatingChestBlock() {
-        super(Material.ROCK);
+        super();
     }
 
     @Override
