@@ -1,6 +1,7 @@
 package com.example.examplemod.block;
 
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.helper.BlockHelper;
 import com.example.examplemod.tileentity.CalculatorTileEntity;
 import com.example.examplemod.tileentity.StateManipulatorTileEntity;
 import com.example.examplemod.helper.ItemHandlerHelper;
@@ -8,8 +9,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -25,6 +29,7 @@ public class CalculatorBlock extends BaseBlock implements ITileEntityProvider {
     public CalculatorBlock() {
         super(Material.ROCK);
         this.setTickRandomly(true);
+        this.setHardness(1.0F);
     }
 
     @Override
@@ -68,14 +73,6 @@ public class CalculatorBlock extends BaseBlock implements ITileEntityProvider {
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state) {
-        CalculatorTileEntity tile = (CalculatorTileEntity) world.getTileEntity(pos);
-        ItemHandlerHelper.dropHandlerItems(world, pos, tile.getInput());
-        ItemHandlerHelper.dropHandlerItems(world, pos, tile.getOutput());
-        super.breakBlock(world, pos, state);
-    }
-
-    @Override
     public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }
@@ -83,5 +80,28 @@ public class CalculatorBlock extends BaseBlock implements ITileEntityProvider {
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return new AxisAlignedBB(1.0/16.0, 0, 1.0/16.0, 15.0/16.0, 2.0/16.0, 15.0/16.0);
+    }
+
+    @Override
+    public int quantityDropped(IBlockState state, int fortune, Random random) {
+        if (fortune > 3) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+        super.onBlockPlacedBy(world, pos, state, placer, stack);
+        BlockHelper.restoreTE(world.getTileEntity(pos), stack);
+    }
+
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        if (!worldIn.isRemote) {
+            BlockHelper.spawnBlockWithNBT(worldIn, pos, this, worldIn.getTileEntity(pos));
+        }
+        super.breakBlock(worldIn, pos, state);
     }
 }
