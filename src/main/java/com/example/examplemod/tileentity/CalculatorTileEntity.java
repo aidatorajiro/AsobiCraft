@@ -18,6 +18,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
+import java.util.function.BiFunction;
 
 import static com.example.examplemod.ModObjects.numberItem;
 
@@ -127,17 +128,19 @@ public class CalculatorTileEntity extends BaseTileEntity {
         if (!canCalculate()) {
             return;
         }
+
         int index_prev = (current_operator - 1 + INPUT_SIZE) % INPUT_SIZE;
         int index_next = (current_operator + 1 + INPUT_SIZE) % INPUT_SIZE;
         int index_replace = (current_operator + 3 + INPUT_SIZE) % INPUT_SIZE;
+
         ItemStack num_a = input.getStackInSlot(index_prev);
         ItemStack num_b = input.getStackInSlot(index_next);
         ItemStack operator = input.getStackInSlot(current_operator % INPUT_SIZE);
-        double result = ((OperatorItem) operator.getItem()).calculate(numberItem.getNumber(num_a), numberItem.getNumber(num_b));
-        ItemStack resultItem = new ItemStack(numberItem);
-        numberItem.setNumber(resultItem, result);
-        resultItem.setCount(input.getStackInSlot(index_replace).getCount());
-        input.setStackInSlot(index_replace, resultItem);
+
+        ItemStack result = numberItem.applyOperator(num_a, num_b, (OperatorItem) operator.getItem());
+        result.setCount(input.getStackInSlot(index_replace).getCount());
+
+        input.setStackInSlot(index_replace, result);
         current_operator += 2;
     }
 }
