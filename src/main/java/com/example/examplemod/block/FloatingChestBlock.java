@@ -61,7 +61,7 @@ public class FloatingChestBlock extends DirectedBlock implements ITileEntityProv
 
     @Override
     public int quantityDropped(IBlockState state, int fortune, Random random) {
-        if (fortune > 3) {
+        if (fortune > 5) {
             return 1;
         } else {
             return 0;
