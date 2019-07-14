@@ -23,7 +23,7 @@ import static com.example.examplemod.ModObjects.numberItem;
 
 public class CounterBlock extends BaseBlock implements ITileEntityProvider {
     public CounterBlock() {
-        super(Material.ROCK);
+        super();
     }
 
     @Override

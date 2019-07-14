@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 public class StateManipulatorBlock extends DirectedBlock implements ITileEntityProvider {
     public StateManipulatorBlock() {
-        super(Material.ROCK);
+        super();
     }
 
     @Override

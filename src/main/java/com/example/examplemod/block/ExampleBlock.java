@@ -4,7 +4,7 @@ import net.minecraft.block.material.Material;
 
 public class ExampleBlock extends BaseBlock {
     public ExampleBlock() {
-        super(Material.ROCK);
+        super();
         setLightLevel(1);
     }
 }

@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 
 public class PointerBlock extends DirectedBlock implements ITileEntityProvider {
     public PointerBlock() {
-        super(Material.ROCK);
+        super();
     }
 
     @Override
