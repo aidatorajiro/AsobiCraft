@@ -70,6 +70,6 @@ public class FloatingItemStack implements INBTSerializable<NBTTagCompound> {
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
         this.itemStack = nbt.hasKey("itemStack") ? new ItemStack(nbt.getCompoundTag("itemStack")) : ItemStack.EMPTY;
-        this.stackSize = nbt.hasKey("stackSize") ? nbt.getDouble("itemStack") : 0.0;
+        this.stackSize = nbt.hasKey("stackSize") ? nbt.getDouble("stackSize") : 0.0;
     }
 }

@@ -3,6 +3,8 @@ package com.example.examplemod.tileentity;
 import com.example.examplemod.helper.ItemHandlerHelper;
 import com.example.examplemod.itemhandler.FloatingItemStackHandler;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -10,8 +12,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import javax.annotation.Nullable;
 
 public class FloatingChestTileEntity extends BaseTileEntity {
-    int INV_SIZE = 40;
-    private static double EXPORT_SIZE = FloatingItemStackHandler.MAX_ITEMSTACK_EXPORT_SIZE;
+    private int INV_SIZE = 40;
 
     private FloatingItemStackHandler handler = new FloatingItemStackHandler(INV_SIZE) {
         @Override
@@ -39,5 +40,20 @@ public class FloatingChestTileEntity extends BaseTileEntity {
             return true;
         }
         return super.hasCapability(capability, facing);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
+        if (compound.hasKey("chest")) {
+            handler.deserializeNBT((NBTTagCompound) compound.getTag("chest"));
+        }
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
+        compound.setTag("chest", handler.serializeNBT());
+        return compound;
     }
 }

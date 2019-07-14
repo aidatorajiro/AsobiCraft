@@ -75,6 +75,5 @@ public class NumberItem extends BaseItem {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         double num = getNumber(stack);
         tooltip.add("Stored number: " + num);
-        tooltip.add("NBT: " + stack.getTagCompound());
     }
 }
