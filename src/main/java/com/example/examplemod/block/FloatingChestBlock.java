@@ -71,13 +71,13 @@ public class FloatingChestBlock extends DirectedBlock implements ITileEntityProv
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         super.onBlockPlacedBy(world, pos, state, placer, stack);
-        BlockHelper.restoreTE(world.getTileEntity(pos), stack);
+        BlockHelper.restoreTE(world, pos, stack);
     }
 
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         if (!worldIn.isRemote) {
-            BlockHelper.spawnBlockWithNBT(worldIn, pos, this, worldIn.getTileEntity(pos));
+            BlockHelper.spawnTE(worldIn, pos, this);
         }
         super.breakBlock(worldIn, pos, state);
     }

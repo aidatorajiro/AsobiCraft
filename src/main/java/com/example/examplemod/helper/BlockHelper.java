@@ -13,9 +13,15 @@ import net.minecraft.world.World;
 import static net.minecraft.inventory.InventoryHelper.spawnItemStack;
 
 public class BlockHelper {
-    public static void spawnBlockWithNBT(World worldIn, BlockPos pos, Block block, TileEntity tile) {
+    /**
+     * Spawn an item block, preserving tile entity NBT.
+     * @param worldIn
+     * @param pos
+     * @param block
+     */
+    public static void spawnTE(World worldIn, BlockPos pos, Block block) {
         ItemStack stack = new ItemStack(Item.getItemFromBlock(block));
-        NBTTagCompound entityTag = tile.serializeNBT();
+        NBTTagCompound entityTag = worldIn.getTileEntity(pos).serializeNBT();
         entityTag.removeTag("x");
         entityTag.removeTag("y");
         entityTag.removeTag("z");
@@ -23,7 +29,14 @@ public class BlockHelper {
         spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack);
     }
 
-    public static void restoreTE(TileEntity tile, ItemStack stack) {
+    /**
+     * Restore tile entity NBT from an item stack.
+     * @param worldIn
+     * @param pos
+     * @param stack
+     */
+    public static void restoreTE(World worldIn, BlockPos pos, ItemStack stack) {
+        TileEntity tile = worldIn.getTileEntity(pos);
         NBTTagCompound compound = stack.getSubCompound("tileNBT");
         if (compound != null) {
             NBTTagCompound orig = tile.serializeNBT();
