@@ -1,3 +1,4 @@
+package com.example.examplemod.slot;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
