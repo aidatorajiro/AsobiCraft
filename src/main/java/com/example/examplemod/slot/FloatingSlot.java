@@ -77,4 +77,9 @@ class FloatingSlot extends Slot {
     {
         return this.getItemHandler().extractItem(index, amount, false);
     }
+
+    public FloatingItemStackHandler getItemHandler()
+    {
+        return itemHandler;
+    }
 }
