@@ -1,4 +1,5 @@
 message.examplemod.counter=Counter: %d
+message.examplemod.statemanipulator=Message: %s
 tile.examplemod.exampleblock.name=Example Block
 tile.examplemod.counterblock.name=Counter
 tile.examplemod.statemanipulatorblock.name=State Manipulator

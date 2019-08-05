@@ -1,5 +1,6 @@
 from PIL import Image, ImageDraw
 import os
+import numpy as np
 
 ASSET_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -27,6 +28,17 @@ def draw_player_inv(im, slot_im, offset):
   draw_slots(im, slot_im, offset, (9, 3))
   draw_slots(im, slot_im, (offset[0], offset[1] + 58), (9, 1))
 
-PINK_SLOT = Image.open(ASSET_DIR + '/pink_slot.png')
-ORANGE_SLOT = Image.open(ASSET_DIR + '/orange_slot.png')
-GRAY_SLOT = Image.open(ASSET_DIR + '/gray_slot.png')
+# Replace all pixels with given color except pixels with alpha == 0
+def replace_all_color(im, color):
+  data = np.array(im)
+  red, green, blue, alpha = data.T
+  data[(alpha!=0).T] = color
+  im2 = Image.fromarray(data)
+  return im2
+
+SLOT = Image.open(ASSET_DIR + '/slot.png')
+PINK_SLOT = replace_all_color(SLOT, (233,182,234,255))
+ORANGE_SLOT = replace_all_color(SLOT, (244,200,164,255))
+GRAY_SLOT = replace_all_color(SLOT, (204,204,204,255))
+
+LIGHT_BLUE_SLOT = replace_all_color(SLOT, (147,175,175,255))

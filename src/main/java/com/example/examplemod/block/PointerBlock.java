@@ -11,6 +11,10 @@ public class PointerBlock extends DirectedBlock implements ITileEntityProvider {
         super();
     }
 
+    /*
+        Tile entity
+     */
+
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new PointerTileEntity();

@@ -1,13 +1,20 @@
 package com.example.examplemod;
 
 import com.example.examplemod.block.*;
+import com.example.examplemod.eventhandler.BlockPatternRecipeEventHandler;
 import com.example.examplemod.item.AdbmalItem;
 import com.example.examplemod.item.BaseItem;
 import com.example.examplemod.item.NumberItem;
 import com.example.examplemod.item.OperatorItem;
+import com.example.examplemod.recipe.IBlockPatternRecipe;
+import com.example.examplemod.recipe.BlockPatternRecipePlane;
 import com.example.examplemod.tileentity.*;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +26,10 @@ import static net.minecraftforge.fml.common.registry.GameRegistry.registerTileEn
  */
 public class ModObjects {
     public static List<BaseBlock> blocks = new ArrayList();
-    public static ExampleBlock exampleBlock;
-    public static CounterBlock counterBlock;
-    public static StateManipulatorBlock stateManipulatorBlock;
-    public static CalculatorBlock calculatorBlock;
-    public static FloatingChestBlock floatingChestBlock;
-    public static PointerBlock pointerBlock;
-
     public static List<Class<?extends BaseTileEntity>> tileEntities = new ArrayList();
     public static List<String> tileEntityNames = new ArrayList();
+    public static List<BaseItem> items = new ArrayList();
+    public static List<IBlockPatternRecipe> pickupRecipes = new ArrayList();
 
     public static final CreativeTabs tabExampleMod = (new CreativeTabs("tabExampleMod") {
         @Override
@@ -36,7 +38,12 @@ public class ModObjects {
         }
     });
 
-    public static List<BaseItem> items = new ArrayList();
+    public static ExampleBlock exampleBlock;
+    public static CounterBlock counterBlock;
+    public static StateManipulatorBlock stateManipulatorBlock;
+    public static CalculatorBlock calculatorBlock;
+    public static FloatingChestBlock floatingChestBlock;
+    public static PointerBlock pointerBlock;
 
     public static AdbmalItem adbmalItem;
     public static OperatorItem plusOperatorItem;
@@ -49,7 +56,7 @@ public class ModObjects {
      * Create and register all items to ModObjects.
      */
     public static void initialize() {
-        // Register Items
+        // Register Item
         adbmalItem = new AdbmalItem();
         registerItem(adbmalItem, "adbmalItem");
 
@@ -68,8 +75,7 @@ public class ModObjects {
         numberItem = new NumberItem();
         registerItem(numberItem, "numberItem");
 
-        // Register Blocks and Tileentities.
-
+        // Register Block and TileEntity
         exampleBlock = new ExampleBlock();
         registerBlock(exampleBlock, "exampleBlock");
 
@@ -92,6 +98,23 @@ public class ModObjects {
         pointerBlock = new PointerBlock();
         registerBlock(pointerBlock, "pointerBlock");
         registerTileEntity(PointerTileEntity.class, "pointerTileEntity");
+
+        // Register EventHandler
+        MinecraftForge.EVENT_BUS.register(new BlockPatternRecipeEventHandler());
+
+        // Register pickupRecipes
+        pickupRecipes.add(new BlockPatternRecipePlane(
+                Items.WOODEN_HOE,
+                1,
+                0,
+                1,
+                NonNullList.withSize(1, new ItemStack(adbmalItem, 3)),
+                "GGG",
+                "GWG",
+                "GGG",
+                'G', Blocks.GLASS,
+                'W', Blocks.WATER
+        ));
     }
 
     /**

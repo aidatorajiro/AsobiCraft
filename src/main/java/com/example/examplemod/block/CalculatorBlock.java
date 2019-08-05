@@ -3,16 +3,10 @@ package com.example.examplemod.block;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.helper.BlockHelper;
 import com.example.examplemod.tileentity.CalculatorTileEntity;
-import com.example.examplemod.tileentity.StateManipulatorTileEntity;
-import com.example.examplemod.helper.ItemHandlerHelper;
-import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -31,10 +25,18 @@ public class CalculatorBlock extends BaseBlock implements ITileEntityProvider {
         this.setTickRandomly(true);
     }
 
+    /*
+        Tile entity
+     */
+
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
         return new CalculatorTileEntity();
     }
+
+    /*
+        GUI
+     */
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -43,6 +45,10 @@ public class CalculatorBlock extends BaseBlock implements ITileEntityProvider {
         }
         return true;
     }
+
+    /*
+        Tick
+     */
 
     @Override
     public int tickRate(World worldIn) {
@@ -55,6 +61,10 @@ public class CalculatorBlock extends BaseBlock implements ITileEntityProvider {
         CalculatorTileEntity tile = (CalculatorTileEntity) world.getTileEntity(pos);
         tile.updateTick(world, pos, state, rand);
     }
+
+    /*
+        Partial Block
+     */
 
     @Override
     public boolean isOpaqueCube(IBlockState state) {
@@ -81,9 +91,12 @@ public class CalculatorBlock extends BaseBlock implements ITileEntityProvider {
         return new AxisAlignedBB(1.0/16.0, 0, 1.0/16.0, 15.0/16.0, 2.0/16.0, 15.0/16.0);
     }
 
+    /*
+        NBT Items
+     */
     @Override
     public int quantityDropped(IBlockState state, int fortune, Random random) {
-        if (fortune > 5) {
+        if (fortune > 9) {
             return 1;
         } else {
             return 0;

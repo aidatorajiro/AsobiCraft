@@ -1,8 +1,11 @@
 package com.example.examplemod.proxy;
 
 import com.example.examplemod.container.CalculatorContainer;
+import com.example.examplemod.container.FloatingChestContainer;
 import com.example.examplemod.gui.CalculatorGui;
+import com.example.examplemod.gui.FloatingChestGui;
 import com.example.examplemod.tileentity.CalculatorTileEntity;
+import com.example.examplemod.tileentity.FloatingChestTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -19,6 +22,9 @@ public class GuiProxy implements IGuiHandler {
         if (tile instanceof CalculatorTileEntity) {
             return new CalculatorContainer(player.inventory, (CalculatorTileEntity) tile);
         }
+        if (tile instanceof FloatingChestTileEntity) {
+            return new FloatingChestContainer(player.inventory, (FloatingChestTileEntity) tile);
+        }
         return null;
     }
 
@@ -29,6 +35,10 @@ public class GuiProxy implements IGuiHandler {
         if (tile instanceof CalculatorTileEntity) {
             CalculatorTileEntity casted = (CalculatorTileEntity)tile;
             return new CalculatorGui(casted, new CalculatorContainer(player.inventory, casted));
+        }
+        if (tile instanceof FloatingChestTileEntity) {
+            FloatingChestTileEntity casted = (FloatingChestTileEntity) tile;
+            return new FloatingChestGui(casted, new FloatingChestContainer(player.inventory, casted));
         }
         return null;
     }

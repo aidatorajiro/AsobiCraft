@@ -7,8 +7,8 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public class FloatingItemStack implements INBTSerializable<NBTTagCompound> {
     public static final FloatingItemStack EMPTY = new FloatingItemStack(ItemStack.EMPTY, 0);
-    private ItemStack itemStack;
-    private double stackSize;
+    protected ItemStack itemStack;
+    protected double stackSize;
 
     public FloatingItemStack(NBTTagCompound nbt) {
         deserializeNBT(nbt);

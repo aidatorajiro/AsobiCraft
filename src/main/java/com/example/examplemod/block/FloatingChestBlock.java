@@ -1,5 +1,6 @@
 package com.example.examplemod.block;
 
+import com.example.examplemod.ExampleMod;
 import com.example.examplemod.helper.BlockHelper;
 import com.example.examplemod.tileentity.CounterTileEntity;
 import com.example.examplemod.tileentity.FloatingChestTileEntity;
@@ -29,10 +30,30 @@ public class FloatingChestBlock extends DirectedBlock implements ITileEntityProv
         super();
     }
 
+    /*
+        Tile entity
+     */
+
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new FloatingChestTileEntity();
     }
+
+    /*
+        GUI
+     */
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (!world.isRemote) {
+            player.openGui(ExampleMod.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
+        }
+        return true;
+    }
+
+    /*
+        Partial Block
+     */
 
     @Override
     public boolean isOpaqueCube(IBlockState state) {
@@ -59,9 +80,13 @@ public class FloatingChestBlock extends DirectedBlock implements ITileEntityProv
         return new AxisAlignedBB(0, 0, 0, 1, 8.0/16.0, 1);
     }
 
+    /*
+        NBT Items
+     */
+
     @Override
     public int quantityDropped(IBlockState state, int fortune, Random random) {
-        if (fortune > 5) {
+        if (fortune > 9) {
             return 1;
         } else {
             return 0;

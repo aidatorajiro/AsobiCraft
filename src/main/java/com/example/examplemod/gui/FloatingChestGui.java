@@ -2,20 +2,22 @@ package com.example.examplemod.gui;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.container.CalculatorContainer;
+import com.example.examplemod.container.FloatingChestContainer;
 import com.example.examplemod.tileentity.CalculatorTileEntity;
+import com.example.examplemod.tileentity.FloatingChestTileEntity;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 
-public class CalculatorGui extends GuiContainer {
+public class FloatingChestGui extends GuiContainer {
 
-    private static CalculatorTileEntity tile;
+    private static FloatingChestTileEntity tile;
 
-    private static final ResourceLocation background = new ResourceLocation(ExampleMod.MODID, "textures/gui/calculator.png");
+    private static final ResourceLocation background = new ResourceLocation(ExampleMod.MODID, "textures/gui/floatingchest.png");
 
-    public CalculatorGui(CalculatorTileEntity tileIn, CalculatorContainer container) {
+    public FloatingChestGui(FloatingChestTileEntity tileIn, FloatingChestContainer container) {
         super(container);
 
-        xSize = 253;
+        xSize = 178;
         ySize = 234;
 
         tile = tileIn;

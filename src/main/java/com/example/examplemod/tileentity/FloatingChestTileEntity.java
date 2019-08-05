@@ -1,10 +1,7 @@
 package com.example.examplemod.tileentity;
 
-import com.example.examplemod.helper.ItemHandlerHelper;
 import com.example.examplemod.itemhandler.FloatingItemStackHandler;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;

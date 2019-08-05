@@ -1,10 +1,8 @@
 package com.example.examplemod.tileentity;
 
-import com.example.examplemod.helper.ItemHandlerHelper;
 import com.example.examplemod.item.NumberItem;
 import com.example.examplemod.item.OperatorItem;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
@@ -18,7 +16,6 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
-import java.util.function.BiFunction;
 
 import static com.example.examplemod.ModObjects.numberItem;
 
@@ -67,6 +64,10 @@ public class CalculatorTileEntity extends BaseTileEntity {
 
     public ItemStackHandler getOutput () {
         return output;
+    }
+
+    public int getCurrentOperatorIndex() {
+        return current_operator;
     }
 
     @Override

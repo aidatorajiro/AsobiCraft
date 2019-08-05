@@ -10,6 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class StateManipulatorBlock extends DirectedBlock implements ITileEntityProvider {
@@ -25,10 +26,14 @@ public class StateManipulatorBlock extends DirectedBlock implements ITileEntityP
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
-            BlockPos frontPos = getFrontBlockPos(world, pos);
-            Block block = world.getBlockState(frontPos).getBlock();
-            int meta = ((StateManipulatorTileEntity) world.getTileEntity(pos)).increase();
-            world.setBlockState(frontPos, block.getStateFromMeta(meta));
+            try {
+                BlockPos frontPos = getFrontBlockPos(world, pos);
+                Block block = world.getBlockState(frontPos).getBlock();
+                int meta = ((StateManipulatorTileEntity) world.getTileEntity(pos)).increase();
+                world.setBlockState(frontPos, block.getStateFromMeta(meta));
+            } catch (Exception e) {
+                player.sendStatusMessage(new TextComponentTranslation("message.examplemod.statemanipulator", e.getMessage()), false);
+            }
         }
         return true;
     }
