@@ -9,5 +9,5 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
-script:
-  - jdk_switcher use oraclejdk8
+jdk:
+  - oraclejdk8
