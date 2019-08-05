@@ -11,7 +11,7 @@ class FloatingSlot extends Slot {
     protected FloatingItemStackHandler itemHandler;
     protected int index;
 
-    public SlotItemHandler(FloatingItemStackHandler itemHandler, int index, int xPosition, int yPosition)
+    public FloatingSlot(FloatingItemStackHandler itemHandler, int index, int xPosition, int yPosition)
     {
         super(emptyInventory, index, xPosition, yPosition);
         this.itemHandler = itemHandler;
