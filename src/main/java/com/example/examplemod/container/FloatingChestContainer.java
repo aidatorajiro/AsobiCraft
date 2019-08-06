@@ -2,6 +2,7 @@ package com.example.examplemod.container;
 
 import com.example.examplemod.tileentity.CalculatorTileEntity;
 import com.example.examplemod.tileentity.FloatingChestTileEntity;
+import com.example.examplemod.itemhandler.FloatingItemStackHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -19,8 +20,8 @@ public class FloatingChestContainer extends BaseContainer {
     }
 
     private void drawItems() {
-        IItemHandler itemHandler = this.tile.getHandler();
-        drawSlots(itemHandler, 9, 16, 9);
+        FloatingItemStackHandler itemHandler = this.tile.getHandler();
+        drawFloatingSlots(itemHandler, 9, 16, 9);
     }
 
     @Override
