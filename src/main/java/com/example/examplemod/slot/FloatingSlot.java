@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
-class FloatingSlot extends Slot {
+public class FloatingSlot extends Slot {
     private static IInventory emptyInventory = new InventoryBasic("[Null]", true, 0);
 
     protected FloatingItemStackHandler itemHandler;
