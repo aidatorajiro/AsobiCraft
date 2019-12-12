@@ -9,6 +9,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
+
+import javax.swing.plaf.basic.BasicComboBoxUI;
 
 import static net.minecraft.inventory.InventoryHelper.spawnItemStack;
 
@@ -136,5 +139,16 @@ public class ItemHelper extends net.minecraftforge.items.ItemHandlerHelper {
         for (ItemStack stack : in) {
             spawnItemStack(worldIn, x, y, z, stack.copy());
         }
+    }
+
+    public static ItemStack insertStackToHandler(IItemHandler handler, ItemStack stack) {
+        ItemStack ret = stack.copy();
+        for (int i = 0; i < handler.getSlots(); i++) {
+            ret = handler.insertItem(i, ret, false);
+            if (ret.isEmpty()) {
+                break;
+            }
+        }
+        return ret;
     }
 }
