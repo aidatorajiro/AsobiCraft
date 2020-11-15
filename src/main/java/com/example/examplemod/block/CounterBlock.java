@@ -2,54 +2,63 @@ package com.example.examplemod.block;
 
 import com.example.examplemod.item.NumberItem;
 import com.example.examplemod.tileentity.CounterTileEntity;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Stats;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.Color;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+
+import javax.annotation.Nullable;
 
 import static com.example.examplemod.ModObjects.numberItem;
 
-public class CounterBlock extends BaseBlock implements ITileEntityProvider {
+public class CounterBlock extends BaseBlock {
     public CounterBlock() {
         super();
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new CounterTileEntity();
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return return new CounterTileEntity();
     }
 
-    @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (!worldIn.isRemote) {
-            int counter = ((CounterTileEntity) worldIn.getTileEntity(pos)).increase();
-            TextComponentTranslation component = new TextComponentTranslation("message.examplemod.counter", counter);
-            component.getStyle().setColor(TextFormatting.GREEN);
-            playerIn.sendStatusMessage(component, false);
-        }
-        return true;
-    }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity entity, Hand hand, BlockRayTraceResult res) {
         if (!world.isRemote) {
-            int counter = ((CounterTileEntity) world.getTileEntity(pos)).getValue();
-            ItemStack item = new ItemStack(numberItem);
-            numberItem.setNumber(item, (double) counter);
-            world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), item));
+            int counter = ((CounterTileEntity) world.getTileEntity(pos)).increase();
+            TranslationTextComponent component = new TranslationTextComponent("message.examplemod.counter", counter);
+            component.getStyle().setColor(Color.fromInt(0x00ff00));
+            entity.sendStatusMessage(component, false);
+            return ActionResultType.CONSUME;
+        } else {
+            return ActionResultType.SUCCESS;
         }
-        super.breakBlock(world, pos, state);
+    }
+
+    @Override
+    public void spawnAdditionalDrops(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack) {
+        super.spawnAdditionalDrops( state,  world,  pos,  stack);
+        int counter = ((CounterTileEntity) world.getTileEntity(pos)).getValue();
+        ItemStack item = new ItemStack(numberItem);
+        numberItem.setNumber(item, (double) counter);
+        world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), item));
     }
 }
