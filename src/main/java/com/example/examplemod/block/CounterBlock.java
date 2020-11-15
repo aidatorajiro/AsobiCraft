@@ -36,7 +36,7 @@ public class CounterBlock extends BaseBlock {
 
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return return new CounterTileEntity();
+        return new CounterTileEntity();
     }
 
 
