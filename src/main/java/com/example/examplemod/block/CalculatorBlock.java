@@ -3,6 +3,7 @@ package com.example.examplemod.block;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.helper.BlockHelper;
 import com.example.examplemod.tileentity.CalculatorTileEntity;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,10 +20,14 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class CalculatorBlock extends BaseBlock implements ITileEntityProvider {
+public class CalculatorBlock extends BaseBlock {
     public CalculatorBlock() {
         super();
-        this.setTickRandomly(true);
+    }
+
+    @Override
+    public boolean ticksRandomly(BlockState p_149653_1_) {
+        return true;
     }
 
     /*

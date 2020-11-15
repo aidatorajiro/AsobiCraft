@@ -5,7 +5,6 @@ import net.minecraft.block.material.Material;
 
 public abstract class BaseBlock extends Block {
     public BaseBlock() {
-        super(Material.ROCK);
-        this.setHardness(1.0F);
+        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0f, 1.0f));
     }
 }
