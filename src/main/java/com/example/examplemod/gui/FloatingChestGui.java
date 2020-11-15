@@ -5,6 +5,7 @@ import com.example.examplemod.container.CalculatorContainer;
 import com.example.examplemod.container.FloatingChestContainer;
 import com.example.examplemod.tileentity.CalculatorTileEntity;
 import com.example.examplemod.tileentity.FloatingChestTileEntity;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 
@@ -32,6 +33,7 @@ public class FloatingChestGui extends GuiContainer {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
         renderHoveredToolTip(mouseX, mouseY);
+        drawCenteredString(fontRenderer, String.valueOf(tile.getHandler().getStackInSlotFloating(0).getStackSize()), 10, 10, 0x000000);
     }
 
     @Override

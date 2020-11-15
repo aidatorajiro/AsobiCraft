@@ -22,6 +22,7 @@ public class FloatingChestContainer extends BaseContainer {
     }
 
     private void drawItems() {
+
     }
 
     @Override
