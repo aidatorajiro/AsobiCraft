@@ -112,7 +112,7 @@ public class CalculatorBlock extends BaseBlock {
     /*
         NBT Items
      */
-    
+
     //@Override  TODO
     //public int quantityDropped(IBlockState state, int fortune, Random random) {
     //    if (fortune > 9) {
