@@ -1,6 +1,7 @@
 package com.example.examplemod.item;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
@@ -17,10 +18,6 @@ import com.example.examplemod.ModObjects;
 import net.minecraftforge.fml.common.Mod;
 
 public class NumberItem extends BaseItem {
-    public NumberItem () {
-        super();
-    }
-
     public double getNumber(ItemStack stack) {
         CompoundNBT nbt = stack.getTag();
         if (nbt == null) {

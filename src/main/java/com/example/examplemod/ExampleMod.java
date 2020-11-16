@@ -2,15 +2,19 @@ package com.example.examplemod;
 
 import com.example.examplemod.block.BaseBlock;
 import com.example.examplemod.item.BaseItem;
+import com.example.examplemod.tileentity.BaseTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
@@ -20,9 +24,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
-import static com.example.examplemod.ModObjects.itemGroupExampleMod;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ExampleMod.MODID)
@@ -88,22 +91,32 @@ public class ExampleMod
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         @SubscribeEvent
-        public static void blocks(final RegistryEvent.Register<Block> blockRegistryEvent) {
+        public static void registerBlocks(final RegistryEvent.Register<Block> event) {
             // register a new block here
             LOGGER.info("HELLO from Register Block");
             for (BaseBlock block : ModObjects.blocks) {
-                blockRegistryEvent.getRegistry().register(block);
+                event.getRegistry().register(block);
             }
         }
         @SubscribeEvent
-        public static void items(final RegistryEvent.Register<Item> itemRegistryEvent) {
+        public static void registerTileEntities(final RegistryEvent.Register<TileEntityType<?>> event) {
+            // register a new block here
+            LOGGER.info("HELLO from Register Tile Entity");
+            for (int i = 0; i < ModObjects.tileEntityTypes.size(); i++) {
+                TileEntityType<?extends BaseTileEntity> entityType = ModObjects.tileEntityTypes.get(i);
+                entityType.setRegistryName(ExampleMod.MODID, ModObjects.tileEntityNames.get(i));
+                event.getRegistry().register(entityType);
+            }
+        }
+        @SubscribeEvent
+        public static void registerItems(final RegistryEvent.Register<Item> event) {
             // register a new block here
             LOGGER.info("HELLO from Register Item");
             for (BaseBlock block : ModObjects.blocks) {
-                itemRegistryEvent.getRegistry().register(new BlockItem(block, new Item.Properties().group(itemGroupExampleMod)).setRegistryName(block.getRegistryName()));
+                event.getRegistry().register(new BlockItem(block, new Item.Properties().group(ModObjects.itemGroupExampleMod)).setRegistryName(block.getRegistryName()));
             }
             for (BaseItem item : ModObjects.items) {
-                itemRegistryEvent.getRegistry().register(item);
+                event.getRegistry().register(item);
             }
         }
     }

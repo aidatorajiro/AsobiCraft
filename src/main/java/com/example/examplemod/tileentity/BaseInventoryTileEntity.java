@@ -1,21 +1,24 @@
 package com.example.examplemod.tileentity;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityType;
 
 public abstract class BaseInventoryTileEntity extends BaseTileEntity implements IInventory {
+    public BaseInventoryTileEntity(TileEntityType<?> type) { super(type); }
+
     @Override
-    public boolean isUsableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(PlayerEntity player) {
         return canInteractWith(player);
     }
 
     @Override
-    public void openInventory(EntityPlayer player) {
+    public void openInventory(PlayerEntity player) {
     }
 
     @Override
-    public void closeInventory(EntityPlayer player) {
+    public void closeInventory(PlayerEntity player) {
     }
 
     @Override
@@ -23,6 +26,7 @@ public abstract class BaseInventoryTileEntity extends BaseTileEntity implements 
         return true;
     }
 
+    /*
     @Override
     public int getField(int id) {
         return 0;
@@ -39,5 +43,5 @@ public abstract class BaseInventoryTileEntity extends BaseTileEntity implements 
     @Override
     public boolean hasCustomName() {
         return false;
-    }
+    }*/
 }

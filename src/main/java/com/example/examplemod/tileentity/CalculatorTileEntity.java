@@ -7,6 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagInt;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -21,7 +22,7 @@ import java.util.Random;
 
 import static com.example.examplemod.ModObjects.numberItem;
 
-public class CalculatorTileEntity extends BaseTileEntity {
+public class CalculatorTileEntity extends BaseTileEntity implements ITickableTileEntity {
     public int INPUT_SIZE = 16;
     public int OUTPUT_SIZE = 48;
     public int current_operator = 0;

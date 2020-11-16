@@ -1,5 +1,7 @@
 package com.example.examplemod.item;
 
+import net.minecraft.item.Item;
+
 import java.util.function.BiFunction;
 
 public class OperatorItem extends BaseItem {

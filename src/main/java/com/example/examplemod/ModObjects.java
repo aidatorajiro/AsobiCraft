@@ -9,24 +9,29 @@ import com.example.examplemod.item.OperatorItem;
 import com.example.examplemod.recipe.IBlockPatternRecipe;
 import com.example.examplemod.recipe.BlockPatternRecipePlane;
 import com.example.examplemod.tileentity.*;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.MinecraftForge;
 
+import javax.management.AttributeList;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * A registry for mod objects.
  */
 public class ModObjects {
     public static List<BaseBlock> blocks = new ArrayList();
-    public static List<Class<?extends BaseTileEntity>> tileEntities = new ArrayList();
+    public static List<TileEntityType<?extends BaseTileEntity>> tileEntityTypes = new ArrayList();
     public static List<String> tileEntityNames = new ArrayList();
     public static List<BaseItem> items = new ArrayList();
     public static List<IBlockPatternRecipe> pickupRecipes = new ArrayList();
@@ -81,23 +86,23 @@ public class ModObjects {
 
         counterBlock = new CounterBlock();
         registerBlock(counterBlock, "counterBlock");
-        registerTileEntity(CounterTileEntity.class, "counterTileEntity");
+        registerTileEntity(CounterTileEntity::new, "counterTileEntity", counterBlock);
 
         stateManipulatorBlock = new StateManipulatorBlock();
         registerBlock(stateManipulatorBlock, "stateManipulatorBlock");
-        registerTileEntity(StateManipulatorTileEntity.class, "stateManipulatorTileEntity");
+        registerTileEntity(StateManipulatorTileEntity::new, "stateManipulatorTileEntity", stateManipulatorBlock);
 
         calculatorBlock = new CalculatorBlock();
         registerBlock(calculatorBlock, "calculatorBlock");
-        registerTileEntity(CalculatorTileEntity.class, "calculatorTileEntity");
+        registerTileEntity(CalculatorTileEntity::new, "calculatorTileEntity", calculatorBlock);
 
         floatingChestBlock = new FloatingChestBlock();
         registerBlock(floatingChestBlock, "floatingChestBlock");
-        registerTileEntity(FloatingChestTileEntity.class, "floatingChestTileEntity");
+        registerTileEntity(FloatingChestTileEntity::new, "floatingChestTileEntity", floatingChestBlock);
 
         pointerBlock = new PointerBlock();
         registerBlock(pointerBlock, "pointerBlock");
-        registerTileEntity(PointerTileEntity.class, "pointerTileEntity");
+        registerTileEntity(PointerTileEntity::new, "pointerTileEntity", pointerBlock);
 
         // Register EventHandler
         MinecraftForge.EVENT_BUS.register(new BlockPatternRecipeEventHandler());
@@ -147,11 +152,12 @@ public class ModObjects {
 
     /**
      * Register a tile entity to ModObjects.
-     * @param tileEntityClass A tile entity instance to add.
+     * @param factoryIn A generator of tile entity to add.
      * @param id Unique identifier for the tile entity.
+     * @param blocks Blocks for the tile entity.
      */
-    private static void registerTileEntity(Class<?extends BaseTileEntity> tileEntityClass, String id) {
-        tileEntities.add(tileEntityClass);
+    private static void registerTileEntity(Supplier<? extends BaseTileEntity> factoryIn, String id, Block... blocks) {
+        tileEntityTypes.add(TileEntityType.Builder.create(factoryIn, blocks).build(null));
         tileEntityNames.add(id);
     }
 }
