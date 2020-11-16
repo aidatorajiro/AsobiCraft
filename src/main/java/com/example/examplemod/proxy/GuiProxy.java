@@ -1,3 +1,5 @@
+/*
+
 package com.example.examplemod.proxy;
 
 import com.example.examplemod.container.CalculatorContainer;
@@ -43,3 +45,4 @@ public class GuiProxy implements IGuiHandler {
         return null;
     }
 }
+*/

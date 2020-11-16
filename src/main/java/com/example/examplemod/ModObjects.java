@@ -9,7 +9,6 @@ import com.example.examplemod.item.OperatorItem;
 import com.example.examplemod.recipe.IBlockPatternRecipe;
 import com.example.examplemod.recipe.BlockPatternRecipePlane;
 import com.example.examplemod.tileentity.*;
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -42,6 +41,12 @@ public class ModObjects {
             return new ItemStack(adbmalItem);
         }
     };
+
+    public static TileEntityType<?extends BaseTileEntity> counterType;
+    public static TileEntityType<?extends BaseTileEntity> stateManipulatorType;
+    public static TileEntityType<?extends BaseTileEntity> calculatorType;
+    public static TileEntityType<?extends BaseTileEntity> floatingChestType;
+    public static TileEntityType<?extends BaseTileEntity> pointerType;
 
     public static ExampleBlock exampleBlock;
     public static CounterBlock counterBlock;
@@ -86,23 +91,28 @@ public class ModObjects {
 
         counterBlock = new CounterBlock();
         registerBlock(counterBlock, "counterBlock");
-        registerTileEntity(CounterTileEntity::new, "counterTileEntity", counterBlock);
+        counterType = generateType(CounterTileEntity::new, counterBlock);
+        registerTileEntity(counterType, "counterTileEntity");
 
         stateManipulatorBlock = new StateManipulatorBlock();
         registerBlock(stateManipulatorBlock, "stateManipulatorBlock");
-        registerTileEntity(StateManipulatorTileEntity::new, "stateManipulatorTileEntity", stateManipulatorBlock);
+        stateManipulatorType = generateType(StateManipulatorTileEntity::new, stateManipulatorBlock);
+        registerTileEntity(stateManipulatorType, "stateManipulatorTileEntity");
 
         calculatorBlock = new CalculatorBlock();
         registerBlock(calculatorBlock, "calculatorBlock");
-        registerTileEntity(CalculatorTileEntity::new, "calculatorTileEntity", calculatorBlock);
+        calculatorType = generateType(CalculatorTileEntity::new, calculatorBlock);
+        registerTileEntity(calculatorType, "calculatorTileEntity");
 
         floatingChestBlock = new FloatingChestBlock();
         registerBlock(floatingChestBlock, "floatingChestBlock");
-        registerTileEntity(FloatingChestTileEntity::new, "floatingChestTileEntity", floatingChestBlock);
+        floatingChestType = generateType(FloatingChestTileEntity::new, floatingChestBlock);
+        registerTileEntity(floatingChestType, "floatingChestTileEntity");
 
         pointerBlock = new PointerBlock();
         registerBlock(pointerBlock, "pointerBlock");
-        registerTileEntity(PointerTileEntity::new, "pointerTileEntity", pointerBlock);
+        pointerType = generateType(PointerTileEntity::new, pointerBlock);
+        registerTileEntity(pointerType, "pointerTileEntity");
 
         // Register EventHandler
         MinecraftForge.EVENT_BUS.register(new BlockPatternRecipeEventHandler());
@@ -126,6 +136,10 @@ public class ModObjects {
                         Ingredient.fromItems(Items.GLASS),
                         Ingredient.fromItems(Items.GLASS))
         ));
+    }
+
+    private static TileEntityType<?extends BaseTileEntity> generateType (Supplier<? extends BaseTileEntity> factoryIn, BaseBlock... blocks) {
+        return TileEntityType.Builder.create(factoryIn, blocks).build(null);
     }
 
     /**
@@ -152,12 +166,11 @@ public class ModObjects {
 
     /**
      * Register a tile entity to ModObjects.
-     * @param factoryIn A generator of tile entity to add.
+     * @param tileEntityType A tile entity type to add.
      * @param id Unique identifier for the tile entity.
-     * @param blocks Blocks for the tile entity.
      */
-    private static void registerTileEntity(Supplier<? extends BaseTileEntity> factoryIn, String id, Block... blocks) {
-        tileEntityTypes.add(TileEntityType.Builder.create(factoryIn, blocks).build(null));
+    private static void registerTileEntity(TileEntityType<?extends BaseTileEntity> tileEntityType, String id) {
+        tileEntityTypes.add(tileEntityType);
         tileEntityNames.add(id);
     }
 }

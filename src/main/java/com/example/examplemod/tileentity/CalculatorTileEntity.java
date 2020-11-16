@@ -3,16 +3,15 @@ package com.example.examplemod.tileentity;
 import com.example.examplemod.item.NumberItem;
 import com.example.examplemod.item.OperatorItem;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.ChestBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -20,9 +19,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
+import static com.example.examplemod.ModObjects.calculatorType;
 import static com.example.examplemod.ModObjects.numberItem;
 
-public class CalculatorTileEntity extends BaseTileEntity implements ITickableTileEntity {
+public class CalculatorTileEntity extends BaseTileEntity implements ITickableTileEntity, ICapabilityProvider {
     public int INPUT_SIZE = 16;
     public int OUTPUT_SIZE = 48;
     public int current_operator = 0;
@@ -61,6 +61,10 @@ public class CalculatorTileEntity extends BaseTileEntity implements ITickableTil
         }
     };
 
+    public CalculatorTileEntity() {
+        super(calculatorType);
+    }
+
     public ItemStackHandler getInput () {
         return input;
     }
@@ -73,48 +77,50 @@ public class CalculatorTileEntity extends BaseTileEntity implements ITickableTil
         return current_operator;
     }
 
+
     @Override
-    public void readFromNBT(CompoundNBT compound) {
-        super.readFromNBT(compound);
-        if (compound.hasKey("input")) {
-            input.deserializeNBT((CompoundNBT) compound.getTag("input"));
+    public void read(BlockState state, CompoundNBT compound) {
+        super.read(state, compound);
+        if (compound.contains("input")) {
+            input.deserializeNBT((CompoundNBT) compound.getCompound("input"));
         }
-        if (compound.hasKey("output")) {
-            output.deserializeNBT((CompoundNBT) compound.getTag("output"));
+        if (compound.contains("output")) {
+            output.deserializeNBT((CompoundNBT) compound.getCompound("output"));
         }
-        if (compound.hasKey("current_operator")) {
-            current_operator = compound.getInteger("current_operator");
+        if (compound.contains("current_operator")) {
+            current_operator = compound.getInt("current_operator");
         }
     }
 
     @Override
-    public CompoundNBT writeToNBT(CompoundNBT compound) {
-        super.writeToNBT(compound);
-        compound.setTag("input", input.serializeNBT());
-        compound.setTag("output", output.serializeNBT());
-        compound.setTag("current_operator", new NBTTagInt(current_operator));
+    public CompoundNBT write(CompoundNBT compound) {
+        super.write(compound);
+        compound.put("input", input.serializeNBT());
+        compound.put("output", output.serializeNBT());
+        compound.putInt("current_operator", current_operator);
         return compound;
     }
 
+    /* TODO
     @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-        if (facing == EnumFacing.UP && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+    public boolean hasCapability(Capability<?> capability, @Nullable Direction facing) {
+        if (facing == Direction.UP && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return true;
         }
-        if (facing == EnumFacing.DOWN && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (facing == Direction.DOWN && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return true;
         }
         return super.hasCapability(capability, facing);
-    }
+    }*/
 
     @Nullable
     @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        if (facing == EnumFacing.UP && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return (T)input;
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
+        if (facing == Direction.UP && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            return LazyOptional.of(() -> input).cast();
         }
-        if (facing == EnumFacing.DOWN && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return (T)output;
+        if (facing == Direction.DOWN && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            return LazyOptional.of(() -> output).cast();
         }
         return super.getCapability(capability, facing);
     }
@@ -128,7 +134,8 @@ public class CalculatorTileEntity extends BaseTileEntity implements ITickableTil
         return true;
     }
 
-    public void updateTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+    @Override
+    public void tick() {
         if (!canCalculate()) {
             return;
         }

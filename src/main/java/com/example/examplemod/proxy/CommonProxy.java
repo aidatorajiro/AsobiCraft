@@ -1,3 +1,5 @@
+/*
+
 package com.example.examplemod.proxy;
 
 import com.example.examplemod.ExampleMod;
@@ -45,3 +47,4 @@ public class CommonProxy {
         }
     }
 }
+*/

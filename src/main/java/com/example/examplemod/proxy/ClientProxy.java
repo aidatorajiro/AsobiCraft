@@ -1,3 +1,4 @@
+/*
 package com.example.examplemod.proxy;
 
 import com.example.examplemod.ModObjects;
@@ -30,3 +31,4 @@ public class ClientProxy extends CommonProxy {
         }
     }
 }
+ */

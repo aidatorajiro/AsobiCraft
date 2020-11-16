@@ -1,11 +1,17 @@
 package com.example.examplemod.tileentity;
 
-import net.minecraft.entity.player.EntityPlayer;
+import com.example.examplemod.ModObjects;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 
 public class CounterTileEntity extends BaseTileEntity {
     private int counter = 0;
+
+    public CounterTileEntity() {
+        super(ModObjects.counterType);
+    }
 
     public int increase () {
         counter++;
@@ -18,15 +24,15 @@ public class CounterTileEntity extends BaseTileEntity {
     }
 
     @Override
-    public void readFromNBT(CompoundNBT compound) {
-        super.readFromNBT(compound);
-        counter = compound.getInteger("counter");
+    public void read(BlockState state, CompoundNBT compound) {
+        super.read(state, compound);
+        counter = compound.getInt("counter");
     }
 
     @Override
-    public CompoundNBT writeToNBT(CompoundNBT compound) {
-        super.writeToNBT(compound);
-        compound.setInteger("counter", counter);
+    public CompoundNBT write(CompoundNBT compound) {
+        super.write(compound);
+        compound.putInt("counter", counter);
         return compound;
     }
 }

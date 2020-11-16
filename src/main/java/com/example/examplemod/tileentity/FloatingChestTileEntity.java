@@ -1,9 +1,13 @@
 package com.example.examplemod.tileentity;
 
+import com.example.examplemod.ModObjects;
 import com.example.examplemod.itemhandler.FloatingItemStackHandler;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
@@ -18,39 +22,44 @@ public class FloatingChestTileEntity extends BaseTileEntity {
         }
     };
 
+    public FloatingChestTileEntity() {
+        super(ModObjects.floatingChestType);
+    }
+
     public FloatingItemStackHandler getHandler() {
         return handler;
     }
 
     @Nullable
     @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return (T)handler;
+            return LazyOptional.of(() -> handler).cast();
         }
         return super.getCapability(capability, facing);
     }
 
+    /* TODO
     @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(Capability<?> capability, @Nullable Direction facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return true;
         }
         return super.hasCapability(capability, facing);
-    }
+    }*/
 
     @Override
-    public void readFromNBT(CompoundNBT compound) {
-        super.readFromNBT(compound);
-        if (compound.hasKey("chest")) {
-            handler.deserializeNBT((CompoundNBT) compound.getTag("chest"));
+    public void read(BlockState state, CompoundNBT compound) {
+        super.read(state, compound);
+        if (compound.contains("chest")) {
+            handler.deserializeNBT(compound.getCompound("chest"));
         }
     }
 
     @Override
-    public CompoundNBT writeToNBT(CompoundNBT compound) {
-        super.writeToNBT(compound);
-        compound.setTag("chest", handler.serializeNBT());
+    public CompoundNBT write(CompoundNBT compound) {
+        super.write(compound);
+        compound.put("chest", handler.serializeNBT());
         return compound;
     }
 }
