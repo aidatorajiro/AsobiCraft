@@ -1,6 +1,6 @@
 package com.example.examplemod.helper;
 
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -22,7 +22,7 @@ public class WorldHelper {
         d3 = d3 * d7;
         d4 = d4 * d7;
         d5 = d5 * d7;
-        world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, (d0 + centerX) / 2.0D, (d1 + centerY) / 2.0D, (d2 + centerZ) / 2.0D, d3, d4, d5);
-        world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, d3, d4, d5);
+        world.addParticle(ParticleTypes.EXPLOSION, (d0 + centerX) / 2.0D, (d1 + centerY) / 2.0D, (d2 + centerZ) / 2.0D, d3, d4, d5);
+        world.addParticle(ParticleTypes.SMOKE, d0, d1, d2, d3, d4, d5);
     }
 }

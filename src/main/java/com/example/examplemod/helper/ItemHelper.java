@@ -47,22 +47,22 @@ public class ItemHelper extends net.minecraftforge.items.ItemHandlerHelper {
 
     public static ItemStack getStackInSlotMerged(int prev_index, IItemHandler... handlers) {
         Tuple<IItemHandler, Integer> t = getMergedHandler(prev_index, handlers);
-        IItemHandler handler = t.getFirst();
-        int index = t.getSecond();
+        IItemHandler handler = t.getA();
+        int index = t.getB();
         return handler.getStackInSlot(index);
     }
 
     public static ItemStack extractItemMerged(int prev_index, int num, boolean simulate, IItemHandler... handlers) {
         Tuple<IItemHandler, Integer> t = getMergedHandler(prev_index, handlers);
-        IItemHandler handler = t.getFirst();
-        int index = t.getSecond();
+        IItemHandler handler = t.getA();
+        int index = t.getB();
         return handler.extractItem(index, num, simulate);
     }
 
     public static ItemStack clearSlotMerged(int prev_index, IItemHandlerModifiable... handlers) {
         Tuple<IItemHandler, Integer> t = getMergedHandler(prev_index, handlers);
-        IItemHandlerModifiable handler = (IItemHandlerModifiable) t.getFirst();
-        int index = t.getSecond();
+        IItemHandlerModifiable handler = (IItemHandlerModifiable) t.getA();
+        int index = t.getB();
         ItemStack copy = handler.getStackInSlot(index).copy();
         handler.setStackInSlot(index, ItemStack.EMPTY);
         return copy;
@@ -70,15 +70,15 @@ public class ItemHelper extends net.minecraftforge.items.ItemHandlerHelper {
 
     public static void setSlotMerged(int prev_index, ItemStack itemStack, IItemHandlerModifiable... handlers) {
         Tuple<IItemHandler, Integer> t = getMergedHandler(prev_index, handlers);
-        IItemHandlerModifiable handler = (IItemHandlerModifiable)  t.getFirst();
-        int index = t.getSecond();
+        IItemHandlerModifiable handler = (IItemHandlerModifiable)  t.getA();
+        int index = t.getB();
         handler.setStackInSlot(index, itemStack.copy());
     }
 
     public static boolean isItemValidMerged(int prev_index, ItemStack itemStack, IItemHandler... handlers) {
         Tuple<IItemHandler, Integer> t = getMergedHandler(prev_index, handlers);
-        IItemHandler handler = t.getFirst();
-        int index = t.getSecond();
+        IItemHandler handler = t.getA();
+        int index = t.getB();
         return handler.isItemValid(index, itemStack);
     }
 
@@ -89,7 +89,7 @@ public class ItemHelper extends net.minecraftforge.items.ItemHandlerHelper {
 
     public static void dropHandlerItems(World worldIn, Entity entityAt, IItemHandler handler)
     {
-        dropHandlerItems(worldIn, entityAt.posX, entityAt.posY, entityAt.posZ, handler);
+        dropHandlerItems(worldIn, entityAt.getPosX(), entityAt.getPosY(), entityAt.getPosZ(), handler);
     }
 
     /**
@@ -128,7 +128,7 @@ public class ItemHelper extends net.minecraftforge.items.ItemHandlerHelper {
 
     public static void dropStackList(World worldIn, Entity entityAt, NonNullList<ItemStack> in)
     {
-        dropStackList(worldIn, entityAt.posX, entityAt.posY, entityAt.posZ, in);
+        dropStackList(worldIn, entityAt.getPosX(), entityAt.getPosY(), entityAt.getPosZ(), in);
     }
 
     /**

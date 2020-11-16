@@ -1,9 +1,10 @@
 package com.example.examplemod.item;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -20,25 +21,25 @@ public class NumberItem extends BaseItem {
     }
 
     public double getNumber(ItemStack stack) {
-        NBTTagCompound nbt = stack.getTagCompound();
+        CompoundNBT nbt = stack.getTag();
         if (nbt == null) {
-            nbt = new NBTTagCompound();
-            stack.setTagCompound(nbt);
+            nbt = new CompoundNBT();
+            stack.setTag(nbt);
         }
-        if (!nbt.hasKey("number")) {
-            nbt.setDouble("number", 0);
+        if (!nbt.contains("number")) {
+            nbt.putDouble("number", 0);
         }
-        if (!nbt.hasKey("isNaN")) {
-            nbt.setBoolean("isNaN", false);
+        if (!nbt.contains("isNaN")) {
+            nbt.putBoolean("isNaN", false);
         }
         if (Double.isNaN(nbt.getDouble("number"))) {
-            nbt.setDouble("number", 0);
-            nbt.setBoolean("isNaN", true);
+            nbt.putDouble("number", 0);
+            nbt.putBoolean("isNaN", true);
         }
-        if (nbt.getBoolean("isNaN") == true && nbt.getDouble("number") != 0) {
-            nbt.setDouble("number", 0);
+        if (nbt.getBoolean("isNaN") && nbt.getDouble("number") != 0) {
+            nbt.putDouble("number", 0);
         }
-        if (nbt.getBoolean("isNaN") == true) {
+        if (nbt.getBoolean("isNaN")) {
             return Double.NaN;
         } else {
             return nbt.getDouble("number");
@@ -46,17 +47,17 @@ public class NumberItem extends BaseItem {
     }
 
     public void setNumber(ItemStack stack, double number) {
-        NBTTagCompound nbt = stack.getTagCompound();
+        CompoundNBT nbt = stack.getTag();
         if (nbt == null) {
-            nbt = new NBTTagCompound();
-            stack.setTagCompound(nbt);
+            nbt = new CompoundNBT();
+            stack.setTag(nbt);
         }
         if (Double.isNaN(number)) {
-            nbt.setDouble("number", 0);
-            nbt.setBoolean("isNaN", true);
+            nbt.putDouble("number", 0);
+            nbt.putBoolean("isNaN", true);
         } else {
-            nbt.setDouble("number", number);
-            nbt.setBoolean("isNaN", false);
+            nbt.putDouble("number", number);
+            nbt.putBoolean("isNaN", false);
         }
     }
 
@@ -71,9 +72,9 @@ public class NumberItem extends BaseItem {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         double num = getNumber(stack);
-        tooltip.add("Stored number: " + num);
+        tooltip.add(new TranslationTextComponent("message.examplemod.statemanipulator", num));
     }
 }

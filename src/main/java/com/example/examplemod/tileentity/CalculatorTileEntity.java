@@ -5,7 +5,7 @@ import com.example.examplemod.item.OperatorItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -73,13 +73,13 @@ public class CalculatorTileEntity extends BaseTileEntity {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(CompoundNBT compound) {
         super.readFromNBT(compound);
         if (compound.hasKey("input")) {
-            input.deserializeNBT((NBTTagCompound) compound.getTag("input"));
+            input.deserializeNBT((CompoundNBT) compound.getTag("input"));
         }
         if (compound.hasKey("output")) {
-            output.deserializeNBT((NBTTagCompound) compound.getTag("output"));
+            output.deserializeNBT((CompoundNBT) compound.getTag("output"));
         }
         if (compound.hasKey("current_operator")) {
             current_operator = compound.getInteger("current_operator");
@@ -87,7 +87,7 @@ public class CalculatorTileEntity extends BaseTileEntity {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public CompoundNBT writeToNBT(CompoundNBT compound) {
         super.writeToNBT(compound);
         compound.setTag("input", input.serializeNBT());
         compound.setTag("output", output.serializeNBT());

@@ -2,15 +2,16 @@ package com.example.examplemod.itemstack;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.INBTSerializable;
 
-public class FloatingItemStack implements INBTSerializable<NBTTagCompound> {
+public class FloatingItemStack implements INBTSerializable<CompoundNBT> {
     public static final FloatingItemStack EMPTY = new FloatingItemStack(ItemStack.EMPTY, 0);
     protected ItemStack itemStack;
     protected double stackSize;
 
-    public FloatingItemStack(NBTTagCompound nbt) {
+    public FloatingItemStack(CompoundNBT nbt) {
         deserializeNBT(nbt);
     }
 
@@ -54,22 +55,23 @@ public class FloatingItemStack implements INBTSerializable<NBTTagCompound> {
         return this;
     }
 
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-        nbt.setTag("itemStack", this.itemStack.serializeNBT());
-        nbt.setDouble("stackSize", this.stackSize);
+    public CompoundNBT writeToNBT(CompoundNBT nbt) {
+        nbt.put("itemStack", this.itemStack.serializeNBT());
+        nbt.putDouble("stackSize", this.stackSize);
         return nbt;
     }
 
     @Override
-    public NBTTagCompound serializeNBT() {
-        NBTTagCompound nbt = new NBTTagCompound();
+    public CompoundNBT serializeNBT() {
+        CompoundNBT nbt = new CompoundNBT();
         writeToNBT(nbt);
         return nbt;
     }
 
     @Override
-    public void deserializeNBT(NBTTagCompound nbt) {
-        this.itemStack = nbt.hasKey("itemStack") ? new ItemStack(nbt.getCompoundTag("itemStack")) : ItemStack.EMPTY;
-        this.stackSize = nbt.hasKey("stackSize") ? nbt.getDouble("stackSize") : 0.0;
+    public void deserializeNBT(CompoundNBT nbt) {
+        final ItemStack itemStack = ItemStack.read(nbt.getCompound("itemStack"));
+        this.itemStack = nbt.contains("itemStack") ? itemStack : ItemStack.EMPTY;
+        this.stackSize = nbt.contains("stackSize") ? nbt.getDouble("stackSize") : 0.0;
     }
 }

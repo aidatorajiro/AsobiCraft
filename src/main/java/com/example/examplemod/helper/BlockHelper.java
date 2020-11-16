@@ -2,13 +2,11 @@ package com.example.examplemod.helper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.stats.Stats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -41,10 +39,10 @@ public class BlockHelper {
      */
     public static void spawnTE(World worldIn, BlockPos pos, Block block) {
         ItemStack stack = new ItemStack(Item.getItemFromBlock(block));
-        NBTTagCompound entityTag = worldIn.getTileEntity(pos).serializeNBT();
-        entityTag.removeTag("x");
-        entityTag.removeTag("y");
-        entityTag.removeTag("z");
+        CompoundNBT entityTag = worldIn.getTileEntity(pos).serializeNBT();
+        entityTag.remove("x");
+        entityTag.remove("y");
+        entityTag.remove("z");
         stack.setTagInfo("tileNBT", entityTag);
         spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack);
     }
@@ -57,11 +55,11 @@ public class BlockHelper {
      */
     public static void restoreTE(World worldIn, BlockPos pos, ItemStack stack) {
         TileEntity tile = worldIn.getTileEntity(pos);
-        NBTTagCompound compound = stack.getSubCompound("tileNBT");
+        CompoundNBT compound = stack.getChildTag("tileNBT");
         if (compound != null) {
-            NBTTagCompound orig = tile.serializeNBT();
+            CompoundNBT orig = tile.serializeNBT();
             orig.merge(compound);
-            tile.readFromNBT(orig);
+            tile.read(worldIn.getBlockState(pos), orig);
         }
     }
 }

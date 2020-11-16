@@ -4,6 +4,6 @@ import net.minecraft.item.Item;
 
 public abstract class BaseItem extends Item {
     public BaseItem () {
-        super();
+        super(new Item.Properties());
     }
 }

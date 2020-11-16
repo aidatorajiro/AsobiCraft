@@ -1,7 +1,7 @@
 package com.example.examplemod.tileentity;
 
 import com.example.examplemod.itemhandler.FloatingItemStackHandler;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -40,15 +40,15 @@ public class FloatingChestTileEntity extends BaseTileEntity {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(CompoundNBT compound) {
         super.readFromNBT(compound);
         if (compound.hasKey("chest")) {
-            handler.deserializeNBT((NBTTagCompound) compound.getTag("chest"));
+            handler.deserializeNBT((CompoundNBT) compound.getTag("chest"));
         }
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public CompoundNBT writeToNBT(CompoundNBT compound) {
         super.writeToNBT(compound);
         compound.setTag("chest", handler.serializeNBT());
         return compound;
