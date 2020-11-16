@@ -1,23 +1,26 @@
 package com.example.examplemod.recipe;
 
 import com.example.examplemod.helper.ItemHelper;
-import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.common.crafting.CraftingHelper.ShapedPrimer;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 
-public class BlockPatternRecipePlane extends IForgeRegistryEntry.Impl<IRecipe> implements IBlockPatternRecipe, IShapedRecipe {
+public class BlockPatternRecipePlane implements IForgeRegistryEntry<IRecipe>, IBlockPatternRecipe, IShapedRecipe {
     protected Item triggerItem;
     protected int itemPosX;
     protected int itemPosY;
@@ -26,14 +29,52 @@ public class BlockPatternRecipePlane extends IForgeRegistryEntry.Impl<IRecipe> i
     protected int width;
     protected int height;
     protected NonNullList<Ingredient> triggerBlocks;
+    protected ResourceLocation resourceLocation;
 
-    public BlockPatternRecipePlane(Item triggerItem, int itemPosX, int itemPosY, int itemPosZ, NonNullList<ItemStack> output, Object... recipe) {
-        this(triggerItem, itemPosX, itemPosY, itemPosZ, output, CraftingHelper.parseShaped(recipe));
+    @Override
+    public IRecipe setRegistryName(ResourceLocation name) {
+        resourceLocation = name;
+        return this;
     }
 
-    public BlockPatternRecipePlane(Item triggerItem, int itemPosX, int itemPosY, int itemPosZ, NonNullList<ItemStack> output, ShapedPrimer primer) {
-        this(triggerItem, itemPosX, itemPosY, itemPosZ, output, primer.width, primer.height, primer.input);
+    @Override
+    public ResourceLocation getId() {
+        return resourceLocation;
     }
+
+    @Override
+    public IRecipeSerializer<?> getSerializer() {
+        return IRecipeSerializer.CRAFTING_SHAPED;
+    }
+
+    @Override
+    public IRecipeType<?> getType() {
+        return IRecipeType.CRAFTING;
+    }
+
+    @Nullable
+    @Override
+    public ResourceLocation getRegistryName() {
+        return resourceLocation;
+    }
+
+    @Override
+    public Class<IRecipe> getRegistryType() {
+        return null;
+    }
+
+    @Override
+    public String getGroup() {
+        return "pickup_recipe";
+    }
+
+    //public BlockPatternRecipePlane(Item triggerItem, int itemPosX, int itemPosY, int itemPosZ, NonNullList<ItemStack> output, Object... recipe) {
+    //    this(triggerItem, itemPosX, itemPosY, itemPosZ, output, CraftingHelper.parseShaped(recipe));
+    //}
+
+    //public BlockPatternRecipePlane(Item triggerItem, int itemPosX, int itemPosY, int itemPosZ, NonNullList<ItemStack> output, ShapedPrimer primer) {
+    //    this(triggerItem, itemPosX, itemPosY, itemPosZ, output, primer.width, primer.height, primer.input);
+    //}
 
     public BlockPatternRecipePlane(Item triggerItem, int itemPosX, int itemPosY, int itemPosZ, NonNullList<ItemStack> output, int width, int height, NonNullList<Ingredient> triggerBlocks) {
         this.width = width;
@@ -104,7 +145,7 @@ public class BlockPatternRecipePlane extends IForgeRegistryEntry.Impl<IRecipe> i
                 int index = i + width*j;
                 Item itemBlock = Item.getItemFromBlock(world.getBlockState(currentPos).getBlock());
                 matchBlocks.add(currentPos);
-                if (!triggerBlocks.get(index).apply(new ItemStack(itemBlock))) {
+                if (!triggerBlocks.get(index).test(new ItemStack(itemBlock))) {
                     return new Tuple(false, null);
                 }
             }
@@ -114,12 +155,12 @@ public class BlockPatternRecipePlane extends IForgeRegistryEntry.Impl<IRecipe> i
     }
 
     @Override
-    public boolean matches(InventoryCrafting inv, World worldIn) {
+    public boolean matches(IInventory inv, World worldIn) {
         return false;
     }
 
     @Override
-    public ItemStack getCraftingResult(InventoryCrafting inv) {
+    public ItemStack getCraftingResult(IInventory inv) {
         return null;
     }
 
