@@ -19,6 +19,11 @@ public class PointerBlock extends DirectedBlock {
         Tile entity
      */
 
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {

@@ -33,6 +33,10 @@ public class FloatingChestBlock extends DirectedBlock {
         Tile entity
      */
 
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
 
     @Nullable
     @Override

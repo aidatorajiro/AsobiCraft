@@ -20,6 +20,11 @@ public class StateManipulatorBlock extends DirectedBlock {
         super();
     }
 
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
@@ -33,7 +38,7 @@ public class StateManipulatorBlock extends DirectedBlock {
                 BlockPos frontPos = getFrontBlockPos(world, pos);
                 Block block = world.getBlockState(frontPos).getBlock();
                 int meta = ((StateManipulatorTileEntity) world.getTileEntity(pos)).increase();
-                world.setBlockState(frontPos, getStateById(meta));
+                world.setBlockState(frontPos, world.getBlockState(frontPos)); // TODO
             } catch (Exception e) {
                 entity.sendStatusMessage(new TranslationTextComponent("message.examplemod.statemanipulator", e.getMessage()),false);
             }
