@@ -1,5 +1,6 @@
 package com.example.examplemod.recipe;
 
+import com.example.examplemod.ExampleMod;
 import com.example.examplemod.helper.ItemHelper;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -65,7 +66,7 @@ public class BlockPatternRecipePlane implements IForgeRegistryEntry<IRecipe>, IB
 
     @Override
     public String getGroup() {
-        return "pickup_recipe";
+        return ExampleMod.MODID + ".pickup_recipe";
     }
 
     //public BlockPatternRecipePlane(Item triggerItem, int itemPosX, int itemPosY, int itemPosZ, NonNullList<ItemStack> output, Object... recipe) {

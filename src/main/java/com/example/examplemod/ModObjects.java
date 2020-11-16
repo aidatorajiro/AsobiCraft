@@ -10,18 +10,16 @@ import com.example.examplemod.recipe.IBlockPatternRecipe;
 import com.example.examplemod.recipe.BlockPatternRecipePlane;
 import com.example.examplemod.tileentity.*;
 import net.minecraft.block.Blocks;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static net.minecraftforge.fml.common.registry.GameRegistry.registerTileEntity;
 
 /**
  * A registry for mod objects.
@@ -33,12 +31,12 @@ public class ModObjects {
     public static List<BaseItem> items = new ArrayList();
     public static List<IBlockPatternRecipe> pickupRecipes = new ArrayList();
 
-    public static final CreativeTabs tabExampleMod = (new CreativeTabs("tabExampleMod") {
+    public static final ItemGroup itemGroupExampleMod = new ItemGroup("tabExampleMod") {
         @Override
-        public ItemStack getTabIconItem() {
+        public ItemStack createIcon() {
             return new ItemStack(adbmalItem);
         }
-    });
+    };
 
     public static ExampleBlock exampleBlock;
     public static CounterBlock counterBlock;
@@ -111,11 +109,17 @@ public class ModObjects {
                 0,
                 1,
                 NonNullList.withSize(1, new ItemStack(adbmalItem, 3)),
-                "GGG",
-                "GWG",
-                "GGG",
-                'G', Blocks.GLASS,
-                'W', Blocks.WATER
+                3, 3,
+                NonNullList.from(
+                        Ingredient.fromItems(Items.GLASS),
+                        Ingredient.fromItems(Items.GLASS),
+                        Ingredient.fromItems(Items.GLASS),
+                        Ingredient.fromItems(Items.GLASS),
+                        Ingredient.fromItems(Item.getItemFromBlock(Blocks.WATER)),
+                        Ingredient.fromItems(Items.GLASS),
+                        Ingredient.fromItems(Items.GLASS),
+                        Ingredient.fromItems(Items.GLASS),
+                        Ingredient.fromItems(Items.GLASS))
         ));
     }
 
@@ -126,8 +130,7 @@ public class ModObjects {
      */
     private static void registerItem (BaseItem item, String id) {
         item.setRegistryName(id);
-        item.setUnlocalizedName(ExampleMod.MODID + "." + id);
-        item.setCreativeTab(ModObjects.tabExampleMod);
+        item.setRegistryName(ExampleMod.MODID + "." + id);
         items.add(item);
     }
 
@@ -138,8 +141,7 @@ public class ModObjects {
      */
     private static void registerBlock (BaseBlock block, String id) {
         block.setRegistryName(id);
-        block.setUnlocalizedName(ExampleMod.MODID + "." + id);
-        block.setCreativeTab(ModObjects.tabExampleMod);
+        block.setRegistryName(ExampleMod.MODID + "." + id);
         blocks.add(block);
     }
 

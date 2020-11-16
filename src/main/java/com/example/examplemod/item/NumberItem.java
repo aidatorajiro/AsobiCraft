@@ -18,6 +18,7 @@ import net.minecraftforge.fml.common.Mod;
 
 public class NumberItem extends BaseItem {
     public NumberItem () {
+        super();
     }
 
     public double getNumber(ItemStack stack) {
