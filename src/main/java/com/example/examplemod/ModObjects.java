@@ -62,57 +62,65 @@ public class ModObjects {
     public static OperatorItem mulOperatorItem;
     public static NumberItem numberItem;
 
+    public static boolean initialized = false;
+
     /**
      * Create and register all items to ModObjects.
      */
     public static void initialize() {
+        if (initialized) {
+            return;
+        }
+
+        initialized = true;
+
         // Register Item
         adbmalItem = new AdbmalItem();
-        registerItem(adbmalItem, "adbmalItem");
+        registerItem(adbmalItem, "adbmalitem");
 
         plusOperatorItem = new OperatorItem((a, b) -> (a + b));
-        registerItem(plusOperatorItem, "plusOperatorItem");
+        registerItem(plusOperatorItem, "plusoperatoritem");
 
         minusOperatorItem = new OperatorItem((a, b) -> (a - b));
-        registerItem(minusOperatorItem, "minusOperatorItem");
+        registerItem(minusOperatorItem, "minusoperatoritem");
 
         divOperatorItem = new OperatorItem((a, b) -> (a / b));
-        registerItem(divOperatorItem, "divOperatorItem");
+        registerItem(divOperatorItem, "divoperatoritem");
 
         mulOperatorItem = new OperatorItem((a, b) -> (a * b));
-        registerItem(mulOperatorItem, "mulOperatorItem");
+        registerItem(mulOperatorItem, "muloperatoritem");
 
         numberItem = new NumberItem();
-        registerItem(numberItem, "numberItem");
+        registerItem(numberItem, "numberitem");
 
         // Register Block and TileEntity
         exampleBlock = new ExampleBlock();
-        registerBlock(exampleBlock, "exampleBlock");
+        registerBlock(exampleBlock, "exampleblock");
 
         counterBlock = new CounterBlock();
-        registerBlock(counterBlock, "counterBlock");
+        registerBlock(counterBlock, "counterblock");
         counterType = generateType(CounterTileEntity::new, counterBlock);
-        registerTileEntity(counterType, "counterTileEntity");
+        registerTileEntity(counterType, "countertileentity");
 
         stateManipulatorBlock = new StateManipulatorBlock();
-        registerBlock(stateManipulatorBlock, "stateManipulatorBlock");
+        registerBlock(stateManipulatorBlock, "statemanipulatorblock");
         stateManipulatorType = generateType(StateManipulatorTileEntity::new, stateManipulatorBlock);
-        registerTileEntity(stateManipulatorType, "stateManipulatorTileEntity");
+        registerTileEntity(stateManipulatorType, "statemanipulatortileentity");
 
         calculatorBlock = new CalculatorBlock();
-        registerBlock(calculatorBlock, "calculatorBlock");
+        registerBlock(calculatorBlock, "calculatorblock");
         calculatorType = generateType(CalculatorTileEntity::new, calculatorBlock);
-        registerTileEntity(calculatorType, "calculatorTileEntity");
+        registerTileEntity(calculatorType, "calculatortileentity");
 
         floatingChestBlock = new FloatingChestBlock();
-        registerBlock(floatingChestBlock, "floatingChestBlock");
+        registerBlock(floatingChestBlock, "floatingchestblock");
         floatingChestType = generateType(FloatingChestTileEntity::new, floatingChestBlock);
-        registerTileEntity(floatingChestType, "floatingChestTileEntity");
+        registerTileEntity(floatingChestType, "floatingchesttileentity");
 
         pointerBlock = new PointerBlock();
-        registerBlock(pointerBlock, "pointerBlock");
+        registerBlock(pointerBlock, "pointerblock");
         pointerType = generateType(PointerTileEntity::new, pointerBlock);
-        registerTileEntity(pointerType, "pointerTileEntity");
+        registerTileEntity(pointerType, "pointertileentity");
 
         // Register EventHandler
         MinecraftForge.EVENT_BUS.register(new BlockPatternRecipeEventHandler());
@@ -149,7 +157,6 @@ public class ModObjects {
      */
     private static void registerItem (BaseItem item, String id) {
         item.setRegistryName(id);
-        item.setRegistryName(ExampleMod.MODID + "." + id);
         items.add(item);
     }
 
@@ -160,7 +167,6 @@ public class ModObjects {
      */
     private static void registerBlock (BaseBlock block, String id) {
         block.setRegistryName(id);
-        block.setRegistryName(ExampleMod.MODID + "." + id);
         blocks.add(block);
     }
 

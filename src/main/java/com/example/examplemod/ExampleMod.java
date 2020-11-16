@@ -52,13 +52,13 @@ public class ExampleMod
         MinecraftForge.EVENT_BUS.register(this);
     }
 
+
+
     private void setup(final FMLCommonSetupEvent event)
     {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
-
-        ModObjects.initialize();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
@@ -91,7 +91,9 @@ public class ExampleMod
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         @SubscribeEvent
-        public static void registerBlocks(final RegistryEvent.Register<Block> event) {
+        public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
+            ModObjects.initialize();
+
             // register a new block here
             LOGGER.info("HELLO from Register Block");
             for (BaseBlock block : ModObjects.blocks) {
@@ -99,7 +101,9 @@ public class ExampleMod
             }
         }
         @SubscribeEvent
-        public static void registerTileEntities(final RegistryEvent.Register<TileEntityType<?>> event) {
+        public static void onTileEntitiesRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
+            ModObjects.initialize();
+
             // register a new block here
             LOGGER.info("HELLO from Register Tile Entity");
             for (int i = 0; i < ModObjects.tileEntityTypes.size(); i++) {
@@ -109,11 +113,16 @@ public class ExampleMod
             }
         }
         @SubscribeEvent
-        public static void registerItems(final RegistryEvent.Register<Item> event) {
+        public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
+            ModObjects.initialize();
+
             // register a new block here
             LOGGER.info("HELLO from Register Item");
             for (BaseBlock block : ModObjects.blocks) {
-                event.getRegistry().register(new BlockItem(block, new Item.Properties().group(ModObjects.itemGroupExampleMod)).setRegistryName(block.getRegistryName()));
+                event.getRegistry()
+                        .register(new BlockItem(block, new Item.Properties()
+                                .group(ModObjects.itemGroupExampleMod))
+                                .setRegistryName(block.getRegistryName()));
             }
             for (BaseItem item : ModObjects.items) {
                 event.getRegistry().register(item);

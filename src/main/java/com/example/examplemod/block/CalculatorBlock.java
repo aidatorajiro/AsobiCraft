@@ -68,7 +68,8 @@ public class CalculatorBlock extends BaseBlock {
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
         super.tick(state, world, pos, rand);
         CalculatorTileEntity tile = (CalculatorTileEntity) world.getTileEntity(pos);
-        tile.updateTick(state, world, pos, rand);
+        world.getPendingBlockTicks().scheduleTick(pos, this, 10); // TODO
+        // tile.updateTick(state, world, pos, rand); TODO
     }
 
     /*

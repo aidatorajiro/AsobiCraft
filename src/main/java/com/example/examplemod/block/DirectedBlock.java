@@ -2,41 +2,38 @@ package com.example.examplemod.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ChestBlock;
+import net.minecraft.block.DirectionalBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
 public abstract class DirectedBlock extends BaseBlock {
-    public static final DirectionProperty FACING = DirectionProperty.create("facing");
+    public static final DirectionProperty FACING = DirectionalBlock.FACING;
 
     public DirectedBlock() {
         super();
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        world.setBlockState(pos, state.with(FACING, placer.getHorizontalFacing().getOpposite()), 2);
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
     }
 
-    //@Override TODO
-    //public IBlockState getStateFromMeta(int meta) {
-    //    return getDefaultState().withProperty(FACING, EnumFacing.getFront(meta));
-    //}
-
-    //@Override TODO
-    //public int getMetaFromState(IBlockState state) {
-    //    return state.getValue(FACING).getIndex();
-    //}
-
-    //@Override TODO
-    //protected BlockStateContainer createBlockState() {
-    //    return new BlockStateContainer(this, FACING);
-    //}
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+        return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
+    }
 
     /**
      * Get the BlockPos in front of the block with given World and BlockPos.
