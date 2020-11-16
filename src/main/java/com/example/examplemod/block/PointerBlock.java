@@ -1,12 +1,16 @@
 package com.example.examplemod.block;
 
 import com.example.examplemod.tileentity.PointerTileEntity;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class PointerBlock extends DirectedBlock implements ITileEntityProvider {
+import javax.annotation.Nullable;
+
+public class PointerBlock extends DirectedBlock {
     public PointerBlock() {
         super();
     }
@@ -15,8 +19,9 @@ public class PointerBlock extends DirectedBlock implements ITileEntityProvider {
         Tile entity
      */
 
+    @Nullable
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new PointerTileEntity();
     }
 }
