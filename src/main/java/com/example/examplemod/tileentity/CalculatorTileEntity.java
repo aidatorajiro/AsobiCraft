@@ -2,6 +2,7 @@ package com.example.examplemod.tileentity;
 
 import com.example.examplemod.item.NumberItem;
 import com.example.examplemod.item.OperatorItem;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,6 +10,7 @@ import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -125,7 +127,7 @@ public class CalculatorTileEntity extends BaseTileEntity {
         return true;
     }
 
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+    public void updateTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
         if (!canCalculate()) {
             return;
         }

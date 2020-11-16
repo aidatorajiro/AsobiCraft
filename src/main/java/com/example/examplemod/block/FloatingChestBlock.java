@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class FloatingChestBlock extends DirectedBlock implements ITileEntityProvider {
+public class FloatingChestBlock extends DirectedBlock {
     public FloatingChestBlock() {
         super();
     }
