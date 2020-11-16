@@ -1,19 +1,22 @@
 package com.example.examplemod.container;
 
 import com.example.examplemod.tileentity.CalculatorTileEntity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+
+import javax.annotation.Nullable;
 
 public class CalculatorContainer extends BaseContainer {
     private CalculatorTileEntity tile;
 
-    public CalculatorContainer (IInventory playerInventory, CalculatorTileEntity tile) {
+    public CalculatorContainer (@Nullable ContainerType<?> type, int id, PlayerInventory playerInventory, CalculatorTileEntity tile) {
+        super(type, id);
         this.tile = tile;
         drawPlayerSlots(playerInventory, 9, 151);
         drawInputs();
@@ -33,7 +36,7 @@ public class CalculatorContainer extends BaseContainer {
         for (int i = 0; i < itemHandler.getSlots(); i++) {
             int x = (int)(-Math.sin(theta*i)*radius + centerX - 8);
             int y = (int)(Math.cos(theta*i)*radius + centerY - 8);
-            addSlotToContainer(new SlotItemHandler(itemHandler, i, x, y));
+            addSlot(new SlotItemHandler(itemHandler, i, x, y));
         }
     }
 
@@ -44,7 +47,7 @@ public class CalculatorContainer extends BaseContainer {
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
         ItemStack ret = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
 
@@ -71,7 +74,7 @@ public class CalculatorContainer extends BaseContainer {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
+    public boolean canInteractWith(PlayerEntity playerIn) {
         return tile.canInteractWith(playerIn);
     }
 }
