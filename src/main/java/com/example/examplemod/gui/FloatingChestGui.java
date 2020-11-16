@@ -5,18 +5,23 @@ import com.example.examplemod.container.CalculatorContainer;
 import com.example.examplemod.container.FloatingChestContainer;
 import com.example.examplemod.tileentity.CalculatorTileEntity;
 import com.example.examplemod.tileentity.FloatingChestTileEntity;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
-public class FloatingChestGui extends GuiContainer {
+public class FloatingChestGui extends ContainerScreen<FloatingChestContainer> {
 
     private static FloatingChestTileEntity tile;
 
     private static final ResourceLocation background = new ResourceLocation(ExampleMod.MODID, "textures/gui/floatingchest.png");
 
-    public FloatingChestGui(FloatingChestTileEntity tileIn, FloatingChestContainer container) {
-        super(container);
+    public FloatingChestGui(FloatingChestContainer container, PlayerInventory inv, FloatingChestTileEntity tileIn) {
+        super(container, inv, new TranslationTextComponent("message.examplemod.floatingchesttitle"));
 
         xSize = 178;
         ySize = 234;
@@ -25,20 +30,15 @@ public class FloatingChestGui extends GuiContainer {
     }
 
     @Override
-    public void updateScreen() {
-        super.updateScreen();
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        super.drawScreen(mouseX, mouseY, partialTicks);
-        renderHoveredToolTip(mouseX, mouseY);
-        drawCenteredString(fontRenderer, String.valueOf(tile.getHandler().getStackInSlotFloating(0).getStackSize()), 10, 10, 0x000000);
-    }
-
-    @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        mc.getTextureManager().bindTexture(background);
-        drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        this.minecraft.getTextureManager().bindTexture(background);
     }
 }
