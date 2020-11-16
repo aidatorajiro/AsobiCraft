@@ -57,16 +57,7 @@ public class CalculatorBlock extends BaseBlock {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity entity, Hand hand, BlockRayTraceResult res) {
-        if (!world.isRemote) {
-            INamedContainerProvider cont = this.getContainer(state, world, pos);
-            if (cont != null) {
-                entity.openContainer(cont);
-                entity.addStat(Stats.OPEN_CHEST); // TODO
-            }
-            return ActionResultType.CONSUME;
-        } else {
-            return ActionResultType.SUCCESS;
-        }
+        return BlockHelper.onBlockActivatedNormal(this, state, world, pos, entity, hand, res);
     }
 
     /*
@@ -124,8 +115,8 @@ public class CalculatorBlock extends BaseBlock {
 
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
-        super.onBlockPlacedBy(world, pos, state, entity, stack);
+    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        super.onBlockPlacedBy(world, pos, state, placer, stack);
         BlockHelper.restoreTE(world, pos, stack);
     }
 
