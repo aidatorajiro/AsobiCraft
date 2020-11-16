@@ -9,10 +9,12 @@ import com.example.examplemod.item.OperatorItem;
 import com.example.examplemod.recipe.IBlockPatternRecipe;
 import com.example.examplemod.recipe.BlockPatternRecipePlane;
 import com.example.examplemod.tileentity.*;
+import net.minecraft.block.Blocks;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.MinecraftForge;
 
