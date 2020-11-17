@@ -30,7 +30,7 @@ public class BlockPatternRecipeEventHandler {
                 for (BlockPos delatePos : result.getSecond()) {
                     world.setBlockState(delatePos, Blocks.AIR.getDefaultState());
                 }
-                world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), 1.0D, 0.0D, 0.0D);
+                world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), 1.0D, 1.0D, 1.0D);
                 ItemHelper.dropStackList(world, pos, recipe.getOutput(world, item, pos));
                 return;
             }

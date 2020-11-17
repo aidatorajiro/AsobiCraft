@@ -12,6 +12,7 @@ import com.example.examplemod.tileentity.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.MinecraftForge;
@@ -101,7 +102,9 @@ public class ModObjects {
 
         // Register EventHandler
         MinecraftForge.EVENT_BUS.register(new BlockPatternRecipeEventHandler());
+    }
 
+    public static void afterRegisterItems() {
         // Register pickupRecipes
         pickupRecipes.add(new BlockPatternRecipePlane(
                 Items.WOODEN_HOE,
@@ -114,6 +117,124 @@ public class ModObjects {
                 "GGG",
                 'G', Blocks.GLASS,
                 'W', Blocks.WATER
+        ));
+
+        pickupRecipes.add(new BlockPatternRecipePlane(
+                adbmalItem,
+                1,
+                0,
+                1,
+                NonNullList.withSize(1, new ItemStack(counterBlock, 10)),
+                "RRR",
+                "RAR",
+                "RRR",
+                'R', Blocks.STONE,
+                'A', Blocks.AIR
+        ));
+
+        pickupRecipes.add(new BlockPatternRecipePlane(
+                adbmalItem,
+                1,
+                0,
+                1,
+                NonNullList.withSize(1, new ItemStack(exampleBlock, 64)),
+                "TTT",
+                "TAT",
+                "TTT",
+                'T', Blocks.TORCH,
+                'A', Blocks.AIR
+        ));
+
+        pickupRecipes.add(new BlockPatternRecipePlane(
+                adbmalItem,
+                1,
+                0,
+                1,
+                NonNullList.withSize(1, new ItemStack(calculatorBlock, 1)),
+                "CEC",
+                "EAE",
+                "CEC",
+                'C', counterBlock,
+                'A', Blocks.AIR,
+                'E', exampleBlock
+        ));
+
+        pickupRecipes.add(new BlockPatternRecipePlane(
+                adbmalItem,
+                1,
+                0,
+                1,
+                NonNullList.withSize(1, new ItemStack(floatingChestBlock, 1)),
+                "DDD",
+                "DWD",
+                "DDD",
+                'D', Blocks.DIAMOND_BLOCK,
+                'W', Blocks.WATER
+        ));
+
+        pickupRecipes.add(new BlockPatternRecipePlane(
+                adbmalItem,
+                1,
+                2,
+                1,
+                NonNullList.withSize(1, new ItemStack(plusOperatorItem, 64)),
+                "AEA",
+                "EEE",
+                "AEA",
+                'E', exampleBlock,
+                'A', Blocks.AIR
+        ));
+
+        pickupRecipes.add(new BlockPatternRecipePlane(
+                adbmalItem,
+                1,
+                2,
+                1,
+                NonNullList.withSize(1, new ItemStack(mulOperatorItem, 64)),
+                "EAE",
+                "AEA",
+                "EAE",
+                'E', exampleBlock,
+                'A', Blocks.AIR
+        ));
+
+        pickupRecipes.add(new BlockPatternRecipePlane(
+                adbmalItem,
+                1,
+                2,
+                1,
+                NonNullList.withSize(1, new ItemStack(divOperatorItem, 64)),
+                "AAE",
+                "AEA",
+                "EAA",
+                'E', exampleBlock,
+                'A', Blocks.AIR
+        ));
+
+        pickupRecipes.add(new BlockPatternRecipePlane(
+                adbmalItem,
+                1,
+                2,
+                1,
+                NonNullList.withSize(1, new ItemStack(minusOperatorItem, 64)),
+                "AAA",
+                "EEE",
+                "AAA",
+                'E', exampleBlock,
+                'A', Blocks.AIR
+        ));
+
+        pickupRecipes.add(new BlockPatternRecipePlane(
+                adbmalItem,
+                1,
+                0,
+                1,
+                NonNullList.withSize(1, new ItemStack(numberItem, 64)),
+                "EEE",
+                "EAE",
+                "EEE",
+                'E', exampleBlock,
+                'A', Blocks.AIR
         ));
     }
 

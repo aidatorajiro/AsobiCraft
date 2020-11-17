@@ -48,5 +48,6 @@ public class CommonProxy {
         for (BaseItem item : ModObjects.items) {
             event.getRegistry().register(item);
         }
+        ModObjects.afterRegisterItems();
     }
 }

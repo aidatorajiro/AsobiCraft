@@ -1,5 +1,7 @@
 package com.example.examplemod.recipe;
 
+import com.example.examplemod.ExampleMod;
+import com.example.examplemod.ModObjects;
 import com.example.examplemod.helper.ItemHelper;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
