@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "lll",
+    "lll",
+    "lll"
+  ],
+  "key":
+  {
+    "l":
+    {
+      "item": "examplemod:adbmalitem"
+    }
+  },
+  "result":
+  {
+    "item": "examplemod:adbmalitem",
+    "count": 64
+  }
+}
