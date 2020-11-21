@@ -39,13 +39,7 @@ public class ChunkChestTileEntity extends BaseTileEntity {
         super.onLoad();
         int chunkx = this.pos.getX() / 16;
         int chunky = this.pos.getY() / 16;
-        handler = WorldData.get(world).getChunkChest(new ItemStackHandler() {
-            @Override
-            protected void onContentsChanged(int slot) {
-                ChunkChestTileEntity.this.markDirty();
-                WorldData.get(world).markDirty();
-            }
-        }, chunkx, chunky);
+        handler = WorldData.get(world).getChunkChest(chunkx, chunky);
     }
 
     @Override
