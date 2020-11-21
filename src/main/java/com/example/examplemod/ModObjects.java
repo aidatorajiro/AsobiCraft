@@ -60,50 +60,50 @@ public class ModObjects {
     public static void initialize() {
         // Register Item
         adbmalItem = new AdbmalItem();
-        registerItem(adbmalItem, "adbmalItem");
+        registerItem(adbmalItem, "adbmalitem");
 
         plusOperatorItem = new OperatorItem((a, b) -> (a + b));
-        registerItem(plusOperatorItem, "plusOperatorItem");
+        registerItem(plusOperatorItem, "plusoperatoritem");
 
         minusOperatorItem = new OperatorItem((a, b) -> (a - b));
-        registerItem(minusOperatorItem, "minusOperatorItem");
+        registerItem(minusOperatorItem, "minusoperatoritem");
 
         divOperatorItem = new OperatorItem((a, b) -> (a / b));
-        registerItem(divOperatorItem, "divOperatorItem");
+        registerItem(divOperatorItem, "divoperatoritem");
 
         mulOperatorItem = new OperatorItem((a, b) -> (a * b));
-        registerItem(mulOperatorItem, "mulOperatorItem");
+        registerItem(mulOperatorItem, "muloperatoritem");
 
         numberItem = new NumberItem();
-        registerItem(numberItem, "numberItem");
+        registerItem(numberItem, "numberitem");
 
         // Register Block and TileEntity
         exampleBlock = new ExampleBlock();
-        registerBlock(exampleBlock, "exampleBlock");
+        registerBlock(exampleBlock, "exampleblock");
 
         counterBlock = new CounterBlock();
-        registerBlock(counterBlock, "counterBlock");
-        registerTileEntity(CounterTileEntity.class, "counterTileEntity");
+        registerBlock(counterBlock, "counterblock");
+        registerTileEntity(CounterTileEntity.class, "countertileentity");
 
         stateManipulatorBlock = new StateManipulatorBlock();
-        registerBlock(stateManipulatorBlock, "stateManipulatorBlock");
-        registerTileEntity(StateManipulatorTileEntity.class, "stateManipulatorTileEntity");
+        registerBlock(stateManipulatorBlock, "statemanipulatorblock");
+        registerTileEntity(StateManipulatorTileEntity.class, "statemanipulatortileentity");
 
         calculatorBlock = new CalculatorBlock();
-        registerBlock(calculatorBlock, "calculatorBlock");
-        registerTileEntity(CalculatorTileEntity.class, "calculatorTileEntity");
+        registerBlock(calculatorBlock, "calculatorblock");
+        registerTileEntity(CalculatorTileEntity.class, "calculatortileentity");
 
         floatingChestBlock = new FloatingChestBlock();
-        registerBlock(floatingChestBlock, "floatingChestBlock");
-        registerTileEntity(FloatingChestTileEntity.class, "floatingChestTileEntity");
+        registerBlock(floatingChestBlock, "floatingchestblock");
+        registerTileEntity(FloatingChestTileEntity.class, "floatingchesttileentity");
 
         chunkChestBlock = new ChunkChestBlock();
         registerBlock(chunkChestBlock, "chunkchestblock");
         registerTileEntity(ChunkChestTileEntity.class, "chunkchesttileentity");
 
         pointerBlock = new PointerBlock();
-        registerBlock(pointerBlock, "pointerBlock");
-        registerTileEntity(PointerTileEntity.class, "pointerTileEntity");
+        registerBlock(pointerBlock, "pointerblock");
+        registerTileEntity(PointerTileEntity.class, "pointertileentity");
 
         // Register EventHandler
         MinecraftForge.EVENT_BUS.register(new BlockPatternRecipeEventHandler());
