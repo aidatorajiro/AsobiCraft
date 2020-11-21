@@ -2,7 +2,7 @@ package com.example.examplemod.block;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.helper.BlockHelper;
-import com.example.examplemod.tileentity.FloatingChestTileEntity;
+import com.example.examplemod.tileentity.ChunkChestTileEntity;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -30,7 +30,7 @@ public class ChunkChestBlock extends DirectedBlock implements ITileEntityProvide
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new FloatingChestTileEntity();
+        return new ChunkChestTileEntity();
     }
 
     /*
@@ -67,11 +67,6 @@ public class ChunkChestBlock extends DirectedBlock implements ITileEntityProvide
     @Override
     public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
-    }
-
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return new AxisAlignedBB(0, 0, 0, 1, 8.0/16.0, 1);
     }
 
     /*
