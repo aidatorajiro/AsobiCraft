@@ -44,6 +44,7 @@ public class ModObjects {
     public static StateManipulatorBlock stateManipulatorBlock;
     public static CalculatorBlock calculatorBlock;
     public static FloatingChestBlock floatingChestBlock;
+    public static ChunkChestBlock chunkChestBlock;
     public static PointerBlock pointerBlock;
 
     public static AdbmalItem adbmalItem;
@@ -95,6 +96,10 @@ public class ModObjects {
         floatingChestBlock = new FloatingChestBlock();
         registerBlock(floatingChestBlock, "floatingChestBlock");
         registerTileEntity(FloatingChestTileEntity.class, "floatingChestTileEntity");
+
+        chunkChestBlock = new ChunkChestBlock();
+        registerBlock(chunkChestBlock, "chunkchestblock");
+        registerTileEntity(ChunkChestTileEntity.class, "chunkchesttileentity");
 
         pointerBlock = new PointerBlock();
         registerBlock(pointerBlock, "pointerBlock");
