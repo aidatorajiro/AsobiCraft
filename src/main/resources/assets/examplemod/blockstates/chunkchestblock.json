@@ -1,0 +1,16 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "examplemod:chunkchestblock"
+	},
+	"variants": {
+		"facing=down": { "model": "examplemod:chunkchestblock" },
+		"facing=up": { "model": "examplemod:chunkchestblock" },
+		"facing=east":  { "model": "examplemod:chunkchestblock" },
+		"facing=west":  { "model": "examplemod:chunkchestblock" },
+		"facing=north": { "model": "examplemod:chunkchestblock" },
+		"facing=south": { "model": "examplemod:chunkchestblock" },
+		"normal": [{}],
+		"inventory": [{}]
+	}
+}
