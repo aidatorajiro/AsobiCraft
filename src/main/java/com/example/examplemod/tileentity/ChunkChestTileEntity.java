@@ -1,5 +1,6 @@
 package com.example.examplemod.tileentity;
 
+import com.example.examplemod.itemhandler.ChunkItemStackHandler;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -9,9 +10,9 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nullable;
 
 public class ChunkChestTileEntity extends BaseTileEntity {
-    private int INV_SIZE = 1769472;
+    private int INV_SIZE = 16*16*256*27;
 
-    private ItemStackHandler handler = new ItemStackHandler(INV_SIZE) {
+    private ChunkItemStackHandler handler = new ChunkItemStackHandler(INV_SIZE) {
         @Override
         protected void onContentsChanged(int slot) {
             ChunkChestTileEntity.this.markDirty();
