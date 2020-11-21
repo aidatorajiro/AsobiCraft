@@ -76,23 +76,14 @@ public class ChunkChestBlock extends DirectedBlock implements ITileEntityProvide
     @Override
     public int quantityDropped(IBlockState state, int fortune, Random random) {
         if (fortune > 9) {
-            return 1;
+            return 2;
         } else {
-            return 0;
+            return 1;
         }
     }
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         super.onBlockPlacedBy(world, pos, state, placer, stack);
-        BlockHelper.restoreTE(world, pos, stack);
-    }
-
-    @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        if (!worldIn.isRemote) {
-            BlockHelper.spawnTE(worldIn, pos, this);
-        }
-        super.breakBlock(worldIn, pos, state);
     }
 }
