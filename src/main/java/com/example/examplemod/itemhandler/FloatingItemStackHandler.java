@@ -80,6 +80,7 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
     public void setStackInSlot(int slot, @Nonnull ItemStack stack)
     {
         validateSlotIndex(slot);
+        // protective; if the amount to be deleted is greater than MAX_ITEMSTACK_EXPORT_SIZE, just ignore...
         if (this.stacks.get(slot).getStackSize() > MAX_ITEMSTACK_EXPORT_SIZE) {
             return;
         }
