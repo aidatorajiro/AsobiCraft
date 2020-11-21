@@ -1,5 +1,6 @@
 package com.example.examplemod.tileentity;
 
+import com.example.examplemod.saveddata.WorldData;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -9,14 +10,8 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nullable;
 
 public class ChunkChestTileEntity extends BaseTileEntity {
-    private int INV_SIZE = 16*16*256*27;
 
-    private ItemStackHandler handler = new ItemStackHandler(INV_SIZE) {
-        @Override
-        protected void onContentsChanged(int slot) {
-            ChunkChestTileEntity.this.markDirty();
-        }
-    };
+    private ItemStackHandler handler;
 
     public ItemStackHandler getHandler() {
         return handler;
@@ -37,6 +32,20 @@ public class ChunkChestTileEntity extends BaseTileEntity {
             return true;
         }
         return super.hasCapability(capability, facing);
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        int chunkx = this.pos.getX() / 16;
+        int chunky = this.pos.getY() / 16;
+        handler = WorldData.get(world).getChunkChest(new ItemStackHandler() {
+            @Override
+            protected void onContentsChanged(int slot) {
+                ChunkChestTileEntity.this.markDirty();
+                WorldData.get(world).markDirty();
+            }
+        }, chunkx, chunky);
     }
 
     @Override
