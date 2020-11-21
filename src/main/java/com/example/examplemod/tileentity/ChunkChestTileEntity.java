@@ -1,6 +1,5 @@
 package com.example.examplemod.tileentity;
 
-import com.example.examplemod.itemhandler.ChunkItemStackHandler;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -12,7 +11,7 @@ import javax.annotation.Nullable;
 public class ChunkChestTileEntity extends BaseTileEntity {
     private int INV_SIZE = 16*16*256*27;
 
-    private ChunkItemStackHandler handler = new ChunkItemStackHandler(INV_SIZE) {
+    private ItemStackHandler handler = new ItemStackHandler(INV_SIZE) {
         @Override
         protected void onContentsChanged(int slot) {
             ChunkChestTileEntity.this.markDirty();
@@ -43,15 +42,11 @@ public class ChunkChestTileEntity extends BaseTileEntity {
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        if (compound.hasKey("chest")) {
-            handler.deserializeNBT((NBTTagCompound) compound.getTag("chest"));
-        }
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
-        compound.setTag("chest", handler.serializeNBT());
         return compound;
     }
 }
