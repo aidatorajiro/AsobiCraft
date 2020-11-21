@@ -70,7 +70,7 @@ public class ChunkChestBlock extends DirectedBlock implements ITileEntityProvide
     }
 
     /*
-        NBT Items
+        Item <-> Block conversion
      */
 
     @Override
