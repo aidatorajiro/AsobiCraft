@@ -240,6 +240,20 @@ public class ModObjects {
                 'E', exampleBlock,
                 'A', Blocks.AIR
         ));
+
+        pickupRecipes.add(new BlockPatternRecipePlane(
+                Items.ENDER_PEARL,
+                1,
+                0,
+                1,
+                NonNullList.withSize(1, new ItemStack(chunkChestBlock, 1)),
+                "ECE",
+                "CWC",
+                "ECE",
+                'C', Blocks.CHEST,
+                'W', Blocks.WATER,
+                'E', exampleBlock
+        ));
     }
 
     /**
