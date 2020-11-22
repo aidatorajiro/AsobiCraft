@@ -10,3 +10,4 @@ Supported Minecraft version is 1.12.2.
 - crafting explosion particle
 - floating chest / chunk chest GUI
 - calculator GUI improvement
+- calculator item generation
