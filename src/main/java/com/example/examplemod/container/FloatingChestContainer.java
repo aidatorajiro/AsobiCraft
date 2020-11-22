@@ -22,38 +22,16 @@ public class FloatingChestContainer extends BaseContainer {
         drawFloatingSlots(tile.getHandler(), 9, 16, 9);
     }
 
-    public boolean mergeItemStack(FloatingItemStackHandler handler, ItemStack itemstack) {
-        for (int i = 0; i < handler.getSlots(); i++) {
-            ItemStack result = handler.insertItem(i, itemstack, false);
-            if (result.isEmpty()) {
-                itemstack.setCount(0);
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-        ItemStack ret = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
-
-        if (slot != null && slot.getHasStack()) {
-            ItemStack itemstack = slot.getStack();
-            ret = itemstack.copy();
-
-            if (!mergeItemStack(tile.getHandler(), itemstack)) {
-                return ItemStack.EMPTY;
-            }
-
-            if (itemstack.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
-            } else {
-                slot.onSlotChanged();
-            }
+        if (slot == null || !slot.getHasStack() || slot.getStack().isEmpty()) {
+            return ItemStack.EMPTY;
         }
-
-        return ret;
+        ItemStack remain = ItemHelper.insertStackToHandler(tile.getHandler(), slot.getStack());
+        slot.putStack(remain);
+        slot.onSlotChanged();
+        return ItemStack.EMPTY;
     }
 
     @Override
