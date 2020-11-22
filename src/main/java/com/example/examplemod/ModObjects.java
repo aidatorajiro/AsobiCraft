@@ -1,7 +1,7 @@
 package com.example.examplemod;
 
 import com.example.examplemod.block.*;
-import com.example.examplemod.eventhandler.BlockPatternRecipeEventHandler;
+import com.example.examplemod.eventhandler.ModEventHandler;
 import com.example.examplemod.item.AdbmalItem;
 import com.example.examplemod.item.BaseItem;
 import com.example.examplemod.item.NumberItem;
@@ -12,7 +12,6 @@ import com.example.examplemod.tileentity.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.MinecraftForge;
@@ -106,7 +105,7 @@ public class ModObjects {
         registerTileEntity(PointerTileEntity.class, "pointertileentity");
 
         // Register EventHandler
-        MinecraftForge.EVENT_BUS.register(new BlockPatternRecipeEventHandler());
+        MinecraftForge.EVENT_BUS.register(new ModEventHandler());
     }
 
     public static void afterRegisterItems() {

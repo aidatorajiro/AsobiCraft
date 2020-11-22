@@ -1,7 +1,6 @@
 package com.example.examplemod.saveddata;
 
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.tileentity.ChunkChestTileEntity;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -12,21 +11,21 @@ import net.minecraftforge.items.ItemStackHandler;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WorldData extends WorldSavedData {
+public class ModWorldData extends WorldSavedData {
     private static int INV_SIZE = 16*16*256*27;
     private static String DATA_NAME = ExampleMod.MODID + "_Data";
 
-    public WorldData(String name) {
+    public ModWorldData(String name) {
         super(name);
         mynbt = new NBTTagCompound();
     }
 
-    public static WorldData get(World world) {
+    public static ModWorldData get(World world) {
         MapStorage storage = world.getPerWorldStorage();
-        WorldData instance = (WorldData) storage.getOrLoadData(WorldData.class, DATA_NAME);
+        ModWorldData instance = (ModWorldData) storage.getOrLoadData(ModWorldData.class, DATA_NAME);
 
         if (instance == null) {
-            instance = new WorldData(DATA_NAME);
+            instance = new ModWorldData(DATA_NAME);
             storage.setData(DATA_NAME, instance);
         }
 
@@ -55,7 +54,7 @@ public class WorldData extends WorldSavedData {
             ItemStackHandler handler = new ItemStackHandler(INV_SIZE) {
                 @Override
                 protected void onContentsChanged(int slot) {
-                    WorldData.this.markDirty();
+                    ModWorldData.this.markDirty();
                 }
             };
             if (!chunkchest.hasKey(key)) {

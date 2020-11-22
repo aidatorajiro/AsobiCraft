@@ -1,6 +1,6 @@
 package com.example.examplemod.tileentity;
 
-import com.example.examplemod.saveddata.WorldData;
+import com.example.examplemod.saveddata.ModWorldData;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -39,7 +39,7 @@ public class ChunkChestTileEntity extends BaseTileEntity {
         super.onLoad();
         int chunkx = this.pos.getX() / 16;
         int chunky = this.pos.getY() / 16;
-        handler = WorldData.get(world).getChunkChest(chunkx, chunky);
+        handler = ModWorldData.get(world).getChunkChest(chunkx, chunky);
     }
 
     @Override

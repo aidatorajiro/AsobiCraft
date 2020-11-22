@@ -17,7 +17,7 @@ import net.minecraft.init.Blocks;
 /**
  * Event handler for overwriting vanilla behavior.
  */
-public class BlockPatternRecipeEventHandler {
+public class ModEventHandler {
     @SubscribeEvent
     public void pickupItem(EntityItemPickupEvent event) {
         Item item = event.getItem().getItem().getItem();
