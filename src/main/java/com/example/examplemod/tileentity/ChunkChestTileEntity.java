@@ -38,8 +38,8 @@ public class ChunkChestTileEntity extends BaseTileEntity {
     public void onLoad() {
         super.onLoad();
         int chunkx = this.pos.getX() / 16;
-        int chunky = this.pos.getY() / 16;
-        handler = ModWorldData.get(world).getChunkChest(chunkx, chunky);
+        int chunkz = this.pos.getZ() / 16;
+        handler = ModWorldData.get(world).getChunkChest(chunkx, chunkz);
     }
 
     @Override

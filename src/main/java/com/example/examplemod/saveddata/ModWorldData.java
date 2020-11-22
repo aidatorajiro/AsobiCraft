@@ -12,8 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ModWorldData extends WorldSavedData {
-    private static int INV_SIZE_MAX = 24*256*27;
-    private static int INV_SIZE_DEFAULT = 4;
+    public static int INV_SIZE_MAX = 24*256*27; // 24*256 chests = 1 chunk-chest
+    public static int INV_SIZE_DEFAULT = 4*27; // 4 chests
+
     private static String DATA_NAME = ExampleMod.MODID + "_Data";
 
     public ModWorldData(String name) {
@@ -43,11 +44,11 @@ public class ModWorldData extends WorldSavedData {
 
     private Map<String, ItemStackHandler> chunkChestHandlers = new HashMap<>();
 
-    public ItemStackHandler getChunkChest(int chunkx, int chunky) {
+    public ItemStackHandler getChunkChest(int chunkx, int chunkz) {
         setDefault(mynbt, "chunkchest", new NBTTagCompound());
         NBTTagCompound chunkchest = mynbt.getCompoundTag("chunkchest");
 
-        String key = chunkx + "_" + chunky;
+        String key = chunkx + "_" + chunkz;
 
         if (chunkChestHandlers.containsKey(key)) {
             return chunkChestHandlers.get(key);
@@ -60,6 +61,7 @@ public class ModWorldData extends WorldSavedData {
             };
             if (!chunkchest.hasKey(key)) {
                 chunkchest.setTag(key, handler.serializeNBT());
+                this.markDirty();
             } else {
                 handler.deserializeNBT(chunkchest.getCompoundTag(key));
             }
