@@ -1,9 +1,12 @@
 package com.example.examplemod.container;
 
+import com.example.examplemod.helper.GuiHelper;
+import com.example.examplemod.itemhandler.FloatingItemStackHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -11,28 +14,7 @@ public abstract class BaseContainer extends Container {
     @Override
     public abstract boolean canInteractWith(EntityPlayer playerIn);
 
-    /**
-     * Draw slots of given IItemHandler, only using the number of column of slots.
-     * If the length of itemHandler is 13 and shapeX == 5, slots will look like this:
-     * .....
-     * .....
-     * ...
-     * @param itemHandler
-     * @param offsetX
-     * @param offsetY
-     * @param shapeX
-     */
-    public void drawSlots(IItemHandler itemHandler, int offsetX, int offsetY, int shapeX) {
-        int index = 0;
-        for (int row = 0; row < (itemHandler.getSlots() / shapeX) + 1; ++row) {
-            int num_slots = row == (itemHandler.getSlots() / shapeX) ? itemHandler.getSlots() % shapeX : shapeX;
-            for (int col = 0; col < num_slots; ++col) {
-                int x = col * 18 + offsetX;
-                int y = row * 18 + offsetY;
-                this.addSlotToContainer(new SlotItemHandler(itemHandler, index, x, y));
-                index++;
-            }
-        }
+    public void drawFloatingSlots(FloatingItemStackHandler itemHandler, int offsetX, int offsetY, int shapeX) {
     }
 
     public void drawSlots(IItemHandler itemHandler, int offsetX, int offsetY, int shapeX, int shapeY) {
@@ -63,5 +45,32 @@ public abstract class BaseContainer extends Container {
             int y = 58 + offsetY;
             this.addSlotToContainer(new Slot(playerInventory, row, x, y));
         }
+    }
+
+    @Override
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+        ItemStack ret = ItemStack.EMPTY;
+        Slot slot = this.inventorySlots.get(index);
+
+        if (slot != null && slot.getHasStack()) {
+            ItemStack itemstack = slot.getStack();
+            ret = itemstack.copy();
+
+            if (index < 36) {
+                if (!mergeItemStack(itemstack, 36, this.inventorySlots.size(), false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!mergeItemStack(itemstack, 0, 36, false)) {
+                return ItemStack.EMPTY;
+            }
+
+            if (itemstack.isEmpty()) {
+                slot.putStack(ItemStack.EMPTY);
+            } else {
+                slot.onSlotChanged();
+            }
+        }
+
+        return ret;
     }
 }

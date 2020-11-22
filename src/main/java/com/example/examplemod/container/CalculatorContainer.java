@@ -45,11 +45,6 @@ public class CalculatorContainer extends BaseContainer {
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-        return GuiHelper.transferStackInSlotDefault(this, this::mergeItemStack, playerIn, index);
-    }
-
-    @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
         return tile.canInteractWith(playerIn);
     }

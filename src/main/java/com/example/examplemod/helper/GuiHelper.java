@@ -1,11 +1,7 @@
 package com.example.examplemod.helper;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.inventory.Container;
-
 public class GuiHelper {
+    /*
     public static ItemStack transferStackInSlotDefault(Container containerIn, Arg4<ItemStack, Integer, Integer, Boolean, Boolean> mis, EntityPlayer playerIn, int index) {
         ItemStack ret = ItemStack.EMPTY;
         Slot slot = containerIn.inventorySlots.get(index);
@@ -30,5 +26,5 @@ public class GuiHelper {
         }
 
         return ret;
-    }
+    }*/
 }

@@ -19,12 +19,41 @@ public class FloatingChestContainer extends BaseContainer {
     public FloatingChestContainer(IInventory playerInventory, FloatingChestTileEntity tile) {
         this.tile = tile;
         drawPlayerSlots(playerInventory, 9, 151);
-        drawSlots(tile.getHandler(), 9, 16, 9);
+        drawFloatingSlots(tile.getHandler(), 9, 16, 9);
+    }
+
+    public boolean mergeItemStack(FloatingItemStackHandler handler, ItemStack itemstack) {
+        for (int i = 0; i < handler.getSlots(); i++) {
+            ItemStack result = handler.insertItem(i, itemstack, false);
+            if (result.isEmpty()) {
+                itemstack.setCount(0);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-        return GuiHelper.transferStackInSlotDefault(this, this::mergeItemStack, playerIn, index);
+        ItemStack ret = ItemStack.EMPTY;
+        Slot slot = this.inventorySlots.get(index);
+
+        if (slot != null && slot.getHasStack()) {
+            ItemStack itemstack = slot.getStack();
+            ret = itemstack.copy();
+
+            if (!mergeItemStack(tile.getHandler(), itemstack)) {
+                return ItemStack.EMPTY;
+            }
+
+            if (itemstack.isEmpty()) {
+                slot.putStack(ItemStack.EMPTY);
+            } else {
+                slot.onSlotChanged();
+            }
+        }
+
+        return ret;
     }
 
     @Override
