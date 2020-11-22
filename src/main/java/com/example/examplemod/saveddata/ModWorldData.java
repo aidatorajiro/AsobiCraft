@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ModWorldData extends WorldSavedData {
-    private static int INV_SIZE = 16*16*256*27;
+    private static int INV_SIZE = 24*256*27;
     private static String DATA_NAME = ExampleMod.MODID + "_Data";
 
     public ModWorldData(String name) {
