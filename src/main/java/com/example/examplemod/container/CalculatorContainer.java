@@ -1,5 +1,6 @@
 package com.example.examplemod.container;
 
+import com.example.examplemod.helper.GuiHelper;
 import com.example.examplemod.tileentity.CalculatorTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -45,29 +46,7 @@ public class CalculatorContainer extends BaseContainer {
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-        ItemStack ret = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-
-        if (slot != null && slot.getHasStack()) {
-            ItemStack itemstack = slot.getStack();
-            ret = itemstack.copy();
-
-            if (index < 36) {
-                if (!this.mergeItemStack(itemstack, 36, this.inventorySlots.size(), false)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (!this.mergeItemStack(itemstack, 0, 36, false)) {
-                return ItemStack.EMPTY;
-            }
-
-            if (itemstack.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
-            } else {
-                slot.onSlotChanged();
-            }
-        }
-
-        return ret;
+        return GuiHelper.transferStackInSlotDefault(this, this::mergeItemStack, playerIn, index);
     }
 
     @Override

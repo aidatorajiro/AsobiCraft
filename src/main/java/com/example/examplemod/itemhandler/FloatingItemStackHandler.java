@@ -1,5 +1,6 @@
 package com.example.examplemod.itemhandler;
 
+import com.example.examplemod.helper.ItemHelper;
 import com.example.examplemod.itemstack.FloatingItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -36,7 +37,8 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
     }
 
     public void addFloatingItemStack(FloatingItemStack item) {
-        stacks.add(item);
+        stacks = ItemHelper.changeListSize(stacks, stacks.size() + 1, FloatingItemStack.EMPTY);
+        stacks.set(stacks.size() - 1, item);
     }
 
     @Override
@@ -79,8 +81,10 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
     @Override
     public void setStackInSlot(int slot, @Nonnull ItemStack stack)
     {
+        //onContentsChanged(slot);
+        //return;
         validateSlotIndex(slot);
-        // protective; if the existing slot count is greater than MAX_ITEMSTACK_EXPORT_SIZE and both the given stack and the existing stack can stack, subtract (MAX_ITEMSTACK_EXPORT_SIZE - given stack count) from the existing stack.
+        // if the existing slot count is greater than MAX_ITEMSTACK_EXPORT_SIZE and both the given stack and the existing stack can stack, subtract (MAX_ITEMSTACK_EXPORT_SIZE - given stack count) from the existing stack.
         // if the existing slot count is greater than MAX_ITEMSTACK_EXPORT_SIZE and the two stacks cannot stack, subtract existing slot by 64 and move it to some appropriate slot. If there is no appropriate slot, expand this.stacks.
         if (stacks.get(slot).getStackSize() > MAX_ITEMSTACK_EXPORT_SIZE) {
             if (ItemHandlerHelper.canItemStacksStack(stack, stacks.get(slot).getItemStack())) {
@@ -97,13 +101,19 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
                 }
                 // if there is no slots available, expand this.stacks
                 if (!result.isEmpty()) {
-                    stacks.add(result);
+                    addFloatingItemStack(remain);
                 }
             }
         } else {
             stacks.set(slot, new FloatingItemStack(stack));
         }
         onContentsChanged(slot);
+    }
+
+    public void setStackInSlotFloating(int slot, @Nonnull FloatingItemStack stack)
+    {
+        this.stacks.set(slot, stack);
+        this.onContentsChanged(slot);
     }
 
     @Override

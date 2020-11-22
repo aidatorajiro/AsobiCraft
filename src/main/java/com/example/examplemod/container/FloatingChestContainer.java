@@ -1,5 +1,6 @@
 package com.example.examplemod.container;
 
+import com.example.examplemod.helper.GuiHelper;
 import com.example.examplemod.helper.ItemHelper;
 import com.example.examplemod.tileentity.CalculatorTileEntity;
 import com.example.examplemod.tileentity.FloatingChestTileEntity;
@@ -18,23 +19,12 @@ public class FloatingChestContainer extends BaseContainer {
     public FloatingChestContainer(IInventory playerInventory, FloatingChestTileEntity tile) {
         this.tile = tile;
         drawPlayerSlots(playerInventory, 9, 151);
-        drawItems();
-    }
-
-    private void drawItems() {
-
+        drawSlots(tile.getHandler(), 9, 16, 9);
     }
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-        Slot slot = this.inventorySlots.get(index);
-        if (slot == null || !slot.getHasStack()) {
-            return ItemStack.EMPTY;
-        }
-        ItemStack remain = ItemHelper.insertStackToHandler(tile.getHandler(), slot.getStack());
-        slot.putStack(remain);
-        slot.onSlotChanged();
-        return ItemStack.EMPTY;
+        return GuiHelper.transferStackInSlotDefault(this, this::mergeItemStack, playerIn, index);
     }
 
     @Override
