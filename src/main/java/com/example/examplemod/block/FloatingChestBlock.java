@@ -46,6 +46,7 @@ public class  FloatingChestBlock extends DirectedBlock implements ITileEntityPro
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
+            world.notifyBlockUpdate(pos, state, state, 2);
             player.openGui(ExampleMod.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
