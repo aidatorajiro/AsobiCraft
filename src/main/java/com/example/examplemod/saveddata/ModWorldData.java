@@ -1,6 +1,7 @@
 package com.example.examplemod.saveddata;
 
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.itemhandler.AdjustableItemStackHandler;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -42,9 +43,9 @@ public class ModWorldData extends WorldSavedData {
 
     private NBTTagCompound mynbt;
 
-    private Map<String, ItemStackHandler> chunkChestHandlers = new HashMap<>();
+    private Map<String, AdjustableItemStackHandler> chunkChestHandlers = new HashMap<>();
 
-    public ItemStackHandler getChunkChest(int chunkx, int chunkz) {
+    public AdjustableItemStackHandler getChunkChest(int chunkx, int chunkz) {
         setDefault(mynbt, "chunkchest", new NBTTagCompound());
         NBTTagCompound chunkchest = mynbt.getCompoundTag("chunkchest");
 
@@ -53,7 +54,7 @@ public class ModWorldData extends WorldSavedData {
         if (chunkChestHandlers.containsKey(key)) {
             return chunkChestHandlers.get(key);
         } else {
-            ItemStackHandler handler = new ItemStackHandler(CHUNK_CHEST_SIZE_DEFAULT) {
+            AdjustableItemStackHandler handler = new AdjustableItemStackHandler(CHUNK_CHEST_SIZE_DEFAULT) {
                 @Override
                 protected void onContentsChanged(int slot) {
                     ModWorldData.this.markDirty();
@@ -81,7 +82,7 @@ public class ModWorldData extends WorldSavedData {
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-        for (Map.Entry<String, ItemStackHandler> entry : chunkChestHandlers.entrySet()) {
+        for (Map.Entry<String, AdjustableItemStackHandler> entry : chunkChestHandlers.entrySet()) {
             setDefault(mynbt, "chunkchest", new NBTTagCompound());
             NBTTagCompound chunkchest = mynbt.getCompoundTag("chunkchest");
             chunkchest.setTag(entry.getKey(), entry.getValue().serializeNBT());
