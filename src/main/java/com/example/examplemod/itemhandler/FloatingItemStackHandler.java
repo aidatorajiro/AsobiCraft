@@ -78,6 +78,7 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
         }
     }
 
+    // TODO fix setStackInSlot in FloatingItemStackHandler
     @Override
     public void setStackInSlot(int slot, @Nonnull ItemStack stack)
     {
