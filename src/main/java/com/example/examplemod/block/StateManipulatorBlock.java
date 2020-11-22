@@ -1,5 +1,6 @@
 package com.example.examplemod.block;
 
+import com.example.examplemod.ExampleMod;
 import com.example.examplemod.tileentity.StateManipulatorTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -32,7 +33,7 @@ public class StateManipulatorBlock extends DirectedBlock implements ITileEntityP
                 int meta = ((StateManipulatorTileEntity) world.getTileEntity(pos)).increase();
                 world.setBlockState(frontPos, block.getStateFromMeta(meta));
             } catch (Exception e) {
-                player.sendStatusMessage(new TextComponentTranslation("message.examplemod.statemanipulator", e.getMessage()), false);
+                player.sendStatusMessage(new TextComponentTranslation("message." + ExampleMod.MODID + ".statemanipulator", e.getMessage()), false);
             }
         }
         return true;
