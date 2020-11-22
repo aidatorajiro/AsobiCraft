@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
 import java.lang.Math;
 
 public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModifiable, INBTSerializable<NBTTagCompound> {
-    public static double MAX_ITEMSTACK_EXPORT_SIZE = 2147483647;
+    public static double MAX_ITEMSTACK_EXPORT_SIZE = 64;
 
     protected NonNullList<FloatingItemStack> stacks;
 
@@ -80,11 +80,29 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
     public void setStackInSlot(int slot, @Nonnull ItemStack stack)
     {
         validateSlotIndex(slot);
-        // protective; if the amount to be deleted is greater than MAX_ITEMSTACK_EXPORT_SIZE, just ignore...
-        if (this.stacks.get(slot).getStackSize() > MAX_ITEMSTACK_EXPORT_SIZE) {
-            return;
+        // protective; if the existing slot count is greater than MAX_ITEMSTACK_EXPORT_SIZE and both the given stack and the existing stack can stack, subtract (MAX_ITEMSTACK_EXPORT_SIZE - given stack count) from the existing stack.
+        // if the existing slot count is greater than MAX_ITEMSTACK_EXPORT_SIZE and the two stacks cannot stack, subtract existing slot by 64 and move it to some appropriate slot. If there is no appropriate slot, expand this.stacks.
+        if (stacks.get(slot).getStackSize() > MAX_ITEMSTACK_EXPORT_SIZE) {
+            if (ItemHandlerHelper.canItemStacksStack(stack, stacks.get(slot).getItemStack())) {
+                stacks.get(slot).modifyStackSize(stack.getCount() - MAX_ITEMSTACK_EXPORT_SIZE);
+            } else {
+                FloatingItemStack remain = stacks.get(slot).copy().modifyStackSize(-MAX_ITEMSTACK_EXPORT_SIZE);
+                stacks.set(slot, new FloatingItemStack(stack));
+                FloatingItemStack result = null;
+                for (int i = 0; i < getSlots(); i++) {
+                    result = insertItemFloating(slot, remain, false);
+                    if (result.isEmpty()) {
+                        break;
+                    }
+                }
+                // if there is no slots available, expand this.stacks
+                if (!result.isEmpty()) {
+                    stacks.add(result);
+                }
+            }
+        } else {
+            stacks.set(slot, new FloatingItemStack(stack));
         }
-        this.stacks.set(slot, new FloatingItemStack(stack));
         onContentsChanged(slot);
     }
 
