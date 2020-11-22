@@ -9,7 +9,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import javax.annotation.Nullable;
 
 public class FloatingChestTileEntity extends BaseTileEntity {
-    private int INV_SIZE = 40;
+    private int INV_SIZE = 27;
 
     private FloatingItemStackHandler handler = new FloatingItemStackHandler(INV_SIZE) {
         @Override
