@@ -41,6 +41,8 @@ public class FloatingChestTileEntity extends BaseTileEntity {
         return super.hasCapability(capability, facing);
     }
 
+    // save data read/write
+
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
@@ -56,6 +58,8 @@ public class FloatingChestTileEntity extends BaseTileEntity {
         return compound;
     }
 
+    // client sync on chunk load
+
     @Override
     public void handleUpdateTag(NBTTagCompound compound) {
         super.handleUpdateTag(compound);
@@ -70,6 +74,8 @@ public class FloatingChestTileEntity extends BaseTileEntity {
         compound.setTag("chest", handler.serializeNBT());
         return compound;
     }
+
+    // client sync on notifyBlockUpdate
 
     @Override
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
