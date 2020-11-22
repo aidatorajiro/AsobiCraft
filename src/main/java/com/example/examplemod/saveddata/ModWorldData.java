@@ -12,7 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ModWorldData extends WorldSavedData {
-    private static int INV_SIZE = 24*256*27;
+    private static int INV_SIZE_MAX = 24*256*27;
+    private static int INV_SIZE_DEFAULT = 4;
     private static String DATA_NAME = ExampleMod.MODID + "_Data";
 
     public ModWorldData(String name) {
@@ -51,7 +52,7 @@ public class ModWorldData extends WorldSavedData {
         if (chunkChestHandlers.containsKey(key)) {
             return chunkChestHandlers.get(key);
         } else {
-            ItemStackHandler handler = new ItemStackHandler(INV_SIZE) {
+            ItemStackHandler handler = new ItemStackHandler(INV_SIZE_DEFAULT) {
                 @Override
                 protected void onContentsChanged(int slot) {
                     ModWorldData.this.markDirty();
