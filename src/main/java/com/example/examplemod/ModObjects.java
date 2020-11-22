@@ -2,7 +2,6 @@ package com.example.examplemod;
 
 import com.example.examplemod.block.*;
 import com.example.examplemod.eventhandler.ModEventHandler;
-import com.example.examplemod.item.AdbmalItem;
 import com.example.examplemod.item.BaseItem;
 import com.example.examplemod.item.NumberItem;
 import com.example.examplemod.item.OperatorItem;
@@ -46,7 +45,7 @@ public class ModObjects {
     public static ChunkChestBlock chunkChestBlock;
     public static PointerBlock pointerBlock;
 
-    public static AdbmalItem adbmalItem;
+    public static BaseItem adbmalItem;
     public static OperatorItem plusOperatorItem;
     public static OperatorItem minusOperatorItem;
     public static OperatorItem divOperatorItem;
@@ -58,7 +57,7 @@ public class ModObjects {
      */
     public static void initialize() {
         // Register Item
-        adbmalItem = new AdbmalItem();
+        adbmalItem = new BaseItem();
         registerItem(adbmalItem, "adbmalitem");
 
         plusOperatorItem = new OperatorItem((a, b) -> (a + b));
