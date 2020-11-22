@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ModWorldData extends WorldSavedData {
-    public static int INV_SIZE_MAX = 24*256*27; // 24*256 chests = 1 chunk-chest
-    public static int INV_SIZE_DEFAULT = 4*27; // 4 chests
+    public static int CHUNK_CHEST_SIZE_MAX = 24*256*27; // 24*256 chests = 1 chunk-chest
+    public static int CHUNK_CHEST_SIZE_DEFAULT = 4*27; // 4 chests
 
     private static String DATA_NAME = ExampleMod.MODID + "_Data";
 
@@ -53,7 +53,7 @@ public class ModWorldData extends WorldSavedData {
         if (chunkChestHandlers.containsKey(key)) {
             return chunkChestHandlers.get(key);
         } else {
-            ItemStackHandler handler = new ItemStackHandler(INV_SIZE_DEFAULT) {
+            ItemStackHandler handler = new ItemStackHandler(CHUNK_CHEST_SIZE_DEFAULT) {
                 @Override
                 protected void onContentsChanged(int slot) {
                     ModWorldData.this.markDirty();
