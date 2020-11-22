@@ -21,5 +21,6 @@ public class AdjustableItemStackHandler extends ItemStackHandler {
     }
     public void increaseSize(int size) {
         this.stacks.addAll(NonNullList.withSize(size, ItemStack.EMPTY));
+        onContentsChanged(-1);
     }
 }

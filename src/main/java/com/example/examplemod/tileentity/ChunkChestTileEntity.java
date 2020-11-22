@@ -56,11 +56,11 @@ public class ChunkChestTileEntity extends BaseTileEntity {
 
             @Override
             protected void onContentsChanged(int slot) {
-                int count = this.getStackInSlot(1).getCount();
+                int count = this.getStackInSlot(0).getCount();
                 int slots_to_add = count * 27;
                 if (handler.getSlots() + slots_to_add <= ModWorldData.CHUNK_CHEST_SIZE_MAX) {
                     handler.increaseSize(slots_to_add);
-                    this.getStackInSlot(1).setCount(0);
+                    this.getStackInSlot(0).setCount(0);
                 }
             }
         };
