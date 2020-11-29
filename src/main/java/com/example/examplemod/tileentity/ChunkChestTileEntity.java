@@ -21,6 +21,10 @@ public class ChunkChestTileEntity extends BaseTileEntity {
         return handler;
     }
 
+    public ItemStackHandler getHandlerChest() {
+        return handler_chest;
+    }
+
     @Nullable
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
@@ -58,7 +62,7 @@ public class ChunkChestTileEntity extends BaseTileEntity {
             protected void onContentsChanged(int slot) {
                 int count = this.getStackInSlot(0).getCount();
                 int slots_to_add = count * 27;
-                if (handler.getSlots() + slots_to_add <= ModWorldData.CHUNK_CHEST_SIZE_MAX) {
+                if (handler.getSlots() + slots_to_add <= ModWorldData.CHUNK_CHEST_SIZE_MAX) { // TODO
                     handler.modifySize(slots_to_add);
                     this.getStackInSlot(0).setCount(0);
                 }
