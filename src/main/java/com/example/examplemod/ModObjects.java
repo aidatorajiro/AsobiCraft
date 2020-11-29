@@ -241,7 +241,7 @@ public class ModObjects {
         ));
 
         pickupRecipes.add(new BlockPatternRecipePlane(
-                Items.ENDER_PEARL,
+                Items.ENDER_EYE,
                 1,
                 0,
                 1,
