@@ -6,10 +6,12 @@ import com.example.examplemod.packet.ModPacketHandler;
 import com.example.examplemod.tileentity.ChunkChestTileEntity;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class ChunkChestGui extends GuiContainer {
     private static ChunkChestTileEntity tile;
+    private static ChunkChestContainer container;
 
     private static final ResourceLocation background = new ResourceLocation(ExampleMod.MODID, "textures/gui/chunkchest.png");
 
@@ -25,13 +27,14 @@ public class ChunkChestGui extends GuiContainer {
         this.addButton(new GuiButton(3, baseX + xSize/2 - bw/2, baseY + 70, bw, bh, "JUMP"));
     }
 
-    public ChunkChestGui(ChunkChestTileEntity tileIn, ChunkChestContainer container) {
-        super(container);
+    public ChunkChestGui(ChunkChestTileEntity tileIn, ChunkChestContainer containerIn) {
+        super(containerIn);
 
         xSize = 178;
         ySize = 234;
 
         tile = tileIn;
+        container = containerIn;
     }
 
     @Override
@@ -49,6 +52,7 @@ public class ChunkChestGui extends GuiContainer {
         }
         pageNo = Math.min(Math.max(pageNo, 0), tile.getHandlerSize()/27 - 1);
         ModPacketHandler.INSTANCE.sendToServer(new ModMessage().chunkChestMessage(tile.getPos(), pageNo));
+        container.emptyItemStacks();
     }
 
     @Override

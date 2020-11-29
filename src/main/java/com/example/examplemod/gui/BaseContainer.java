@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
 
 public abstract class BaseContainer extends Container {
     @Override
-    public abstract boolean canInteractWith(@Nonnull EntityPlayer playerIn);
+    public abstract boolean canInteractWith(EntityPlayer playerIn);
 
     public void drawFloatingSlots(FloatingItemStackHandler itemHandler, int offsetX, int offsetY, int shapeX, int shapeY) {
     }
@@ -50,7 +50,7 @@ public abstract class BaseContainer extends Container {
             }
         }
 
-        // Slots for the hotbar
+        // Slots for the hot bar
         for (int row = 0; row < 9; ++row) {
             int x = row * 18 + offsetX;
             int y = 58 + offsetY;
@@ -59,8 +59,7 @@ public abstract class BaseContainer extends Container {
     }
 
     @Override
-    @Nonnull
-    public ItemStack transferStackInSlot(@Nonnull EntityPlayer playerIn, int index) {
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
         ItemStack ret = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
 
