@@ -19,7 +19,7 @@ public class FloatingChestContainer extends BaseContainer {
     public FloatingChestContainer(IInventory playerInventory, FloatingChestTileEntity tile) {
         this.tile = tile;
         drawPlayerSlots(playerInventory, 9, 151);
-        drawFloatingSlots(tile.getHandler(), 9, 16, 9);
+        drawFloatingSlots(tile.getHandler(), 9, 16, 9, 3);
     }
 
     @Override

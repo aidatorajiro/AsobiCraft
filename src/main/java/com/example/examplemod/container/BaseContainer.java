@@ -14,11 +14,11 @@ public abstract class BaseContainer extends Container {
     @Override
     public abstract boolean canInteractWith(EntityPlayer playerIn);
 
-    public void drawFloatingSlots(FloatingItemStackHandler itemHandler, int offsetX, int offsetY, int shapeX) {
+    public void drawFloatingSlots(FloatingItemStackHandler itemHandler, int offsetX, int offsetY, int shapeX, int shapeY) {
     }
 
-    public void drawSlots(IItemHandler itemHandler, int offsetX, int offsetY, int shapeX, int shapeY) {
-        int index = 0;
+    public void drawSlots(IItemHandler itemHandler, int offsetX, int offsetY, int offsetIndex, int shapeX, int shapeY) {
+        int index = offsetIndex;
         for (int row = 0; row < shapeY; ++row) {
             for (int col = 0; col < shapeX; ++col) {
                 int x = col * 18 + offsetX;
@@ -27,6 +27,10 @@ public abstract class BaseContainer extends Container {
                 index++;
             }
         }
+    }
+
+    public void drawSlots(IItemHandler itemHandler, int offsetX, int offsetY, int shapeX, int shapeY) {
+        drawSlots(itemHandler, offsetX, offsetY, 0, shapeX, shapeY);
     }
 
     public void drawPlayerSlots(IInventory playerInventory, int offsetX, int offsetY) {
