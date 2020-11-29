@@ -10,11 +10,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
+import javax.annotation.Nonnull;
+
 public abstract class BaseContainer extends Container {
     @Override
-    public abstract boolean canInteractWith(EntityPlayer playerIn);
+    public abstract boolean canInteractWith(@Nonnull EntityPlayer playerIn);
 
     public void drawFloatingSlots(FloatingItemStackHandler itemHandler, int offsetX, int offsetY, int shapeX, int shapeY) {
+    }
+
+    public void clearSlots() {
+        this.inventorySlots.clear();
+        this.inventoryItemStacks.clear();
     }
 
     public void drawSlots(IItemHandler itemHandler, int offsetX, int offsetY, int offsetIndex, int shapeX, int shapeY) {
@@ -52,7 +59,8 @@ public abstract class BaseContainer extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+    @Nonnull
+    public ItemStack transferStackInSlot(@Nonnull EntityPlayer playerIn, int index) {
         ItemStack ret = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
 

@@ -1,5 +1,6 @@
 package com.example.examplemod.packet;
 
+import com.example.examplemod.gui.ChunkChestContainer;
 import com.example.examplemod.tileentity.ChunkChestTileEntity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
@@ -17,9 +18,11 @@ public class ModMessageHandler implements IMessageHandler<ModMessage, IMessage> 
             WorldServer world = player.getServerWorld();
             if (message.type == ModMessage.TYPE_CHUNK_CHEST) {
                 TileEntity tile = world.getTileEntity(message.chunkChestPos);
-                if (tile != null && tile instanceof ChunkChestTileEntity) {
-                    ChunkChestTileEntity ccte = (ChunkChestTileEntity) tile;
-                    ccte.setPageNo(message.chunkChestPageNo);
+                if (tile instanceof ChunkChestTileEntity) {
+                    ((ChunkChestTileEntity) tile).setPageNo(message.chunkChestPageNo);
+                    if (player.openContainer instanceof ChunkChestContainer) {
+                        ((ChunkChestContainer)player.openContainer).redraw();
+                    }
                 }
             }
         } else if (ctx.side == Side.CLIENT) {
