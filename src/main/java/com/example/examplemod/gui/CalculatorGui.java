@@ -1,7 +1,6 @@
 package com.example.examplemod.gui;
 
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.container.CalculatorContainer;
 import com.example.examplemod.tileentity.CalculatorTileEntity;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;

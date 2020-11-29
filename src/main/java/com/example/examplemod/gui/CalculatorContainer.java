@@ -1,4 +1,4 @@
-package com.example.examplemod.container;
+package com.example.examplemod.gui;
 
 import com.example.examplemod.tileentity.CalculatorTileEntity;
 import net.minecraft.entity.player.EntityPlayer;

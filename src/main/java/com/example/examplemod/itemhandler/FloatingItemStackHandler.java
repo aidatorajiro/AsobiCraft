@@ -1,7 +1,6 @@
 package com.example.examplemod.itemhandler;
 
 import com.example.examplemod.helper.ItemHelper;
-import com.example.examplemod.itemstack.FloatingItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;

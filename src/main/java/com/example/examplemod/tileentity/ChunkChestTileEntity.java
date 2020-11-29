@@ -1,7 +1,8 @@
 package com.example.examplemod.tileentity;
 
 import com.example.examplemod.itemhandler.AdjustableItemStackHandler;
-import com.example.examplemod.saveddata.ModWorldData;
+import com.example.examplemod.data.ModWorldData;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,6 +20,9 @@ public class ChunkChestTileEntity extends BaseTileEntity {
 
     private AdjustableItemStackHandler handler;
     private ItemStackHandler handler_chest;
+    private int handlerSize;
+
+    public int getHandlerSize() { return handlerSize; }
 
     public ItemStackHandler getHandler() {
         return handler;
@@ -74,6 +78,8 @@ public class ChunkChestTileEntity extends BaseTileEntity {
                         int remain = (handler.getSlots() + slots_to_add - ModWorldData.CHUNK_CHEST_SIZE_MAX) / 27;
                         this.getStackInSlot(0).setCount(remain);
                     }
+                    IBlockState state = world.getBlockState(pos);
+                    world.notifyBlockUpdate(pos, state, state, 2);
                 }
             }
         };
@@ -86,7 +92,7 @@ public class ChunkChestTileEntity extends BaseTileEntity {
         super.onDataPacket(net, pkt);
         NBTTagCompound compound = pkt.getNbtCompound();
         if (compound.hasKey("numSlots")) {
-            handler.setSize(compound.getInteger("numSlots"));
+            handlerSize = compound.getInteger("numSlots");
         }
     }
 

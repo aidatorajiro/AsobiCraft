@@ -1,7 +1,6 @@
 package com.example.examplemod.gui;
 
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.container.FloatingChestContainer;
 import com.example.examplemod.tileentity.FloatingChestTileEntity;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;

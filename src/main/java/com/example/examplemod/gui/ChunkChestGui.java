@@ -1,13 +1,10 @@
 package com.example.examplemod.gui;
 
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.container.ChunkChestContainer;
 import com.example.examplemod.tileentity.ChunkChestTileEntity;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
-
-import java.io.IOException;
 
 public class ChunkChestGui extends GuiContainer {
     private static ChunkChestTileEntity tile;
@@ -58,7 +55,7 @@ public class ChunkChestGui extends GuiContainer {
          && ChunkChestContainer.chestSlotY <= relY && relY <= ChunkChestContainer.chestSlotY + 18) {
             this.drawHoveringText("Put chests here to expand pages.", mouseX, mouseY);
         }
-        drawString(fontRenderer, "Page " + (pageNo + 1) + " of " + tile.getHandler().getSlots()/27, mouseX, mouseY, 10526880);
+        drawString(fontRenderer, "Page " + (pageNo + 1) + " of " + tile.getHandlerSize()/27, mouseX, mouseY, 10526880);
     }
 
     @Override

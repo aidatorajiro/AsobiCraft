@@ -1,8 +1,8 @@
 package com.example.examplemod.proxy;
 
-import com.example.examplemod.container.CalculatorContainer;
-import com.example.examplemod.container.ChunkChestContainer;
-import com.example.examplemod.container.FloatingChestContainer;
+import com.example.examplemod.gui.CalculatorContainer;
+import com.example.examplemod.gui.ChunkChestContainer;
+import com.example.examplemod.gui.FloatingChestContainer;
 import com.example.examplemod.gui.CalculatorGui;
 import com.example.examplemod.gui.ChunkChestGui;
 import com.example.examplemod.gui.FloatingChestGui;

@@ -1,6 +1,5 @@
-package com.example.examplemod.itemstack;
+package com.example.examplemod.itemhandler;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;

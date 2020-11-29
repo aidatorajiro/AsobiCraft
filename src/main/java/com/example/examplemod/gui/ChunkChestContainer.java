@@ -1,12 +1,8 @@
-package com.example.examplemod.container;
+package com.example.examplemod.gui;
 
-import com.example.examplemod.helper.ItemHelper;
 import com.example.examplemod.tileentity.ChunkChestTileEntity;
-import com.example.examplemod.tileentity.FloatingChestTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ChunkChestContainer extends BaseContainer {
@@ -17,7 +13,7 @@ public class ChunkChestContainer extends BaseContainer {
     public ChunkChestContainer(IInventory playerInventory, ChunkChestTileEntity tile) {
         this.tile = tile;
         drawPlayerSlots(playerInventory, 9, 151);
-        drawSlots(tile.getHandler(), 9, 16, 9, 3);
+        drawSlots(tile.getHandler(), 9, 16, 0, 9, 3);
         this.addSlotToContainer(new SlotItemHandler(tile.getHandlerChest(), 0, chestSlotX, chestSlotY));
     }
 

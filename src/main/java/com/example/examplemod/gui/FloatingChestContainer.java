@@ -1,17 +1,11 @@
-package com.example.examplemod.container;
+package com.example.examplemod.gui;
 
-import com.example.examplemod.helper.GuiHelper;
 import com.example.examplemod.helper.ItemHelper;
-import com.example.examplemod.tileentity.CalculatorTileEntity;
 import com.example.examplemod.tileentity.FloatingChestTileEntity;
-import com.example.examplemod.itemhandler.FloatingItemStackHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class FloatingChestContainer extends BaseContainer {
     private FloatingChestTileEntity tile;
