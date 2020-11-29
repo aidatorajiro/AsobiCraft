@@ -4,6 +4,9 @@ import com.example.examplemod.ExampleMod;
 import com.example.examplemod.ModObjects;
 import com.example.examplemod.block.BaseBlock;
 import com.example.examplemod.item.BaseItem;
+import com.example.examplemod.packet.ModMessage;
+import com.example.examplemod.packet.ModMessageHandler;
+import com.example.examplemod.packet.ModPacketHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -16,11 +19,14 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod.EventBusSubscriber
 public class CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         ModObjects.initialize();
+        ModPacketHandler.INSTANCE.registerMessage(ModMessageHandler.class, ModMessage.class, 0, Side.SERVER);
+        ModPacketHandler.INSTANCE.registerMessage(ModMessageHandler.class, ModMessage.class, 0, Side.CLIENT);
     }
 
     public void init(FMLInitializationEvent event) {
