@@ -29,6 +29,10 @@ public class ChunkChestGui extends GuiContainer {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
         renderHoveredToolTip(mouseX, mouseY);
+        if (ChunkChestContainer.chestSlotX <= mouseX && mouseX <= ChunkChestContainer.chestSlotX + 18
+        && ChunkChestContainer.chestSlotY <= mouseY && mouseY <= ChunkChestContainer.chestSlotY + 18) {
+            this.drawHoveringText("Put chests here to expand pages.", mouseX, mouseY);
+        }
     }
 
     @Override
