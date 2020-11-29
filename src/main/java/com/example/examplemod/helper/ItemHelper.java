@@ -16,7 +16,7 @@ import javax.swing.plaf.basic.BasicComboBoxUI;
 import static net.minecraft.inventory.InventoryHelper.spawnItemStack;
 
 public class ItemHelper extends net.minecraftforge.items.ItemHandlerHelper {
-    public static <E> NonNullList<E> changeListSize(NonNullList<E> old, int length, E def) {
+    public static <E> NonNullList<E> withListSize(NonNullList<E> old, int length, E def) {
         NonNullList<E> list = NonNullList.withSize(length, def);
         for (int i = 0; i < old.size(); i++) {
             list.set(i, old.get(i));

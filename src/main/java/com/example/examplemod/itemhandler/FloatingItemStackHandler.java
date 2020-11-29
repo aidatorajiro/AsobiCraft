@@ -37,7 +37,7 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
     }
 
     public void addFloatingItemStack(FloatingItemStack item) {
-        stacks = ItemHelper.changeListSize(stacks, stacks.size() + 1, FloatingItemStack.EMPTY);
+        stacks = ItemHelper.withListSize(stacks, stacks.size() + 1, FloatingItemStack.EMPTY);
         stacks.set(stacks.size() - 1, item);
     }
 
@@ -85,6 +85,7 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
         //onContentsChanged(slot);
         //return;
         validateSlotIndex(slot);
+        /*
         // if the existing slot count is greater than MAX_ITEMSTACK_EXPORT_SIZE and both the given stack and the existing stack can stack, subtract (MAX_ITEMSTACK_EXPORT_SIZE - given stack count) from the existing stack.
         // if the existing slot count is greater than MAX_ITEMSTACK_EXPORT_SIZE and the two stacks cannot stack, subtract existing slot by 64 and move it to some appropriate slot. If there is no appropriate slot, expand this.stacks.
         if (stacks.get(slot).getStackSize() > MAX_ITEMSTACK_EXPORT_SIZE) {
@@ -107,7 +108,11 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
             }
         } else {
             stacks.set(slot, new FloatingItemStack(stack));
-        }
+        }*/
+
+        FloatingItemStack remain = stacks.get(slot);
+        stacks.set(slot, new FloatingItemStack(stack));
+        addFloatingItemStack(remain);
         onContentsChanged(slot);
     }
 

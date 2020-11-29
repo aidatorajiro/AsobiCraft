@@ -5,6 +5,7 @@ import com.example.examplemod.saveddata.ModWorldData;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -61,10 +62,16 @@ public class ChunkChestTileEntity extends BaseTileEntity {
             @Override
             protected void onContentsChanged(int slot) {
                 int count = this.getStackInSlot(0).getCount();
-                int slots_to_add = count * 27;
-                if (handler.getSlots() + slots_to_add <= ModWorldData.CHUNK_CHEST_SIZE_MAX) { // TODO
-                    handler.modifySize(slots_to_add);
-                    this.getStackInSlot(0).setCount(0);
+                if (count > 0 && handler.getSlots() <= ModWorldData.CHUNK_CHEST_SIZE_MAX) {
+                    int slots_to_add = count * 27;
+                    if (handler.getSlots() + slots_to_add <= ModWorldData.CHUNK_CHEST_SIZE_MAX) {
+                        handler.modifySize(slots_to_add);
+                        this.getStackInSlot(0).setCount(0);
+                    } else {
+                        handler.modifySize(ModWorldData.CHUNK_CHEST_SIZE_MAX - handler.getSlots());
+                        int remain = (handler.getSlots() + slots_to_add - ModWorldData.CHUNK_CHEST_SIZE_MAX) / 27;
+                        this.getStackInSlot(0).setCount(remain);
+                    }
                 }
             }
         };
