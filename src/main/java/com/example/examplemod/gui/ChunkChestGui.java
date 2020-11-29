@@ -16,19 +16,27 @@ public class ChunkChestGui extends GuiContainer {
 
     private static final ResourceLocation background = new ResourceLocation(ExampleMod.MODID, "textures/gui/chunkchest.png");
 
+    @Override
+    public void initGui() {
+        super.initGui();
+        int baseX = width/2 - xSize/2;
+        int baseY = height/2 - ySize/2;
+        int bw = 20;
+        int bh = 20;
+        this.addButton(new GuiButton(1, baseX + 9             , baseY + 70, bw, bh, "<"));
+        this.addButton(new GuiButton(2, baseX + xSize - bw - 9, baseY + 70, bw, bh, ">"));
+        this.addButton(new GuiButton(3, baseX + xSize/2 - bw/2, baseY + 70, bw, bh, "JUMP"));
+    }
+
     public ChunkChestGui(ChunkChestTileEntity tileIn, ChunkChestContainer container) {
         super(container);
 
-        xSize = 253;
+        xSize = 178;
         ySize = 234;
 
         pageNo = 0;
 
         tile = tileIn;
-
-        this.addButton(new GuiButton(1, 9, 70, "<"));
-        this.addButton(new GuiButton(2, 59, 70, ">"));
-        this.addButton(new GuiButton(3, 109, 70, "JUMP"));
     }
 
     @Override
@@ -43,12 +51,14 @@ public class ChunkChestGui extends GuiContainer {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
+        int relX = mouseX - width/2 + xSize/2;
+        int relY = mouseY - height/2 + ySize/2;
         renderHoveredToolTip(mouseX, mouseY);
-        if (ChunkChestContainer.chestSlotX <= mouseX && mouseX <= ChunkChestContainer.chestSlotX + 18
-         && ChunkChestContainer.chestSlotY <= mouseY && mouseY <= ChunkChestContainer.chestSlotY + 18) {
+        if (ChunkChestContainer.chestSlotX <= relX && relX <= ChunkChestContainer.chestSlotX + 18
+         && ChunkChestContainer.chestSlotY <= relY && relY <= ChunkChestContainer.chestSlotY + 18) {
             this.drawHoveringText("Put chests here to expand pages.", mouseX, mouseY);
         }
-        drawString(fontRenderer, "Page " + (pageNo + 1) + " of " + tile.getHandler().getSlots()/27, mouseX, mouseY, 0xFFFFFFFF);
+        drawString(fontRenderer, "Page " + (pageNo + 1) + " of " + tile.getHandler().getSlots()/27, mouseX, mouseY, 10526880);
     }
 
     @Override

@@ -1,18 +1,14 @@
 package com.example.examplemod.container;
 
-import com.example.examplemod.helper.GuiHelper;
 import com.example.examplemod.tileentity.CalculatorTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class CalculatorContainer extends BaseContainer {
     private CalculatorTileEntity tile;
+    private int pageNo;
 
     public CalculatorContainer (IInventory playerInventory, CalculatorTileEntity tile) {
         this.tile = tile;

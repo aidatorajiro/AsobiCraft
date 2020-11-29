@@ -6,6 +6,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -75,5 +77,23 @@ public class ChunkChestTileEntity extends BaseTileEntity {
                 }
             }
         };
+    }
+
+    // client sync on notifyBlockUpdate
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        super.onDataPacket(net, pkt);
+        NBTTagCompound compound = pkt.getNbtCompound();
+        if (compound.hasKey("numSlots")) {
+            handler.setSize(compound.getInteger("numSlots"));
+        }
+    }
+
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        NBTTagCompound compound = new NBTTagCompound();
+        compound.setInteger("numSlots", handler.getSlots());
+        return new SPacketUpdateTileEntity(getPos(), -1, compound);
     }
 }
