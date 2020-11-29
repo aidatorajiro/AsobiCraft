@@ -5,6 +5,7 @@ import math
 im = Image.new("RGBA", (256, 256), (255, 255, 255, 0))
 draw_window(im, (178, 234), (169, 200, 201, 255), (249, 167, 79, 255), 2)
 
+draw_slots(im, LIGHT_BLUE_SLOT, (9, 16), (9, 3))
 draw_player_inv(im, LIGHT_BLUE_SLOT, (9, 151))
 
 centerX = 89

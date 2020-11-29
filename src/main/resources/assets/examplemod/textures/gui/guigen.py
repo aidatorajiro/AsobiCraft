@@ -20,8 +20,8 @@ def draw_window(im, size, back_color, border_color, border_width):
 def draw_slots(im, slot_im, offset, shape):
   for i in range(0, shape[0]):
     for j in range(0, shape[1]):
-      x = offset[0] + i * 18;
-      y = offset[1] + j * 18;
+      x = offset[0] + i * 18
+      y = offset[1] + j * 18
       im.paste(slot_im, (x, y), slot_im)
 
 def draw_player_inv(im, slot_im, offset):
