@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 public class ChunkChestGui extends GuiContainer {
     private static ChunkChestTileEntity tile;
 
-    private static final ResourceLocation background = new ResourceLocation(ExampleMod.MODID, "textures/gui/floatingchest.png");
+    private static final ResourceLocation background = new ResourceLocation(ExampleMod.MODID, "textures/gui/chunkchest.png");
 
     public ChunkChestGui(ChunkChestTileEntity tileIn, ChunkChestContainer container) {
         super(container);
