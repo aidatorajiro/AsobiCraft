@@ -1,6 +1,8 @@
 package com.example.examplemod.gui;
 
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.packet.ModMessage;
+import com.example.examplemod.packet.ModPacketHandler;
 import com.example.examplemod.tileentity.ChunkChestTileEntity;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -8,8 +10,6 @@ import net.minecraft.util.ResourceLocation;
 
 public class ChunkChestGui extends GuiContainer {
     private static ChunkChestTileEntity tile;
-
-    private static int pageNo;
 
     private static final ResourceLocation background = new ResourceLocation(ExampleMod.MODID, "textures/gui/chunkchest.png");
 
@@ -31,13 +31,24 @@ public class ChunkChestGui extends GuiContainer {
         xSize = 178;
         ySize = 234;
 
-        pageNo = 0;
-
         tile = tileIn;
     }
 
     @Override
     protected void actionPerformed(GuiButton button) {
+        int pageNo = tile.getPageNo();
+        switch (button.id) {
+            case 1:
+                pageNo -= 1;
+                break;
+            case 2:
+                pageNo += 1;
+                break;
+            case 3:
+                break;
+        }
+        pageNo = Math.min(Math.max(pageNo, 0), tile.getHandlerSize()/27 - 1);
+        ModPacketHandler.INSTANCE.sendToServer(new ModMessage().chunkChestMessage(tile.getPos(), pageNo));
     }
 
     @Override
@@ -55,7 +66,7 @@ public class ChunkChestGui extends GuiContainer {
          && ChunkChestContainer.chestSlotY <= relY && relY <= ChunkChestContainer.chestSlotY + 18) {
             this.drawHoveringText("Put chests here to expand pages.", mouseX, mouseY);
         }
-        drawString(fontRenderer, "Page " + (pageNo + 1) + " of " + tile.getHandlerSize()/27, mouseX, mouseY, 10526880);
+        drawString(fontRenderer, "Page " + (tile.getPageNo() + 1) + " of " + tile.getHandlerSize()/27, mouseX, mouseY, 10526880);
     }
 
     @Override

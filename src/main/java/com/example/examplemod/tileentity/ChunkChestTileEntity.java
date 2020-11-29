@@ -20,9 +20,9 @@ public class ChunkChestTileEntity extends BaseTileEntity {
 
     private AdjustableItemStackHandler handler;
     private ItemStackHandler handler_chest;
-    private int handlerSize;
+    private int pageNo;
 
-    public int getHandlerSize() { return handlerSize; }
+    public int getHandlerSize() { return handler.getSlots(); }
 
     public ItemStackHandler getHandler() {
         return handler;
@@ -30,6 +30,16 @@ public class ChunkChestTileEntity extends BaseTileEntity {
 
     public ItemStackHandler getHandlerChest() {
         return handler_chest;
+    }
+
+    public int getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
+        IBlockState state = world.getBlockState(pos);
+        world.notifyBlockUpdate(pos, state, state, 2);
     }
 
     @Nullable
@@ -92,7 +102,10 @@ public class ChunkChestTileEntity extends BaseTileEntity {
         super.onDataPacket(net, pkt);
         NBTTagCompound compound = pkt.getNbtCompound();
         if (compound.hasKey("numSlots")) {
-            handlerSize = compound.getInteger("numSlots");
+            handler.setSize(compound.getInteger("numSlots"));
+        }
+        if (compound.hasKey("pageNo")) {
+            pageNo = compound.getInteger("pageNo");
         }
     }
 
@@ -100,6 +113,7 @@ public class ChunkChestTileEntity extends BaseTileEntity {
     public SPacketUpdateTileEntity getUpdatePacket() {
         NBTTagCompound compound = new NBTTagCompound();
         compound.setInteger("numSlots", handler.getSlots());
+        compound.setInteger("pageNo", pageNo);
         return new SPacketUpdateTileEntity(getPos(), -1, compound);
     }
 }

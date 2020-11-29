@@ -13,7 +13,7 @@ public class ChunkChestContainer extends BaseContainer {
     public ChunkChestContainer(IInventory playerInventory, ChunkChestTileEntity tile) {
         this.tile = tile;
         drawPlayerSlots(playerInventory, 9, 151);
-        drawSlots(tile.getHandler(), 9, 16, 0, 9, 3);
+        drawSlots(tile.getHandler(), 9, 16, 27*tile.getPageNo(), 9, 3);
         this.addSlotToContainer(new SlotItemHandler(tile.getHandlerChest(), 0, chestSlotX, chestSlotY));
     }
 
