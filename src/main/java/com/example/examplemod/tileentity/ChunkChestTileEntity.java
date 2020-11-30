@@ -52,7 +52,6 @@ public class ChunkChestTileEntity extends BaseTileEntity {
 
     public void setPageNo(EntityPlayer player, int no) {
         pageNo.put(player.getUniqueID(), no);
-        IBlockState state = world.getBlockState(pos);
     }
 
     @Nullable

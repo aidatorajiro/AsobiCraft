@@ -1,6 +1,11 @@
 package com.example.examplemod.helper;
 
+import com.example.examplemod.gui.ChunkChestContainer;
+
 public class GuiHelper {
+    public static boolean collision (int boundX, int boundY, int width, int height, int testX, int testY) {
+        return boundX <= testX && testX <= boundX+width && boundY <= testY && testY <= boundY+height;
+    }
     /*
     public static ItemStack transferStackInSlotDefault(Container containerIn, Arg4<ItemStack, Integer, Integer, Boolean, Boolean> mis, EntityPlayer playerIn, int index) {
         ItemStack ret = ItemStack.EMPTY;
