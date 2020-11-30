@@ -8,7 +8,6 @@ import com.example.examplemod.tileentity.ChunkChestTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -20,7 +19,7 @@ import java.util.Arrays;
 import static com.example.examplemod.gui.ChunkChestContainer.chestSlotX;
 import static com.example.examplemod.gui.ChunkChestContainer.chestSlotY;
 
-public class ChunkChestGui extends GuiContainer {
+public class ChunkChestGui extends BaseGui {
     private static ChunkChestTileEntity tile;
     private static ChunkChestContainer container;
     private static GuiTextField jumpTo;
@@ -83,7 +82,7 @@ public class ChunkChestGui extends GuiContainer {
         }
         pageNo = Math.min(Math.max(pageNo, 0), tile.getHandlerSize()/27 - 1);
         ModPacketHandler.INSTANCE.sendToServer(new ModMessage().chunkChestMessage(tile.getPos(), pageNo, -1));
-        container.emptyItemStacks();
+        container.emptySlots();
         tile.setPageNo(Minecraft.getMinecraft().player, pageNo);
     }
 
