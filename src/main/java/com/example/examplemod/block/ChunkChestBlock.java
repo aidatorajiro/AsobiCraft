@@ -1,11 +1,14 @@
 package com.example.examplemod.block;
 
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.packet.ModMessage;
+import com.example.examplemod.packet.ModPacketHandler;
 import com.example.examplemod.tileentity.ChunkChestTileEntity;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -38,7 +41,14 @@ public class ChunkChestBlock extends DirectedBlock implements ITileEntityProvide
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
-            world.notifyBlockUpdate(pos, state, state, 2);
+            TileEntity tile = world.getTileEntity(pos);
+            if (tile instanceof ChunkChestTileEntity) {
+                ChunkChestTileEntity cc = (ChunkChestTileEntity) tile;
+                ModPacketHandler.INSTANCE.sendTo(
+                        new ModMessage().chunkChestMessage(pos, cc.getPageNo(player), cc.getHandlerSize()),
+                        (EntityPlayerMP) player
+                );
+            }
             player.openGui(ExampleMod.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;

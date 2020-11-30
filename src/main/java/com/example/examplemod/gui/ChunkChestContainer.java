@@ -13,10 +13,12 @@ public class ChunkChestContainer extends BaseContainer {
     public static int chestSlotX = 135;
     public static int chestSlotY = 88;
     private IInventory playerInventory;
+    private EntityPlayer player;
 
-    public ChunkChestContainer(IInventory playerInventory, ChunkChestTileEntity tile) {
+    public ChunkChestContainer(EntityPlayer player, ChunkChestTileEntity tile) {
         this.tile = tile;
-        this.playerInventory = playerInventory;
+        this.playerInventory = player.inventory;
+        this.player = player;
         redraw();
         this.addSlotToContainer(new SlotItemHandler(tile.getHandlerChest(), 0, chestSlotX, chestSlotY));
     }
@@ -29,6 +31,6 @@ public class ChunkChestContainer extends BaseContainer {
     public void redraw() {
         clearSlots();
         drawPlayerSlots(playerInventory, 9, 151);
-        drawSlots(tile.getHandler(), 9, 16, 27*tile.getPageNo(), 9, 3);
+        drawSlots(tile.getHandler(), 9, 16, 27*tile.getPageNo(player), 9, 3);
     }
 }

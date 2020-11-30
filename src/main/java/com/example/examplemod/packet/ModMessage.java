@@ -13,16 +13,20 @@ public class ModMessage implements IMessage {
     public BlockPos blockPos;
 
     /* chunk chest */
+
+    /* chunk chest */
     public static int TYPE_CHUNK_CHEST = 1;
     public int pageNo;
+    public int maxPages;
 
     /* particle */
     public static int TYPE_EXPLOSION = 2;
 
-    public ModMessage chunkChestMessage(BlockPos pos, int no) {
+    public ModMessage chunkChestMessage(BlockPos pos, int no, int max) {
         type = TYPE_CHUNK_CHEST;
         blockPos = pos;
         pageNo = no;
+        maxPages = max;
         return this;
     }
 
@@ -38,6 +42,7 @@ public class ModMessage implements IMessage {
         if (type == TYPE_CHUNK_CHEST) {
             blockPos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
             pageNo = buf.readInt();
+            maxPages = buf.readInt();
         }
         if (type == TYPE_EXPLOSION) {
             blockPos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
@@ -52,6 +57,7 @@ public class ModMessage implements IMessage {
             buf.writeInt(blockPos.getY());
             buf.writeInt(blockPos.getZ());
             buf.writeInt(pageNo);
+            buf.writeInt(maxPages);
         }
         if (type == TYPE_EXPLOSION) {
             buf.writeInt(blockPos.getX());

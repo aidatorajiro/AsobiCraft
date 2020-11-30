@@ -5,7 +5,8 @@ import com.example.examplemod.ModObjects;
 import com.example.examplemod.block.BaseBlock;
 import com.example.examplemod.item.BaseItem;
 import com.example.examplemod.packet.ModMessage;
-import com.example.examplemod.packet.ModMessageHandler;
+import com.example.examplemod.packet.ModMessageHandlerClient;
+import com.example.examplemod.packet.ModMessageHandlerServer;
 import com.example.examplemod.packet.ModPacketHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -25,8 +26,7 @@ import net.minecraftforge.fml.relauncher.Side;
 public class CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         ModObjects.initialize();
-        ModPacketHandler.INSTANCE.registerMessage(ModMessageHandler.class, ModMessage.class, 0, Side.SERVER);
-        ModPacketHandler.INSTANCE.registerMessage(ModMessageHandler.class, ModMessage.class, 0, Side.CLIENT);
+        ModPacketHandler.INSTANCE.registerMessage(ModMessageHandlerServer.class, ModMessage.class, 0, Side.SERVER);
     }
 
     public void init(FMLInitializationEvent event) {

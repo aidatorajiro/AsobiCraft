@@ -3,6 +3,10 @@ package com.example.examplemod.proxy;
 import com.example.examplemod.ModObjects;
 import com.example.examplemod.block.BaseBlock;
 import com.example.examplemod.item.BaseItem;
+import com.example.examplemod.packet.ModMessage;
+import com.example.examplemod.packet.ModMessageHandlerClient;
+import com.example.examplemod.packet.ModMessageHandlerServer;
+import com.example.examplemod.packet.ModPacketHandler;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -17,6 +21,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void preInit(FMLPreInitializationEvent e) {
         super.preInit(e);
+        ModPacketHandler.INSTANCE.registerMessage(ModMessageHandlerClient.class, ModMessage.class, 0, Side.CLIENT);
     }
 
     @SubscribeEvent

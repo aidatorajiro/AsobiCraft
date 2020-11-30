@@ -2,7 +2,6 @@ package com.example.examplemod.eventhandler;
 
 import com.example.examplemod.ModObjects;
 import com.example.examplemod.helper.ItemHelper;
-import com.example.examplemod.helper.WorldHelper;
 import com.example.examplemod.packet.ModMessage;
 import com.example.examplemod.packet.ModPacketHandler;
 import com.example.examplemod.recipe.IBlockPatternRecipe;

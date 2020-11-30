@@ -27,7 +27,7 @@ public class GuiProxy implements IGuiHandler {
             return new FloatingChestContainer(player.inventory, (FloatingChestTileEntity) tile);
         }
         if (tile instanceof ChunkChestTileEntity) {
-            return new ChunkChestContainer(player.inventory, (ChunkChestTileEntity) tile);
+            return new ChunkChestContainer(player, (ChunkChestTileEntity) tile);
         }
         return null;
     }
@@ -46,7 +46,7 @@ public class GuiProxy implements IGuiHandler {
         }
         if (tile instanceof ChunkChestTileEntity) {
             ChunkChestTileEntity casted = (ChunkChestTileEntity) tile;
-            return new ChunkChestGui(casted, new ChunkChestContainer(player.inventory, casted));
+            return new ChunkChestGui(casted, new ChunkChestContainer(player, casted));
         }
         return null;
     }

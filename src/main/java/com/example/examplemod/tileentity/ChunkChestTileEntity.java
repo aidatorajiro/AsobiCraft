@@ -2,7 +2,12 @@ package com.example.examplemod.tileentity;
 
 import com.example.examplemod.itemhandler.AdjustableItemStackHandler;
 import com.example.examplemod.data.ModWorldData;
+import com.example.examplemod.packet.ModMessage;
+import com.example.examplemod.packet.ModPacketHandler;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,14 +20,20 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class ChunkChestTileEntity extends BaseTileEntity {
 
     private AdjustableItemStackHandler handler;
     private ItemStackHandler handler_chest;
-    private int pageNo;
+    private HashMap<UUID, Integer> pageNo = new HashMap<>();
 
     public int getHandlerSize() { return handler.getSlots(); }
+
+    public void setHandlerSize(int size) {
+        handler.setSize(size);
+    }
 
     public ItemStackHandler getHandler() {
         return handler;
@@ -32,14 +43,16 @@ public class ChunkChestTileEntity extends BaseTileEntity {
         return handler_chest;
     }
 
-    public int getPageNo() {
-        return pageNo;
+    public int getPageNo(EntityPlayer player) {
+        if (!pageNo.containsKey(player.getUniqueID())) {
+            this.pageNo.put(player.getUniqueID(), 0);
+        }
+        return pageNo.get(player.getUniqueID());
     }
 
-    public void setPageNo(int pageNo) {
-        this.pageNo = pageNo;
+    public void setPageNo(EntityPlayer player, int no) {
+        pageNo.put(player.getUniqueID(), no);
         IBlockState state = world.getBlockState(pos);
-        world.notifyBlockUpdate(pos, state, state, 2);
     }
 
     @Nullable
@@ -89,31 +102,8 @@ public class ChunkChestTileEntity extends BaseTileEntity {
                         this.getStackInSlot(0).setCount(remain);
                     }
                     IBlockState state = world.getBlockState(pos);
-                    world.notifyBlockUpdate(pos, state, state, 2);
                 }
             }
         };
-    }
-
-    // client sync on notifyBlockUpdate
-
-    @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        super.onDataPacket(net, pkt);
-        NBTTagCompound compound = pkt.getNbtCompound();
-        if (compound.hasKey("numSlots")) {
-            handler.setSize(compound.getInteger("numSlots"));
-        }
-        if (compound.hasKey("pageNo")) {
-            pageNo = compound.getInteger("pageNo");
-        }
-    }
-
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        NBTTagCompound compound = new NBTTagCompound();
-        compound.setInteger("numSlots", handler.getSlots());
-        compound.setInteger("pageNo", pageNo);
-        return new SPacketUpdateTileEntity(getPos(), -1, compound);
     }
 }

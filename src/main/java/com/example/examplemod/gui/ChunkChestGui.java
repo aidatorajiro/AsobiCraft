@@ -4,9 +4,10 @@ import com.example.examplemod.ExampleMod;
 import com.example.examplemod.packet.ModMessage;
 import com.example.examplemod.packet.ModPacketHandler;
 import com.example.examplemod.tileentity.ChunkChestTileEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 public class ChunkChestGui extends GuiContainer {
@@ -39,7 +40,8 @@ public class ChunkChestGui extends GuiContainer {
 
     @Override
     protected void actionPerformed(GuiButton button) {
-        int pageNo = tile.getPageNo();
+        EntityPlayer player = Minecraft.getMinecraft().player;
+        int pageNo = tile.getPageNo(player);
         switch (button.id) {
             case 1:
                 pageNo -= 1;
@@ -51,8 +53,9 @@ public class ChunkChestGui extends GuiContainer {
                 break;
         }
         pageNo = Math.min(Math.max(pageNo, 0), tile.getHandlerSize()/27 - 1);
-        ModPacketHandler.INSTANCE.sendToServer(new ModMessage().chunkChestMessage(tile.getPos(), pageNo));
+        ModPacketHandler.INSTANCE.sendToServer(new ModMessage().chunkChestMessage(tile.getPos(), pageNo, -1));
         container.emptyItemStacks();
+        tile.setPageNo(Minecraft.getMinecraft().player, pageNo);
     }
 
     @Override
@@ -62,6 +65,7 @@ public class ChunkChestGui extends GuiContainer {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        EntityPlayer player = Minecraft.getMinecraft().player;
         super.drawScreen(mouseX, mouseY, partialTicks);
         int relX = mouseX - width/2 + xSize/2;
         int relY = mouseY - height/2 + ySize/2;
@@ -70,7 +74,7 @@ public class ChunkChestGui extends GuiContainer {
          && ChunkChestContainer.chestSlotY <= relY && relY <= ChunkChestContainer.chestSlotY + 18) {
             this.drawHoveringText("Put chests here to expand pages.", mouseX, mouseY);
         }
-        drawString(fontRenderer, "Page " + (tile.getPageNo() + 1) + " of " + tile.getHandlerSize()/27, mouseX, mouseY, 10526880);
+        drawString(fontRenderer, "Page " + (tile.getPageNo(player) + 1) + " of " + tile.getHandlerSize()/27, mouseX, mouseY, 10526880);
     }
 
     @Override
