@@ -30,8 +30,8 @@ public class ModEventHandler {
         for (IBlockPatternRecipe recipe : ModObjects.pickupRecipes) {
             Tuple<Boolean, Iterable<BlockPos>> result = recipe.triggerMatches(world, item, pos);
             if (result.getFirst()) {
-                for (BlockPos delatePos : result.getSecond()) {
-                    world.setBlockState(delatePos, Blocks.AIR.getDefaultState());
+                for (BlockPos deletePos : result.getSecond()) {
+                    world.setBlockState(deletePos, Blocks.AIR.getDefaultState());
                 }
                 ModPacketHandler.INSTANCE.sendToAllAround(
                         new ModMessage().explosionMessage(pos),
