@@ -2,6 +2,7 @@ package com.example.examplemod.packet;
 
 import com.example.examplemod.gui.ChunkChestContainer;
 import com.example.examplemod.tileentity.ChunkChestTileEntity;
+import com.example.examplemod.tileentity.FloatingChestTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.tileentity.TileEntity;
@@ -23,6 +24,12 @@ public class ModMessageHandlerClient implements IMessageHandler<ModMessage, IMes
             if (tile instanceof ChunkChestTileEntity) {
                 ((ChunkChestTileEntity) tile).setPageNo(player, message.pageNo);
                 ((ChunkChestTileEntity) tile).setHandlerSize(message.maxPages);
+            }
+        }
+        if (message.type == ModMessage.TYPE_FLOATING_CHEST) {
+            TileEntity tile = world.getTileEntity(message.blockPos);
+            if (tile instanceof FloatingChestTileEntity) {
+                ((FloatingChestTileEntity) tile).readChest(message.nbtData);
             }
         }
         if (message.type == ModMessage.TYPE_EXPLOSION) {

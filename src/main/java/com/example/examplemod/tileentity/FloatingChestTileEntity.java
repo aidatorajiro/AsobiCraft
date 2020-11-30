@@ -43,13 +43,13 @@ public class FloatingChestTileEntity extends BaseTileEntity {
 
     // core read/write func
 
-    private void read(NBTTagCompound compound) {
+    public void readChest(NBTTagCompound compound) {
         if (compound.hasKey("chest")) {
             handler.deserializeNBT((NBTTagCompound) compound.getTag("chest"));
         }
     }
 
-    private NBTTagCompound write(NBTTagCompound compound) {
+    public NBTTagCompound writeChest(NBTTagCompound compound) {
         compound.setTag("chest", handler.serializeNBT());
         return compound;
     }
@@ -59,41 +59,12 @@ public class FloatingChestTileEntity extends BaseTileEntity {
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        read(compound);
+        readChest(compound);
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
-        return write(compound);
-    }
-
-    // client sync on chunk load
-
-    @Override
-    public void handleUpdateTag(NBTTagCompound compound) {
-        super.handleUpdateTag(compound);
-        read(compound);
-    }
-
-    @Override
-    public NBTTagCompound getUpdateTag() {
-        NBTTagCompound compound = super.getUpdateTag();
-        return write(compound);
-    }
-
-    // client sync on notifyBlockUpdate
-
-    @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        super.onDataPacket(net, pkt);
-        NBTTagCompound compound = pkt.getNbtCompound();
-        read(compound);
-    }
-
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        NBTTagCompound compound = write(new NBTTagCompound());
-        return new SPacketUpdateTileEntity(getPos(), -1, compound);
+        return writeChest(compound);
     }
 }

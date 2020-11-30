@@ -2,6 +2,10 @@ package com.example.examplemod.block;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.helper.BlockHelper;
+import com.example.examplemod.itemhandler.FloatingItemStack;
+import com.example.examplemod.packet.ModMessage;
+import com.example.examplemod.packet.ModPacketHandler;
+import com.example.examplemod.tileentity.ChunkChestTileEntity;
 import com.example.examplemod.tileentity.CounterTileEntity;
 import com.example.examplemod.tileentity.FloatingChestTileEntity;
 import net.minecraft.block.ITileEntityProvider;
@@ -9,6 +13,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -46,8 +51,15 @@ public class  FloatingChestBlock extends DirectedBlock implements ITileEntityPro
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
-            world.notifyBlockUpdate(pos, state, state, 2);
             player.openGui(ExampleMod.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
+            TileEntity tile = world.getTileEntity(pos);
+            if (tile instanceof FloatingChestTileEntity) {
+                FloatingChestTileEntity fc = (FloatingChestTileEntity) tile;
+                ModPacketHandler.INSTANCE.sendTo(
+                        new ModMessage().floatingChestMessage(pos, fc.writeChest(new NBTTagCompound())),
+                        (EntityPlayerMP) player
+                );
+            }
         }
         return true;
     }
