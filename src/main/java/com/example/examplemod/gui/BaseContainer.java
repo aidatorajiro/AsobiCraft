@@ -3,6 +3,7 @@ package com.example.examplemod.gui;
 import com.example.examplemod.helper.GuiHelper;
 import com.example.examplemod.itemhandler.FloatingItemStack;
 import com.example.examplemod.itemhandler.FloatingItemStackHandler;
+import com.example.examplemod.itemhandler.FloatingSlot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -18,7 +19,7 @@ public abstract class BaseContainer extends Container {
     @Override
     public abstract boolean canInteractWith(EntityPlayer playerIn);
 
-    public List<Tuple4<FloatingItemStackHandler, Integer, Integer, Integer>> floatingSlots = new ArrayList<>();
+    public List<FloatingSlot> floatingSlots = new ArrayList<>();
 
     public void drawFloatingSlots(FloatingItemStackHandler itemHandler, int offsetX, int offsetY, int offsetIndex, int shapeX, int shapeY) {
         int index = offsetIndex;
@@ -26,7 +27,7 @@ public abstract class BaseContainer extends Container {
             for (int col = 0; col < shapeX; ++col) {
                 int x = col * 18 + offsetX;
                 int y = row * 18 + offsetY;
-                floatingSlots.add(Tuple4.apply(itemHandler, index, x, y));
+                floatingSlots.add(new FloatingSlot(itemHandler, index, x, y));
                 index++;
             }
         }

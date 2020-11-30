@@ -1,21 +1,18 @@
 package com.example.examplemod.gui;
 
-import com.example.examplemod.itemhandler.FloatingItemStack;
-import com.example.examplemod.itemhandler.FloatingItemStackHandler;
+import com.example.examplemod.helper.GuiHelper;
+import com.example.examplemod.itemhandler.FloatingSlot;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
-import scala.Tuple4;
 
 import java.util.List;
-
-import static com.example.examplemod.gui.ChunkChestContainer.chestSlotX;
-import static com.example.examplemod.gui.ChunkChestContainer.chestSlotY;
 
 public abstract class BaseGui extends GuiContainer {
     public BaseGui(BaseContainer inventorySlotsIn) {
         super(inventorySlotsIn);
     }
+
+    private FloatingSlot hoveredSlotFloating;
 
     public void drawItemStack(ItemStack itemstack, int x, int y) {
         drawItemStack(itemstack, x, y, "");
@@ -29,35 +26,47 @@ public abstract class BaseGui extends GuiContainer {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
-        List<Tuple4<FloatingItemStackHandler, Integer, Integer, Integer>> floatingSlots
+        hoveredSlotFloating = null;
+        List<FloatingSlot> floatingSlots
                 = ((BaseContainer)inventorySlots).floatingSlots;
-        for (Tuple4<FloatingItemStackHandler, Integer, Integer, Integer> tup : floatingSlots) {
-            FloatingItemStackHandler handler = tup._1();
-            int index = tup._2();
-            int x = tup._3();
-            int y = tup._4();
+        for (FloatingSlot slot : floatingSlots) {
+            int x = slot.getX();
+            int y = slot.getY();
             int baseX = width/2 - xSize/2;
             int baseY = height/2 - ySize/2;
-            FloatingItemStack stack = handler.getStackInSlotFloating(index);
-            Double size = stack.getStackSize();
+            Double size = slot.getSize();
             String str;
             if (Double.isNaN(size)) {
                 str = "?";
             } else if (Double.isInfinite(size)) {
                 str = "!";
             } else {
-                int index_scale = (int) Math.floor(Math.max(Math.log10(Math.abs(stack.getStackSize())), 0));
+                int index_scale = (int) Math.floor(Math.max(Math.log10(Math.abs(slot.getSize())), 0));
                 str = Integer.toString(index_scale, 36);
             }
             if (size < 0) {
                 str = "-" + str;
             }
+            ItemStack itemStack = slot.getItemStack();
             drawItemStack(
-                    stack.getItemStack(),
+                    itemStack,
                     baseX + x,
                     baseY + y,
                     str
             );
+            if (GuiHelper.collision(baseX + x, baseY + y, 18, 18, mouseX, mouseY)) {
+                hoveredSlotFloating = slot;
+            }
+        }
+    }
+
+    @Override
+    protected void renderHoveredToolTip(int mouseX, int mouseY) {
+        super.renderHoveredToolTip(mouseX, mouseY);
+        if (hoveredSlotFloating != null && !hoveredSlotFloating.isEmpty()) {
+            List<String> list = hoveredSlotFloating.getTooltip(this.mc.player, () -> false);
+            list.add("x " + hoveredSlotFloating.getSize());
+            drawHoveringText(list, mouseX, mouseY);
         }
     }
 }

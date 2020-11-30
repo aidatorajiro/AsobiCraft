@@ -22,8 +22,11 @@ public class AdjustableItemStackHandler extends ItemStackHandler {
     }
     public void setSize(int size) {
         stacks = ItemHelper.withListSize(stacks, size, ItemStack.EMPTY);
-        onContentsChanged(0);
+        onSizeChanged(0);
     }
+
+    protected void onSizeChanged(int index) {}
+
     public void modifySize(int size) {
         setSize(size + stacks.size());
     }

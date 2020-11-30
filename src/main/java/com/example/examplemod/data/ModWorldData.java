@@ -58,6 +58,8 @@ public class ModWorldData extends WorldSavedData {
                 protected void onContentsChanged(int slot) {
                     ModWorldData.this.markDirty();
                 }
+                @Override
+                protected void onSizeChanged(int slot) { ModWorldData.this.markDirty(); }
             };
             if (!chunkchest.hasKey(key)) {
                 chunkchest.setTag(key, handler.serializeNBT());
