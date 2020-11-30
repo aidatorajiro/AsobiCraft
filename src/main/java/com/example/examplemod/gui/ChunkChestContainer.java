@@ -20,7 +20,6 @@ public class ChunkChestContainer extends BaseContainer {
         this.playerInventory = player.inventory;
         this.player = player;
         redraw();
-        this.addSlotToContainer(new SlotItemHandler(tile.getHandlerChest(), 0, chestSlotX, chestSlotY));
     }
 
     @Override
@@ -32,5 +31,6 @@ public class ChunkChestContainer extends BaseContainer {
         clearSlots();
         drawPlayerSlots(playerInventory, 9, 151);
         drawSlots(tile.getHandler(), 9, 16, 27*tile.getPageNo(player), 9, 3);
+        this.addSlotToContainer(new SlotItemHandler(tile.getHandlerChest(), 0, chestSlotX, chestSlotY));
     }
 }
