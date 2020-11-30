@@ -24,7 +24,7 @@ public abstract class BaseContainer extends Container {
         this.inventoryItemStacks.clear();
     }
 
-    public void emptyItemStacks() {
+    public void emptySlots() {
         for (int i = 36; i < this.inventoryItemStacks.size(); i++) {
             this.inventoryItemStacks.set(i, ItemStack.EMPTY);
             this.inventorySlots.get(i).getStack().setCount(0);
