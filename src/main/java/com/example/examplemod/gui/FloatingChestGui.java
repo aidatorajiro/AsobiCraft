@@ -28,7 +28,6 @@ public class FloatingChestGui extends BaseGui {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
         renderHoveredToolTip(mouseX, mouseY);
-        // drawCenteredString(fontRenderer, String.valueOf(tile.getHandler().getStackInSlotFloating(0).getStackSize()), 10, 10, 0x000000);
     }
 
     @Override

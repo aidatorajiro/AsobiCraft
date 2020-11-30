@@ -1,6 +1,7 @@
 package com.example.examplemod.gui;
 
 import com.example.examplemod.helper.GuiHelper;
+import com.example.examplemod.itemhandler.FloatingItemStack;
 import com.example.examplemod.itemhandler.FloatingItemStackHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -9,14 +10,30 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-
-import javax.annotation.Nonnull;
+import scala.Tuple4;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BaseContainer extends Container {
     @Override
     public abstract boolean canInteractWith(EntityPlayer playerIn);
 
+    public List<Tuple4<FloatingItemStackHandler, Integer, Integer, Integer>> floatingSlots = new ArrayList<>();
+
+    public void drawFloatingSlots(FloatingItemStackHandler itemHandler, int offsetX, int offsetY, int offsetIndex, int shapeX, int shapeY) {
+        int index = offsetIndex;
+        for (int row = 0; row < shapeY; ++row) {
+            for (int col = 0; col < shapeX; ++col) {
+                int x = col * 18 + offsetX;
+                int y = row * 18 + offsetY;
+                floatingSlots.add(Tuple4.apply(itemHandler, index, x, y));
+                index++;
+            }
+        }
+    }
+
     public void drawFloatingSlots(FloatingItemStackHandler itemHandler, int offsetX, int offsetY, int shapeX, int shapeY) {
+        drawFloatingSlots(itemHandler, offsetX, offsetY, 0, shapeX, shapeY);
     }
 
     public void clearSlots() {

@@ -5,7 +5,6 @@ import com.example.examplemod.helper.GuiHelper;
 import com.example.examplemod.packet.ModMessage;
 import com.example.examplemod.packet.ModPacketHandler;
 import com.example.examplemod.tileentity.ChunkChestTileEntity;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +20,6 @@ import static com.example.examplemod.gui.ChunkChestContainer.chestSlotY;
 
 public class ChunkChestGui extends BaseGui {
     private static ChunkChestTileEntity tile;
-    private static ChunkChestContainer container;
     private static GuiTextField jumpTo;
     private static int jumpToX = 40;
     private static int jumpToY = 70;
@@ -30,6 +28,17 @@ public class ChunkChestGui extends BaseGui {
 
     private static final ResourceLocation background = new ResourceLocation(ExampleMod.MODID, "textures/gui/chunkchest.png");
     private static ItemStack chestItemStack;
+
+    public ChunkChestGui(ChunkChestTileEntity tileIn, ChunkChestContainer containerIn) {
+        super(containerIn);
+
+        xSize = 178;
+        ySize = 234;
+
+        tile = tileIn;
+
+        chestItemStack = new ItemStack(Blocks.CHEST);
+    }
 
     @Override
     public void initGui() {
@@ -49,21 +58,9 @@ public class ChunkChestGui extends BaseGui {
         jumpTo.setValidator((x) -> x.matches("\\d*"));
     }
 
-    public ChunkChestGui(ChunkChestTileEntity tileIn, ChunkChestContainer containerIn) {
-        super(containerIn);
-
-        xSize = 178;
-        ySize = 234;
-
-        tile = tileIn;
-        container = containerIn;
-
-        chestItemStack = new ItemStack(Blocks.CHEST);
-    }
-
     @Override
     protected void actionPerformed(GuiButton button) {
-        EntityPlayer player = Minecraft.getMinecraft().player;
+        EntityPlayer player = this.mc.player;
         int pageNo = tile.getPageNo(player);
         switch (button.id) {
             case 1:
@@ -82,8 +79,8 @@ public class ChunkChestGui extends BaseGui {
         }
         pageNo = Math.min(Math.max(pageNo, 0), tile.getHandlerSize()/27 - 1);
         ModPacketHandler.INSTANCE.sendToServer(new ModMessage().chunkChestMessage(tile.getPos(), pageNo, -1));
-        container.emptySlots();
-        tile.setPageNo(Minecraft.getMinecraft().player, pageNo);
+        ((ChunkChestContainer)inventorySlots).emptySlots();
+        tile.setPageNo(this.mc.player, pageNo);
     }
 
     @Override
@@ -94,7 +91,7 @@ public class ChunkChestGui extends BaseGui {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        EntityPlayer player = Minecraft.getMinecraft().player;
+        EntityPlayer player = this.mc.player;
         super.drawScreen(mouseX, mouseY, partialTicks);
 
         //coordinate calculation
@@ -103,8 +100,7 @@ public class ChunkChestGui extends BaseGui {
         int relX = mouseX - baseX;
         int relY = mouseY - baseY;
 
-        this.itemRender.renderItemAndEffectIntoGUI(this.mc.player, chestItemStack, baseX + chestSlotX - 42, baseY + chestSlotY);
-        this.itemRender.renderItemOverlayIntoGUI(this.fontRenderer, chestItemStack, baseX + chestSlotX - 42, baseY + chestSlotY, "");
+        drawItemStack(chestItemStack, baseX + chestSlotX - 42, baseY + chestSlotY);
 
         // page no and text input
         drawString(fontRenderer, "Page " + (tile.getPageNo(player) + 1) + " of " + tile.getHandlerSize()/27, baseX + 6, baseY + 5, 0xF0F0F0);
