@@ -7,7 +7,7 @@ Supported Minecraft version is 1.12.2.
 ## TODO LIST
 
 - floating chest / chunk chest direction
-- crafting explosion particle
-- floating chest / chunk chest GUI
+- floating chest GUI
 - calculator GUI improvement
 - calculator item generation
+- new blocks

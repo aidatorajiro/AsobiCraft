@@ -24,6 +24,13 @@ public abstract class BaseContainer extends Container {
         this.inventoryItemStacks.clear();
     }
 
+    public void emptyItemStacks() {
+        for (int i = 36; i < this.inventoryItemStacks.size(); i++) {
+            this.inventoryItemStacks.set(i, ItemStack.EMPTY);
+            this.inventorySlots.get(i).getStack().setCount(0);
+        }
+    }
+
     public void drawSlots(IItemHandler itemHandler, int offsetX, int offsetY, int offsetIndex, int shapeX, int shapeY) {
         int index = offsetIndex;
         for (int row = 0; row < shapeY; ++row) {
