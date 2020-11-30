@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 public class ChunkChestContainer extends BaseContainer {
     private ChunkChestTileEntity tile;
     public static int chestSlotX = 135;
-    public static int chestSlotY = 88;
+    public static int chestSlotY = 106;
     private IInventory playerInventory;
     private EntityPlayer player;
 

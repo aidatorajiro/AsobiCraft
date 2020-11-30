@@ -6,13 +6,17 @@ import com.example.examplemod.packet.ModPacketHandler;
 import com.example.examplemod.tileentity.ChunkChestTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
+import java.io.IOException;
+
 public class ChunkChestGui extends GuiContainer {
     private static ChunkChestTileEntity tile;
     private static ChunkChestContainer container;
+    private static GuiTextField jumpTo;
 
     private static final ResourceLocation background = new ResourceLocation(ExampleMod.MODID, "textures/gui/chunkchest.png");
 
@@ -25,7 +29,12 @@ public class ChunkChestGui extends GuiContainer {
         int bh = 20;
         this.addButton(new GuiButton(1, baseX + 9             , baseY + 70, bw, bh, "<"));
         this.addButton(new GuiButton(2, baseX + xSize - bw - 9, baseY + 70, bw, bh, ">"));
-        this.addButton(new GuiButton(3, baseX + xSize/2 - bw/2, baseY + 70, bw, bh, "JUMP"));
+        this.addButton(new GuiButton(3, baseX + xSize - bw - 40, baseY + 70, bw, bh, "JUMP"));
+        jumpTo = new GuiTextField(4, this.fontRenderer, baseX + 40, baseY + 70, xSize - bw - 90,20);
+        jumpTo.setMaxStringLength(4);
+        jumpTo.setText("1");
+        jumpTo.setFocused(true);
+        jumpTo.setValidator((x) -> x.matches("\\d*"));
     }
 
     public ChunkChestGui(ChunkChestTileEntity tileIn, ChunkChestContainer containerIn) {
@@ -50,6 +59,11 @@ public class ChunkChestGui extends GuiContainer {
                 pageNo += 1;
                 break;
             case 3:
+                if (jumpTo.getText().equals("")) {
+                    return;
+                } else {
+                    pageNo = Integer.parseInt(jumpTo.getText()) - 1;
+                }
                 break;
         }
         pageNo = Math.min(Math.max(pageNo, 0), tile.getHandlerSize()/27 - 1);
@@ -61,6 +75,7 @@ public class ChunkChestGui extends GuiContainer {
     @Override
     public void updateScreen() {
         super.updateScreen();
+        jumpTo.updateCursorCounter();
     }
 
     @Override
@@ -74,7 +89,14 @@ public class ChunkChestGui extends GuiContainer {
          && ChunkChestContainer.chestSlotY <= relY && relY <= ChunkChestContainer.chestSlotY + 18) {
             this.drawHoveringText("Put chests here to expand pages.", mouseX, mouseY);
         }
-        drawString(fontRenderer, "Page " + (tile.getPageNo(player) + 1) + " of " + tile.getHandlerSize()/27, mouseX, mouseY, 10526880);
+        drawString(fontRenderer, "Page " + (tile.getPageNo(player) + 1) + " of " + tile.getHandlerSize()/27, mouseX, mouseY, 0xFFFFFF);
+        jumpTo.drawTextBox();
+    }
+
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        super.keyTyped(typedChar, keyCode);
+        jumpTo.textboxKeyTyped(typedChar, keyCode);
     }
 
     @Override
