@@ -11,3 +11,12 @@ cache:
 
 jdk:
   - openjdk8
+
+deploy:
+  provider: releases
+  api_key:
+    secure: "o46rYjKVO/MGCtIkbOMXzGe4PDTb0bxVN44HQAmvdhv0MkAxMsd+kQEyqCLXJ0FOmP0YgcCJFb9dpFvmCqo3X1yZiZw7lsfcjQAUQ2WNqdDS/+ihJ+xgymAp9MLSukwfLGdArQfRVDtw8pJMqZzw6+v/RM9752FZQYA0i7ToyQlC9VlqsXZLGv7mNAqs7dAjWE/WpSfbjCYDWlfoCMLNk+Dlj/hA1CDh3ts2iBLyiypPQYmHKMoiPYSzHfguwPvpCp5wv2J3p6q1DC8mmLrdh19/mdcm8XAQ0EvNnUlwhYOzTiJbzQD+dr48zCPBTE4nQ+l1k+BhVFEWUZhGN5rvq1nFfo+Vmvj0G9Di9W5kqdemNlKFjdK+Vq1Uix4bOW/DN4uj4WJJ1nvOqt+pwp2NQlf+QVR6YnBDntIUMIHBCKr9tT2tWZFX0S0Pu7G0/FPn+IY+zqql8X7HNKCcKOBWrLOH/U3oXItPYDeI95f1mYgFtV/lCw6kndwCGyovWSKxuGQx57Ms7tyXDmqKLo960TsJ2UMmDD5JXHDv120iITeemwj42zwbmYTN+B+Rq5CC8FkpjYPsszd9F4ZM7Z7XN4nYr8FVKByabebleP0oYiDyrvM+GdlP4Hf081PvvG1wAaWriWktThcmD+fix2BxxNrVWNxIC37I3WwSCKI2g4Y="
+  file: "build/libs/*"
+  skip_cleanup: true
+  on:
+    tags: true

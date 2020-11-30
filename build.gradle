@@ -12,8 +12,8 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 
 version = "1.0"
-group = "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "modid"
+group = "com.example.examplemod" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "examplemod"
 
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 compileJava {
@@ -77,49 +77,4 @@ processResources {
 }
 
 repositories {
-    maven { url = "http://chickenbones.net/maven/" }
-    maven { url = "https://minecraft.curseforge.com/api/maven/" }
-    maven { url = "http://tehnut.info/maven" }
-    maven { url = "http://maven.tterrag.com" }
-    maven { url = "http://maven2.tterrag.com" }
-    maven { url = "http://dvs1.progwml6.com/files/maven" }
-    maven { url = "http://files.minecraftforge.net/maven" }
-    maven { url = "http://maven.cil.li/" } // OpenComputers
-    maven { url = "http://maven.mcmoddev.com" }
-    maven { url = "http://mod-buildcraft.com/maven/" }
-    maven { url = "https://maven.latmod.com" } // FTBLib
-    maven { url = "http://maven.covers1624.net/" } // CoFHCore
-    maven { url = "http://cc.crzd.me/maven/" } // ComputerCraft
-    maven { url = "https://repo.raoulvdberge.com/" } // Refined Storage (new)
-    maven { url = "http://maven.ic2.player.to/" }
-    mavenLocal()
-}
-
-dependencies {
-    //deobfCompile "com.enderio.core:EnderCore:1.12.2-0.5.40"
-    //compile "com.mod-buildcraft:buildcraft:7.99.12"
-    //compile "appeng:appliedenergistics2:rv6-stable-1"
-    //deobfCompile "projecte:ProjectE:1.12:PE1.3.1B"
-    //compile "com.wayoftime.bloodmagic:BloodMagic:1.12.2-2.3.3-101"
-    //compile "info.amerifrance.guideapi:Guide-API:1.12-2.1.7-62"
-    //compile "com.enderio:EnderIO:1.12.2-5.0.36"
-    //compile "info.loenwind.autosave:AutoSave:1.12.2-1.0.8"
-    //compile "codechicken:ChickenASM:1.12-1.0.2.9"
-    //compile "mrtjp:ProjectRed:1.12.2-4.9.2.101:Base"
-    //compile "mrtjp:ProjectRed:1.12.2-4.9.2.101:compat"
-    //compile "mrtjp:ProjectRed:1.12.2-4.9.2.101:fabrication"
-    //compile "mrtjp:ProjectRed:1.12.2-4.9.2.101:integration"
-    //compile "mrtjp:ProjectRed:1.12.2-4.9.2.101:lighting"
-    //compile "mrtjp:ProjectRed:1.12.2-4.9.2.101:mechanical"
-    //compile "mrtjp:ProjectRed:1.12.2-4.9.2.101:world"
-    //compile "net.industrial-craft:industrialcraft-2:2.8.99-ex112"
-
-    //    deobfCompile "com.mod-buildcraft:buildcraft:7.99.12"
-    //    compile "appeng:appliedenergistics2:rv6-stable-1"
-    //    deobfCompile "projecte:ProjectE:1.12:PE1.3.1B"
-    //    compile "com.wayoftime.bloodmagic:BloodMagic:1.12.2-2.3.3-101"
-    //    compile "info.amerifrance.guideapi:Guide-API:1.12-2.1.7-62"
-    //    deobfCompile "com.enderio.core:EnderCore:1.12.2-0.5.40"
-    //    compile "com.enderio:EnderIO:1.12.2-5.0.36"
-    //    compile "info.loenwind.autosave:AutoSave:1.12.2-1.0.8"
 }
