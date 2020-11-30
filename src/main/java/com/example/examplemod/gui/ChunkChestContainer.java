@@ -33,7 +33,7 @@ public class ChunkChestContainer extends BaseContainer {
     }
 
     public void emptyItemStacks() {
-        for (int i = 0; i < this.inventoryItemStacks.size(); i++) {
+        for (int i = 36; i < this.inventoryItemStacks.size(); i++) {
             this.inventoryItemStacks.set(i, ItemStack.EMPTY);
             this.inventorySlots.get(i).getStack().setCount(0);
         }
