@@ -10,6 +10,8 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import java.io.IOException;
@@ -28,6 +30,7 @@ public class ChunkChestGui extends GuiContainer {
     private static int jumpToH = 20;
 
     private static final ResourceLocation background = new ResourceLocation(ExampleMod.MODID, "textures/gui/chunkchest.png");
+    private static ItemStack chestItemStack;
 
     @Override
     public void initGui() {
@@ -55,6 +58,8 @@ public class ChunkChestGui extends GuiContainer {
 
         tile = tileIn;
         container = containerIn;
+
+        chestItemStack = new ItemStack(Blocks.CHEST);
     }
 
     @Override
@@ -98,6 +103,9 @@ public class ChunkChestGui extends GuiContainer {
         int baseY = height/2 - ySize/2;
         int relX = mouseX - baseX;
         int relY = mouseY - baseY;
+
+        this.itemRender.renderItemAndEffectIntoGUI(this.mc.player, chestItemStack, baseX + chestSlotX - 42, baseY + chestSlotY);
+        this.itemRender.renderItemOverlayIntoGUI(this.fontRenderer, chestItemStack, baseX + chestSlotX - 42, baseY + chestSlotY, "");
 
         // page no and text input
         drawString(fontRenderer, "Page " + (tile.getPageNo(player) + 1) + " of " + tile.getHandlerSize()/27, baseX + 6, baseY + 5, 0xF0F0F0);
