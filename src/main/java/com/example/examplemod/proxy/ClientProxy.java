@@ -5,7 +5,6 @@ import com.example.examplemod.block.BaseBlock;
 import com.example.examplemod.item.BaseItem;
 import com.example.examplemod.packet.ModMessage;
 import com.example.examplemod.packet.ModMessageHandlerClient;
-import com.example.examplemod.packet.ModMessageHandlerServer;
 import com.example.examplemod.packet.ModPacketHandler;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
