@@ -41,7 +41,7 @@ public abstract class BaseGui extends GuiContainer {
             } else if (Double.isInfinite(size)) {
                 str = "!";
             } else {
-                int index_scale = (int) Math.floor(Math.max(Math.log10(Math.abs(slot.getSize())), 0));
+                int index_scale = (int) Math.floor(Math.max(Math.log10(Math.abs(size)), 0));
                 str = Integer.toString(index_scale, 36);
             }
             if (size < 0) {
