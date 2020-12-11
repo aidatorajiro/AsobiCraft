@@ -40,12 +40,11 @@ public abstract class BaseGui extends GuiContainer {
                 str = "?";
             } else if (Double.isInfinite(size)) {
                 str = "!";
+            } else if (size <= 0) {
+                str = "@";
             } else {
-                int index_scale = (int) Math.floor(Math.max(Math.log10(Math.abs(size)), 0));
+                int index_scale = (int) Math.floor(Math.log10(size));
                 str = Integer.toString(index_scale, 36);
-            }
-            if (size < 0) {
-                str = "-" + str;
             }
             ItemStack itemStack = slot.getItemStack();
             drawItemStack(
