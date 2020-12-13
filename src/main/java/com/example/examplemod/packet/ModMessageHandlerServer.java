@@ -1,5 +1,6 @@
 package com.example.examplemod.packet;
 
+import com.example.examplemod.gui.BaseContainer;
 import com.example.examplemod.gui.ChunkChestContainer;
 import com.example.examplemod.tileentity.ChunkChestTileEntity;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -23,6 +24,11 @@ public class ModMessageHandlerServer implements IMessageHandler<ModMessage, IMes
                 if (player.openContainer instanceof ChunkChestContainer) {
                     ((ChunkChestContainer)player.openContainer).redraw();
                 }
+            }
+        }
+        if (message.type == ModMessage.TYPE_FLOATING_SLOT) {
+            if (player.openContainer instanceof BaseContainer) {
+                ((BaseContainer)player.openContainer).floatingSlotClicked(message.slotId);
             }
         }
         return null;

@@ -1,10 +1,13 @@
 package com.example.examplemod.gui;
 
 import com.example.examplemod.helper.GuiHelper;
-import com.example.examplemod.itemhandler.FloatingSlot;
+import com.example.examplemod.packet.ModMessage;
+import com.example.examplemod.packet.ModPacketHandler;
+import com.example.examplemod.slot.FloatingSlot;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 
+import java.io.IOException;
 import java.util.List;
 
 public abstract class BaseGui extends GuiContainer {
@@ -21,6 +24,28 @@ public abstract class BaseGui extends GuiContainer {
     public void drawItemStack(ItemStack itemstack, int x, int y, String str) {
         this.itemRender.renderItemAndEffectIntoGUI(this.mc.player, itemstack, x, y);
         this.itemRender.renderItemOverlayIntoGUI(this.fontRenderer, itemstack, x, y, str);
+    }
+
+    @Override
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
+        try {
+            super.mouseClicked(mouseX, mouseY, mouseButton);
+        } catch (IOException e) {
+            // do nothing
+        }
+        List<FloatingSlot> floatingSlots
+                = ((BaseContainer)inventorySlots).floatingSlots;
+        for (int i = 0; i < floatingSlots.size(); i++) {
+            FloatingSlot slot = floatingSlots.get(i);
+            int x = slot.getX();
+            int y = slot.getY();
+            int baseX = width/2 - xSize/2;
+            int baseY = height/2 - ySize/2;
+            if (GuiHelper.collision(baseX + x, baseY + y, 18, 18, mouseX, mouseY)) {
+                ModPacketHandler.INSTANCE.sendToServer(new ModMessage().floatingSlotMessage(i));
+                ((BaseContainer) inventorySlots).floatingSlotClicked(i);
+            }
+        }
     }
 
     @Override

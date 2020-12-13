@@ -15,8 +15,8 @@ import javax.annotation.Nonnull;
 
 import java.lang.Math;
 
-public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModifiable, INBTSerializable<NBTTagCompound> {
-    public static double MAX_ITEMSTACK_EXPORT_SIZE = 2147483647;
+public class FloatingItemStackHandler implements IItemHandler, INBTSerializable<NBTTagCompound> {
+    public static int MAX_ITEMSTACK_EXPORT_SIZE = 2147483647;
 
     protected NonNullList<FloatingItemStack> stacks;
 
@@ -77,51 +77,12 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
         }
     }
 
-    // TODO fix setStackInSlot in FloatingItemStackHandler
-    @Override
-    public void setStackInSlot(int slot, @Nonnull ItemStack stack)
-    {
-        //onContentsChanged(slot);
-        //return;
-        validateSlotIndex(slot);
-        /*
-        // if the existing slot count is greater than MAX_ITEMSTACK_EXPORT_SIZE and both the given stack and the existing stack can stack, subtract (MAX_ITEMSTACK_EXPORT_SIZE - given stack count) from the existing stack.
-        // if the existing slot count is greater than MAX_ITEMSTACK_EXPORT_SIZE and the two stacks cannot stack, subtract existing slot by 64 and move it to some appropriate slot. If there is no appropriate slot, expand this.stacks.
-        if (stacks.get(slot).getStackSize() > MAX_ITEMSTACK_EXPORT_SIZE) {
-            if (ItemHandlerHelper.canItemStacksStack(stack, stacks.get(slot).getItemStack())) {
-                stacks.get(slot).modifyStackSize(stack.getCount() - MAX_ITEMSTACK_EXPORT_SIZE);
-            } else {
-                FloatingItemStack remain = stacks.get(slot).copy().modifyStackSize(-MAX_ITEMSTACK_EXPORT_SIZE);
-                stacks.set(slot, new FloatingItemStack(stack));
-                FloatingItemStack result = null;
-                for (int i = 0; i < getSlots(); i++) {
-                    result = insertItemFloating(slot, remain, false);
-                    if (result.isEmpty()) {
-                        break;
-                    }
-                }
-                // if there is no slots available, expand this.stacks
-                if (!result.isEmpty()) {
-                    addFloatingItemStack(remain);
-                }
-            }
-        } else {
-            stacks.set(slot, new FloatingItemStack(stack));
-        }*/
-
-        FloatingItemStack remain = stacks.get(slot);
-        stacks.set(slot, new FloatingItemStack(stack));
-        addFloatingItemStack(remain);
-        onContentsChanged(slot);
-    }
-
     public void setStackInSlotFloating(int slot, @Nonnull FloatingItemStack stack)
     {
         this.stacks.set(slot, stack);
         this.onContentsChanged(slot);
     }
 
-    @Override
     public int getSlots() {
         return stacks.size();
     }
@@ -132,7 +93,6 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
      * @param slot slot id
      */
     @Nonnull
-    @Override
     public ItemStack getStackInSlot(int slot) {
         validateSlotIndex(slot);
         FloatingItemStack stack = this.stacks.get(slot);
@@ -148,7 +108,6 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
     }
 
     @Nonnull
-    @Override
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
         if (stack.isEmpty())
             return ItemStack.EMPTY;
@@ -213,7 +172,6 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
     }
 
     @Nonnull
-    @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         if (amount == 0)
             return ItemStack.EMPTY;
@@ -249,6 +207,11 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
             export.setCount(amount);
             return export;
         }
+    }
+
+    @Override
+    public int getSlotLimit(int slot) {
+        return MAX_ITEMSTACK_EXPORT_SIZE;
     }
 
     public FloatingItemStack extractItemFloating(int slot, double amount, boolean simulate) {
@@ -288,12 +251,6 @@ public class FloatingItemStackHandler implements IItemHandler, IItemHandlerModif
         }
     }
 
-    @Override
-    public int getSlotLimit(int slot) {
-        return (int) MAX_ITEMSTACK_EXPORT_SIZE;
-    }
-
-    @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
         return true;
     }

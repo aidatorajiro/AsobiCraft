@@ -1,9 +1,9 @@
 package com.example.examplemod.gui;
 
-import com.example.examplemod.helper.GuiHelper;
-import com.example.examplemod.itemhandler.FloatingItemStack;
 import com.example.examplemod.itemhandler.FloatingItemStackHandler;
-import com.example.examplemod.itemhandler.FloatingSlot;
+import com.example.examplemod.packet.ModMessage;
+import com.example.examplemod.packet.ModPacketHandler;
+import com.example.examplemod.slot.FloatingSlot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -11,7 +11,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import scala.Tuple4;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,5 +107,11 @@ public abstract class BaseContainer extends Container {
         }
 
         return ret;
+    }
+
+    public void floatingSlotClicked(int i) {
+        FloatingSlot slot = floatingSlots.get(i);
+        ItemStack extracted = slot.getHandler().extractItem(slot.getIndex(), 64, false);
+        mergeItemStack(extracted, 0, 36, false);
     }
 }

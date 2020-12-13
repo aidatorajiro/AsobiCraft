@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 public class ModMessage implements IMessage {
     public int type = 0;
+
     /* frequently used arguments */
     public BlockPos blockPos;
     public NBTTagCompound nbtData;
@@ -23,8 +24,12 @@ public class ModMessage implements IMessage {
     /* explosion */
     public static int TYPE_EXPLOSION = 2;
 
-    /* NBT */
+    /* floating chest sync */
     public static int TYPE_FLOATING_CHEST = 3;
+
+    /* floating slot */
+    public static int TYPE_FLOATING_SLOT = 4;
+    public int slotId;
 
     public ModMessage chunkChestMessage(BlockPos pos, int no, int max) {
         type = TYPE_CHUNK_CHEST;
@@ -47,35 +52,55 @@ public class ModMessage implements IMessage {
         return this;
     }
 
+    public ModMessage floatingSlotMessage(int id) {
+        type = TYPE_FLOATING_SLOT;
+        slotId = id;
+        return this;
+    }
+
     @Override
     public void fromBytes(ByteBuf buf) {
         type = buf.readInt();
+        if (type == TYPE_FLOATING_SLOT) {
+            slotId = buf.readInt();
+            return;
+        }
         blockPos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
         if (type == TYPE_CHUNK_CHEST) {
             pageNo = buf.readInt();
             maxPages = buf.readInt();
+            return;
         }
         if (type == TYPE_EXPLOSION) {
+            return;
         }
         if (type == TYPE_FLOATING_CHEST) {
             nbtData = ByteBufUtils.readTag(buf);
+            return;
         }
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
         buf.writeInt(type);
+        if (type == TYPE_FLOATING_SLOT) {
+            buf.writeInt(slotId);
+            return;
+        }
         buf.writeInt(blockPos.getX());
         buf.writeInt(blockPos.getY());
         buf.writeInt(blockPos.getZ());
         if (type == TYPE_CHUNK_CHEST) {
             buf.writeInt(pageNo);
             buf.writeInt(maxPages);
+            return;
         }
         if (type == TYPE_EXPLOSION) {
+            return;
         }
         if (type == TYPE_FLOATING_CHEST) {
             ByteBufUtils.writeTag(buf, nbtData);
+            return;
         }
     }
 }

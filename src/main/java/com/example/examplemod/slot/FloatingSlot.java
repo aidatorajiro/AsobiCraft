@@ -1,5 +1,6 @@
-package com.example.examplemod.itemhandler;
+package com.example.examplemod.slot;
 
+import com.example.examplemod.itemhandler.FloatingItemStackHandler;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -17,11 +18,11 @@ public class FloatingSlot {
     }
 
     public boolean isEmpty() {
-        return handler.stacks.get(index).isEmpty();
+        return handler.getStackInSlotFloating(index).isEmpty();
     }
 
     public Double getSize() {
-        return handler.stacks.get(index).getStackSize();
+        return handler.getStackInSlotFloating(index).getStackSize();
     }
 
     public Integer getIndex() {
@@ -44,10 +45,10 @@ public class FloatingSlot {
     }
 
     public List<String> getTooltip(EntityPlayerSP player, ITooltipFlag flag) {
-        return handler.stacks.get(index).itemStack.getTooltip(player, flag);
+        return handler.getStackInSlot(index).getTooltip(player, flag);
     }
 
     public ItemStack getItemStack() {
-        return handler.stacks.get(index).itemStack.copy();
+        return handler.getStackInSlotFloating(index).getItemStack();
     }
 }
