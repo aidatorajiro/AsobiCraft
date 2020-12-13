@@ -100,7 +100,6 @@ public class ChunkChestTileEntity extends BaseTileEntity {
                         int remain = (handler.getSlots() + slots_to_add - ModWorldData.CHUNK_CHEST_SIZE_MAX) / 27;
                         this.getStackInSlot(0).setCount(remain);
                     }
-                    IBlockState state = world.getBlockState(pos);
                 }
             }
         };
